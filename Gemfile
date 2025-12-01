@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 ruby "3.3.5"
 
+gem 'devise-guests', '~> 0.8.3'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.6"
 
