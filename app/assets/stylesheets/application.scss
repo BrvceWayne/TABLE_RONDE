@@ -1,12 +1,21 @@
-// Graphical variables
+// TableRonde Design System
+// ========================
+
+// 1. Configuration (load first - provides variables to all other files)
 @import "config/fonts";
 @import "config/colors";
+@import "config/design_tokens";
 @import "config/bootstrap_variables";
 
-// External libraries
+// 2. External libraries
 @import "bootstrap";
 @import "font-awesome";
 
-// Your CSS partials
+// 3. Base styles
+@import "base/index";
+
+// 4. Components
 @import "components/index";
+
+// 5. Page-specific styles
 @import "pages/index";

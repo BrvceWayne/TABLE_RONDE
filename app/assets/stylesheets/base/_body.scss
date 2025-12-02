@@ -1,0 +1,15 @@
+// TableRonde Design System - Body Base Styles
+
+body {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-relaxed;
+  color: $text-primary;
+  background-color: $cream;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: $text-secondary;
+}

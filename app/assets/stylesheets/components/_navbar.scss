@@ -1,12 +1,278 @@
+// TableRonde Design System - Navbar
+// Based on official brand guidelines
+
+// ========== MAIN NAVBAR ==========
+.navbar-tableronde {
+  background-color: $white;
+  border-bottom: 1px solid $border-light;
+  padding: $space-md $space-lg;
+  min-height: $navbar-height;
+
+  .container,
+  .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+// ========== LOGO ==========
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  font-family: $font-display;
+  font-size: 1.5rem;
+  font-weight: $font-weight-bold;
+  color: $forest;
+  text-decoration: none;
+
+  &:hover {
+    color: $forest;
+  }
+
+  img {
+    height: 40px;
+    width: auto;
+  }
+}
+
+// Logo text with cutlery icon embedded
+.navbar-logo-text {
+  display: flex;
+  align-items: center;
+
+  .logo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin: 0 -2px;
+    position: relative;
+
+    .circle {
+      width: 24px;
+      height: 24px;
+      border: 3px solid $forest;
+      border-radius: 50%;
+    }
+
+    .fork,
+    .knife {
+      position: absolute;
+      width: 3px;
+      height: 14px;
+      background-color: $forest;
+      border-radius: 2px;
+    }
+
+    .fork {
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .knife {
+      right: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+// ========== NAV LINKS ==========
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+  padding: $space-sm $space-md;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+  text-decoration: none;
+  border-radius: $radius-md;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $forest;
+    background-color: rgba($forest, 0.05);
+  }
+
+  &.active {
+    color: $forest;
+    background-color: $lime;
+  }
+}
+
+// ========== NAVBAR ACTIONS ==========
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+}
+
+// ========== DROPDOWN ==========
+.navbar-dropdown {
+  position: relative;
+
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-xs;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: $radius-full;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: $cream;
+    }
+
+    &::after {
+      display: none; // Remove Bootstrap caret
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 200px;
+    margin-top: $space-sm;
+    padding: $space-sm;
+    background-color: $white;
+    border: 1px solid $border-light;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all $transition-fast;
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-sm $space-md;
+    font-size: $font-size-base;
+    color: $text-primary;
+    text-decoration: none;
+    border-radius: $radius-sm;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: $cream;
+      color: $text-primary;
+    }
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    margin: $space-sm 0;
+    background-color: $border-light;
+  }
+}
+
+// ========== MOBILE TOGGLE ==========
+.navbar-toggler {
+  display: none;
+  padding: $space-sm;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: $radius-sm;
+
+  @media (max-width: $breakpoint-md) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-toggler-icon {
+    width: 24px;
+    height: 2px;
+    background-color: $charcoal;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background-color: $charcoal;
+      left: 0;
+    }
+
+    &::before {
+      top: -7px;
+    }
+
+    &::after {
+      bottom: -7px;
+    }
+  }
+}
+
+// ========== RESPONSIVE ==========
+@media (max-width: $breakpoint-md) {
+  .navbar-tableronde {
+    padding: $space-sm $space-md;
+  }
+
+  .navbar-collapse {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: $white;
+    border-bottom: 1px solid $border-light;
+    padding: $space-md;
+
+    &.show {
+      display: block;
+    }
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    gap: $space-xs;
+  }
+
+  .navbar-actions {
+    flex-direction: column;
+    margin-top: $space-md;
+    padding-top: $space-md;
+    border-top: 1px solid $border-light;
+  }
+}
+
+// ========== LEGACY SUPPORT (Le Wagon navbar class) ==========
 .navbar-lewagon {
-  justify-content: space-between;
-  background: white;
-}
-
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
-
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+  @extend .navbar-tableronde;
 }

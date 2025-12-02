@@ -1,0 +1,56 @@
+// TableRonde Design System - Link Styles
+
+a {
+  color: $electric-blue;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: darken($electric-blue, 10%);
+  }
+}
+
+// Link variations
+.link-forest {
+  color: $forest;
+
+  &:hover {
+    color: darken($forest, 10%);
+  }
+}
+
+.link-tangerine {
+  color: $tangerine;
+
+  &:hover {
+    color: darken($tangerine, 10%);
+  }
+}
+
+.link-muted {
+  color: $text-muted;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+// Link with underline on hover
+.link-underline {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width $transition-base;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}

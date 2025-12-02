@@ -1,1 +1,330 @@
-// Specific CSS for your home-page
+// ============================================
+// HOME PAGE - Style App Minimaliste
+// ============================================
+
+.home {
+  // Plein écran centré
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background-color: #FAFAF8;
+}
+
+.home__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 400px;
+}
+
+// ============================================
+// LOGO ANIMÉ
+// ============================================
+// Animation séquentielle :
+// 1. Icône apparaît (0s → 0.6s)
+// 2. Texte gauche slide (0.4s → 0.9s)
+// 3. Texte droit slide (0.5s → 1s)
+
+.home__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  overflow: hidden; // Cache le texte pendant l'animation
+}
+
+// Texte gauche "TableR"
+.home__logo-left {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #016642;
+  line-height: 1;
+
+  // Animation : slide depuis la gauche
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideFromLeft 0.5s ease forwards;
+  animation-delay: 0.5s;
+
+  @media (max-width: 576px) {
+    font-size: 2.25rem;
+  }
+}
+
+// Texte droit "nde"
+.home__logo-right {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #016642;
+  line-height: 1;
+
+  // Animation : slide depuis la droite
+  opacity: 0;
+  transform: translateX(20px);
+  animation: slideFromRight 0.5s ease forwards;
+  animation-delay: 0.6s;
+
+  @media (max-width: 576px) {
+    font-size: 2.25rem;
+  }
+}
+
+// Icône du logo (assiette + couverts)
+.home__logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 2px;
+  position: relative;
+
+  // Animation : scale + fade
+  opacity: 0;
+  transform: scale(0.5);
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0s;
+
+  @media (max-width: 576px) {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.home__logo-circle {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #016642;
+  border-radius: 50%;
+
+  @media (max-width: 576px) {
+    width: 32px;
+    height: 32px;
+    border-width: 3px;
+  }
+}
+
+.home__logo-fork,
+.home__logo-knife {
+  position: absolute;
+  width: 4px;
+  height: 22px;
+  background-color: #016642;
+  border-radius: 2px;
+
+  @media (max-width: 576px) {
+    width: 3px;
+    height: 17px;
+  }
+}
+
+.home__logo-fork {
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  @media (max-width: 576px) {
+    left: 4px;
+  }
+}
+
+.home__logo-knife {
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  @media (max-width: 576px) {
+    right: 4px;
+  }
+}
+
+// ============================================
+// TAGLINE
+// ============================================
+
+.home__tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 48px;
+
+  // Animation fade in
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: 0.9s;
+
+  @media (max-width: 576px) {
+    font-size: 1.125rem;
+    margin-bottom: 40px;
+  }
+}
+
+// ============================================
+// CTA BUTTON
+// ============================================
+
+.home__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 48px;
+  background-color: #FF570D;
+  color: #FFFFFF !important;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+  // Animation fade in + scale
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 1.1s;
+
+  &:hover {
+    background-color: #e64d0a;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 87, 13, 0.35);
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(255, 87, 13, 0.25);
+  }
+}
+
+// ============================================
+// FOOTER
+// ============================================
+
+.home__footer {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  // Animation
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: 1.3s;
+
+  p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    color: #BBBBBB;
+    margin: 0;
+  }
+}
+
+// ============================================
+// ANIMATIONS KEYFRAMES
+// ============================================
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: 576px) {
+  .home {
+    padding: 16px;
+  }
+
+  .home__cta {
+    padding: 18px 40px;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .home__footer {
+    position: relative;
+    bottom: auto;
+    margin-top: 48px;
+  }
+}
+
+@media (max-height: 600px) {
+  .home {
+    justify-content: flex-start;
+    padding-top: 80px;
+  }
+
+  .home__logo {
+    margin-bottom: 24px;
+  }
+
+  .home__tagline {
+    margin-bottom: 32px;
+  }
+
+  .home__footer {
+    position: relative;
+    bottom: auto;
+    margin-top: 32px;
+  }
+}
