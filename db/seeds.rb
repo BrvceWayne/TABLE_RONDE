@@ -7,3 +7,17 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+User.destroy_all
+puts "🧹 Cleared users"
+Session.destroy_all
+puts "🧹 Cleared sessions"
+
+User.create!(
+    email: "test@gmail.com",
+    password: "123456"
+  )
+
+
+
+puts "🎉 Seed completed! #{User.count} users created."
