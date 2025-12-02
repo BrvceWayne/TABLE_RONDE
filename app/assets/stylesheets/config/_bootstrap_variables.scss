@@ -1,28 +1,131 @@
-// This is where you override default Bootstrap variables
-// 1. Find all Bootstrap variables that you can override at the end of each component's documentation under the `Sass variables` anchor
-// e.g. here are the ones you can override for the navbar https://getbootstrap.com/docs/5.3/components/navbar/#sass-variables
-// 2. These variables are defined with default value (see https://robots.thoughtbot.com/sass-default)
-// 3. You can override them below!
+// TableRonde Design System - Bootstrap Variable Overrides
+// Customizes Bootstrap 5.3 to match brand guidelines
 
-// General style
-$font-family-sans-serif: $body-font;
-$headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
-$font-size-base:         1rem;
+// ========== TYPOGRAPHY ==========
+$font-family-sans-serif: $font-body;
+$font-family-base: $font-body;
+$headings-font-family: $font-display;
+$headings-font-weight: $font-weight-bold;
+$font-size-base: 1rem;
 
-// Colors
-$body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+// ========== COLORS ==========
+$body-bg: $cream;
+$body-color: $text-primary;
 
-// Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
+// Bootstrap theme colors
+$primary: $forest;
+$secondary: $charcoal;
+$success: $forest;
+$info: $electric-blue;
+$warning: $sunshine;
+$danger: $tangerine;
+$light: $cream;
+$dark: $charcoal;
 
-// Override other variables below!
+// Link colors
+$link-color: $electric-blue;
+$link-hover-color: darken($electric-blue, 10%);
+
+// ========== BORDER RADIUS (Generous, as per design guide) ==========
+$border-radius-sm: 0.5rem;      // 8px - Small elements
+$border-radius: 0.75rem;        // 12px - Default/Medium
+$border-radius-lg: 1rem;        // 16px - Large elements
+$border-radius-xl: 1.25rem;     // 20px - Extra large
+$border-radius-xxl: 1.5rem;     // 24px - Cards, modals
+$border-radius-pill: 100px;     // Full rounded pills
+
+// ========== SPACING ==========
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: 0.25rem,   // 4px - xs
+  2: 0.5rem,    // 8px - sm
+  3: 1rem,      // 16px - md
+  4: 1.5rem,    // 24px - lg
+  5: 2rem,      // 32px - xl
+  6: 3rem,      // 48px - 2xl
+  7: 4rem,      // 64px - 3xl
+  8: 5rem       // 80px - 4xl
+);
+
+// ========== BUTTONS ==========
+$btn-padding-y: 0.875rem;       // 14px
+$btn-padding-x: 1.75rem;        // 28px
+$btn-font-weight: $font-weight-semibold;
+$btn-font-size: 0.95rem;
+$btn-border-radius: $border-radius;
+$btn-border-radius-sm: $border-radius-sm;
+$btn-border-radius-lg: $border-radius-lg;
+
+// Button focus
+$btn-focus-box-shadow: none;
+
+// ========== FORMS ==========
+$input-padding-y: 0.875rem;     // 14px
+$input-padding-x: 1.25rem;      // 20px
+$input-font-size: 0.95rem;
+$input-border-radius: $border-radius;
+$input-border-color: $border-light;
+$input-border-width: 2px;
+$input-focus-border-color: $forest;
+$input-focus-box-shadow: none;
+$input-placeholder-color: $text-placeholder;
+$input-bg: $white;
+
+// ========== CARDS ==========
+$card-spacer-y: 1.5rem;         // 24px
+$card-spacer-x: 1.5rem;         // 24px
+$card-border-radius: $border-radius-xl;
+$card-border-width: 1px;
+$card-border-color: $border-light;
+$card-bg: $white;
+$card-cap-bg: transparent;
+
+// ========== NAVBAR ==========
+$navbar-padding-y: 1rem;
+$navbar-nav-link-padding-x: 1rem;
+$navbar-light-color: $text-primary;
+$navbar-light-hover-color: $forest;
+$navbar-light-active-color: $forest;
+
+// ========== ALERTS ==========
+$alert-padding-y: 1rem;
+$alert-padding-x: 1.25rem;
+$alert-border-radius: $border-radius;
+
+// ========== BADGES ==========
+$badge-font-size: 0.85em;
+$badge-font-weight: $font-weight-medium;
+$badge-padding-y: 0.5em;
+$badge-padding-x: 1em;
+$badge-border-radius: $border-radius-pill;
+
+// ========== DROPDOWNS ==========
+$dropdown-border-radius: $border-radius;
+$dropdown-border-color: $border-light;
+$dropdown-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+$dropdown-link-hover-bg: $cream;
+$dropdown-item-padding-y: 0.625rem;
+$dropdown-item-padding-x: 1rem;
+
+// ========== MODALS ==========
+$modal-content-border-radius: $border-radius-xxl;
+$modal-content-border-width: 0;
+$modal-content-box-shadow-sm-up: 0 16px 48px rgba(0, 0, 0, 0.12);
+
+// ========== SHADOWS ==========
+$box-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+$box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+$box-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+
+// ========== TRANSITIONS ==========
+$transition-base: all 0.2s ease;
+
+// ========== CONTAINER ==========
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1200px
+);

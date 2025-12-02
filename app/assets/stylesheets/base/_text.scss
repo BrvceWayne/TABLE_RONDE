@@ -1,0 +1,58 @@
+// TableRonde Design System - Text Styles
+
+// Font family modifiers
+.text-display {
+  font-family: $font-display;
+}
+
+.text-body {
+  font-family: $font-body;
+}
+
+// Label style (uppercase, small, muted)
+.text-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-caps;
+  color: $text-muted;
+}
+
+// Meta information (dates, counts, etc.)
+.text-meta {
+  font-size: $font-size-sm;
+  color: $text-muted;
+}
+
+// Caption style
+.text-caption {
+  font-size: $font-size-xs;
+  color: $text-muted;
+}
+
+// Tagline (brand slogan style)
+.tagline {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  letter-spacing: $letter-spacing-wider;
+  text-transform: uppercase;
+  color: $text-muted;
+}
+
+// Lead paragraph
+.text-lead {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-relaxed;
+  color: $text-secondary;
+}
+
+// Small text
+.text-small {
+  font-size: $font-size-sm;
+}
+
+.text-xs {
+  font-size: $font-size-xs;
+}

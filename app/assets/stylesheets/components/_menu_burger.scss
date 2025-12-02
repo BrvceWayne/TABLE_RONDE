@@ -1,0 +1,296 @@
+// ============================================
+// MENU BURGER FLOTTANT - Ultra minimaliste
+// ============================================
+// Juste un burger flottant, pas de header visible
+
+// ============================================
+// 1. BURGER FLOTTANT
+// ============================================
+
+.burger-floating {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 1030;
+
+  // Style du bouton
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 12px;
+
+  // Flexbox pour les lignes
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  gap: 6px;
+
+  // Transition hover
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  // Les 3 lignes
+  .burger__line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #1A1A1A;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+    transform-origin: center;
+  }
+
+  // Animation vers la croix
+  &.is-active {
+    .burger__line {
+      background-color: #FFFFFF;
+    }
+
+    .burger__line:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .burger__line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .burger__line:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+}
+
+// ============================================
+// 2. OVERLAY
+// ============================================
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(26, 26, 26, 0.6);
+  z-index: 1040;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+// ============================================
+// 3. MENU PANEL
+// ============================================
+
+.menu-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  background-color: #FFFFFF;
+  z-index: 1050;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-fullscreen.is-open {
+  transform: translateX(0);
+}
+
+// Header du menu avec logo
+.menu-fullscreen__header {
+  padding: 24px;
+  border-bottom: 1px solid #E8E8E4;
+}
+
+.menu-fullscreen__logo {
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+.menu-fullscreen__logo:hover {
+  text-decoration: none !important;
+}
+
+// Logo dans le menu
+.logo-text {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #016642;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0 -2px;
+  position: relative;
+}
+
+.logo-icon__circle {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #016642;
+  border-radius: 50%;
+}
+
+.logo-icon__fork,
+.logo-icon__knife {
+  position: absolute;
+  width: 3px;
+  height: 14px;
+  background-color: #016642;
+  border-radius: 2px;
+}
+
+.logo-icon__fork {
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.logo-icon__knife {
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// Contenu du menu
+.menu-fullscreen__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.menu-fullscreen__nav {
+  list-style: none !important;
+  margin: 0 0 32px 0 !important;
+  padding: 0 !important;
+}
+
+.menu-fullscreen__nav li {
+  margin-bottom: 4px;
+}
+
+.menu-fullscreen__link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1A1A1A !important;
+  text-decoration: none !important;
+  border-radius: 12px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.menu-fullscreen__link:hover {
+  background-color: #CAFF8D;
+  color: #016642 !important;
+  text-decoration: none !important;
+}
+
+.menu-fullscreen__icon {
+  font-size: 1.25rem;
+  width: 28px;
+  text-align: center;
+}
+
+.menu-fullscreen__actions {
+  padding-top: 24px;
+  border-top: 1px solid #E8E8E4;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-fullscreen__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.menu-fullscreen__email {
+  font-size: 0.875rem;
+  color: #888888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-fullscreen__footer {
+  padding: 20px 24px;
+  text-align: center;
+  border-top: 1px solid #E8E8E4;
+  background-color: #FAFAF8;
+}
+
+.menu-fullscreen__footer .tagline {
+  color: #888888;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+// ============================================
+// 4. BODY STATE
+// ============================================
+
+body.menu-open {
+  overflow: hidden !important;
+}
+
+// Plus de padding-top sur main (pas de header)
+main {
+  padding-top: 0;
+}
+
+// ============================================
+// 5. RESPONSIVE
+// ============================================
+
+@media (max-width: 576px) {
+  .burger-floating {
+    top: 16px;
+    left: 16px;
+  }
+
+  .menu-fullscreen {
+    max-width: 100%;
+  }
+
+  .menu-fullscreen__link {
+    font-size: 1.125rem;
+    padding: 14px 16px;
+  }
+}

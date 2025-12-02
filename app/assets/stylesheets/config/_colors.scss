@@ -1,10 +1,51 @@
-// Define variables for your color scheme
+// TableRonde Design System - Color Palette
+// Based on official brand guidelines
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// ========== PRIMARY COLORS ==========
+$forest: #016642;        // Primary brand color, natural anchor
+$tangerine: #FF570D;     // CTAs, energetic accents
+$electric-blue: #0059DB; // Links, interactive elements
+$charcoal: #1A1A1A;      // Text, secondary elements
+
+// ========== ACCENT COLORS ==========
+$lime: #CAFF8D;          // Tags, badges, success states
+$bubblegum: #FFA6D5;     // Highlights, favorites
+$sunshine: #FFE876;      // Ratings, premium badges
+
+// ========== NEUTRAL COLORS ==========
+$cream: #FAFAF8;         // Main background
+$white: #FFFFFF;         // Cards, surfaces
+$border-light: #E8E8E4;  // Borders, dividers
+
+// ========== TEXT COLORS ==========
+$text-primary: $charcoal;
+$text-secondary: #666666;
+$text-muted: #888888;
+$text-placeholder: #AAAAAA;
+
+// ========== SEMANTIC COLORS ==========
+$success: $lime;
+$warning: $sunshine;
+$danger: $tangerine;
+$info: $electric-blue;
+
+// ========== LEGACY ALIASES (for Bootstrap compatibility) ==========
+$red: $tangerine;
+$blue: $electric-blue;
+$yellow: $sunshine;
+$orange: $tangerine;
+$green: $forest;
+$gray: $charcoal;
+$light-gray: $cream;
+
+// ========== COLOR MAP FOR UTILITIES ==========
+$theme-colors: (
+  "forest": $forest,
+  "tangerine": $tangerine,
+  "blue": $electric-blue,
+  "charcoal": $charcoal,
+  "lime": $lime,
+  "bubblegum": $bubblegum,
+  "sunshine": $sunshine,
+  "cream": $cream
+);

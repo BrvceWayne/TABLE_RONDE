@@ -1,6 +1,180 @@
+// TableRonde Design System - Alerts & Notifications
+// Based on official brand guidelines
+
+// ========== BASE ALERT ==========
 .alert {
+  position: relative;
+  padding: $space-md $space-lg;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  border-radius: $radius-md;
+  border: none;
+
+  // Flash notification positioning
+  &.alert-flash {
+    position: fixed;
+    bottom: $space-lg;
+    right: $space-lg;
+    z-index: $z-toast;
+    max-width: 400px;
+    box-shadow: $shadow-lg;
+    animation: slideInRight 0.3s ease;
+  }
+}
+
+// ========== ALERT VARIANTS ==========
+.alert-success {
+  background-color: $lime;
+  color: $forest;
+
+  .alert-icon {
+    color: $forest;
+  }
+}
+
+.alert-danger,
+.alert-error {
+  background-color: rgba($tangerine, 0.1);
+  color: darken($tangerine, 10%);
+  border-left: 4px solid $tangerine;
+
+  .alert-icon {
+    color: $tangerine;
+  }
+}
+
+.alert-warning {
+  background-color: $sunshine;
+  color: darken($sunshine, 45%);
+
+  .alert-icon {
+    color: darken($sunshine, 30%);
+  }
+}
+
+.alert-info {
+  background-color: rgba($electric-blue, 0.1);
+  color: $electric-blue;
+  border-left: 4px solid $electric-blue;
+
+  .alert-icon {
+    color: $electric-blue;
+  }
+}
+
+.alert-notice {
+  @extend .alert-info;
+}
+
+// ========== ALERT WITH ICON ==========
+.alert-with-icon {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-md;
+
+  .alert-icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+  }
+
+  .alert-content {
+    flex: 1;
+  }
+}
+
+// ========== ALERT TITLE ==========
+.alert-title {
+  font-weight: $font-weight-semibold;
+  margin-bottom: $space-xs;
+}
+
+// ========== ALERT CLOSE ==========
+.alert-close,
+.btn-close {
+  position: absolute;
+  top: $space-md;
+  right: $space-md;
+  padding: $space-xs;
+  background: none;
+  border: none;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity $transition-fast;
+  font-size: 1.25rem;
+  line-height: 1;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// ========== TOAST NOTIFICATION ==========
+.toast {
   position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 1000;
+  bottom: $space-lg;
+  right: $space-lg;
+  z-index: $z-toast;
+  min-width: 300px;
+  max-width: 400px;
+  padding: $space-md $space-lg;
+  background-color: $charcoal;
+  color: $white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-xl;
+  animation: slideInRight 0.3s ease;
+
+  &.toast-success {
+    background-color: $forest;
+  }
+
+  &.toast-error {
+    background-color: $tangerine;
+  }
+}
+
+// ========== ANIMATIONS ==========
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.alert-dismissing {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+// ========== INLINE ALERT ==========
+.alert-inline {
+  position: static;
+  margin-bottom: $space-md;
+}
+
+// ========== BANNER ALERT ==========
+.alert-banner {
+  position: relative;
+  width: 100%;
+  border-radius: 0;
+  text-align: center;
+  padding: $space-sm $space-lg;
+
+  .btn-close {
+    position: absolute;
+    right: $space-md;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }

@@ -1,5 +1,18 @@
-// Import your components CSS files here.
+// TableRonde Design System - Components Index
+
+// Core components
+@import "buttons";
+@import "forms";
+@import "cards";
+@import "tags";
+
+// Navigation & layout
+@import "menu_burger";  // Menu burger minimaliste (remplace navbar)
 @import "alert";
+
+// UI elements
 @import "avatar";
+@import "icons";
+
+// Bootstrap fixes
 @import "form_legend_clear";
-@import "navbar";

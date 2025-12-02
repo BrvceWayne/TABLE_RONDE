@@ -1,0 +1,143 @@
+// TableRonde Design System - Utility Classes
+
+// ========== COLOR UTILITIES ==========
+.bg-forest { background-color: $forest !important; }
+.bg-tangerine { background-color: $tangerine !important; }
+.bg-blue { background-color: $electric-blue !important; }
+.bg-charcoal { background-color: $charcoal !important; }
+.bg-lime { background-color: $lime !important; }
+.bg-bubblegum { background-color: $bubblegum !important; }
+.bg-sunshine { background-color: $sunshine !important; }
+.bg-cream { background-color: $cream !important; }
+
+.text-forest { color: $forest !important; }
+.text-tangerine { color: $tangerine !important; }
+.text-blue { color: $electric-blue !important; }
+.text-charcoal { color: $charcoal !important; }
+.text-lime { color: $lime !important; }
+.text-bubblegum { color: $bubblegum !important; }
+.text-sunshine { color: $sunshine !important; }
+
+// ========== BORDER RADIUS UTILITIES ==========
+.rounded-sm { border-radius: $radius-sm !important; }
+.rounded-md { border-radius: $radius-md !important; }
+.rounded-lg { border-radius: $radius-lg !important; }
+.rounded-xl { border-radius: $radius-xl !important; }
+.rounded-2xl { border-radius: $radius-2xl !important; }
+.rounded-3xl { border-radius: $radius-3xl !important; }
+.rounded-full { border-radius: $radius-full !important; }
+
+// ========== SHADOW UTILITIES ==========
+.shadow-xs { box-shadow: $shadow-xs !important; }
+.shadow-sm { box-shadow: $shadow-sm !important; }
+.shadow-md { box-shadow: $shadow-md !important; }
+.shadow-lg { box-shadow: $shadow-lg !important; }
+.shadow-xl { box-shadow: $shadow-xl !important; }
+.shadow-forest { box-shadow: $shadow-forest !important; }
+.shadow-tangerine { box-shadow: $shadow-tangerine !important; }
+.shadow-lime { box-shadow: $shadow-lime !important; }
+
+// ========== SPACING UTILITIES (extend Bootstrap) ==========
+.gap-xs { gap: $space-xs !important; }
+.gap-sm { gap: $space-sm !important; }
+.gap-md { gap: $space-md !important; }
+.gap-lg { gap: $space-lg !important; }
+.gap-xl { gap: $space-xl !important; }
+.gap-2xl { gap: $space-2xl !important; }
+
+// ========== LAYOUT UTILITIES ==========
+.container-narrow {
+  max-width: $narrow-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $space-lg;
+  padding-right: $space-lg;
+}
+
+.container-reading {
+  max-width: $reading-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $space-lg;
+  padding-right: $space-lg;
+}
+
+// ========== FLEX UTILITIES ==========
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+// ========== HOVER EFFECTS ==========
+.hover-lift {
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.hover-scale {
+  transition: transform $transition-base;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.hover-glow-forest {
+  transition: box-shadow $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-forest;
+  }
+}
+
+// ========== ANIMATION UTILITIES ==========
+.transition-fast { transition: all $transition-fast; }
+.transition-base { transition: all $transition-base; }
+.transition-slow { transition: all $transition-slow; }
+
+// ========== BORDER UTILITIES ==========
+.border-light { border: 1px solid $border-light !important; }
+.border-2-light { border: 2px solid $border-light !important; }
+.border-forest { border: 2px solid $forest !important; }
+.border-tangerine { border: 2px solid $tangerine !important; }
+
+// ========== WIDTH UTILITIES ==========
+.w-max-content { max-width: $content-max-width; }
+.w-max-reading { max-width: $reading-max-width; }
+.w-max-narrow { max-width: $narrow-max-width; }
+
+// ========== CURSOR UTILITIES ==========
+.cursor-pointer { cursor: pointer; }
+
+// ========== OVERFLOW UTILITIES ==========
+.overflow-hidden { overflow: hidden; }
+
+// ========== ACCESSIBILITY ==========
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

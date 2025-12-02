@@ -1,2 +1,39 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<%#
+  HOME PAGE - Style App Minimaliste
+
+  Animation :
+  1. L'icône assiette apparaît en premier (scale + fade)
+  2. Le texte "TableR" slide depuis la gauche
+  3. Le texte "nde" slide depuis la droite
+  4. La tagline et le CTA apparaissent ensuite
+%>
+
+<div class="home">
+  <div class="home__content">
+    <%# Logo animé - structure séparée pour l'animation %>
+    <div class="home__logo">
+      <span class="home__logo-left">TableR</span>
+      <span class="home__logo-icon">
+        <span class="home__logo-fork"></span>
+        <span class="home__logo-circle"></span>
+        <span class="home__logo-knife"></span>
+      </span>
+      <span class="home__logo-right">nde</span>
+    </div>
+
+    <%# Tagline %>
+    <p class="home__tagline">
+      Trouvez le resto parfait<br>pour votre groupe
+    </p>
+
+    <%# CTA Button %>
+    <%= link_to new_session_path, class: "home__cta" do %>
+      On mange où ?
+    <% end %>
+  </div>
+
+  <%# Footer discret %>
+  <footer class="home__footer">
+    <p>Votez ensemble, mangez heureux</p>
+  </footer>
+</div>

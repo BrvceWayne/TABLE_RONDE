@@ -1,0 +1,218 @@
+// TableRonde Design System - Cards
+// Based on official brand guidelines
+
+// ========== BASE CARD ==========
+.card {
+  background-color: $white;
+  border: 1px solid $border-light;
+  border-radius: $card-radius;
+  overflow: hidden;
+  transition: transform $transition-base, box-shadow $transition-base;
+}
+
+.card-body {
+  padding: $card-padding;
+}
+
+.card-header {
+  padding: $card-padding;
+  padding-bottom: 0;
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.card-footer {
+  padding: $card-padding;
+  padding-top: $space-md;
+  background-color: transparent;
+  border-top: 1px solid $border-light;
+}
+
+// ========== CARD HOVER EFFECTS ==========
+.card-hover {
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.card-clickable {
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// ========== CARD VARIANTS ==========
+.card-bordered {
+  border: 2px solid $border-light;
+}
+
+.card-shadow {
+  border: none;
+  box-shadow: $shadow-md;
+}
+
+.card-flat {
+  border: none;
+  background-color: $cream;
+}
+
+// ========== COLORED CARDS ==========
+.card-forest {
+  background-color: $forest;
+  border-color: $forest;
+  color: $white;
+
+  .card-title { color: $white; }
+  p { color: rgba(255, 255, 255, 0.8); }
+}
+
+.card-lime {
+  background-color: $lime;
+  border-color: $lime;
+  color: $forest;
+}
+
+.card-tangerine {
+  background-color: $tangerine;
+  border-color: $tangerine;
+  color: $white;
+
+  .card-title { color: $white; }
+  p { color: rgba(255, 255, 255, 0.8); }
+}
+
+// ========== RESTAURANT CARD ==========
+.restaurant-card {
+  background-color: $white;
+  border: 1px solid $border-light;
+  border-radius: $restaurant-card-radius;
+  overflow: hidden;
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+.restaurant-card-img {
+  height: $restaurant-card-img-height;
+  background: linear-gradient(135deg, $forest 0%, $lime 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .restaurant-card-emoji {
+    font-size: 3rem;
+  }
+}
+
+.restaurant-card-content {
+  padding: $space-md;
+}
+
+.restaurant-card-name {
+  font-family: $font-display;
+  font-size: 1.1rem;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $space-xs;
+}
+
+.restaurant-card-meta {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  color: $text-muted;
+  font-size: $font-size-sm;
+  margin-bottom: $space-sm;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.restaurant-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-xs;
+}
+
+// ========== SESSION CARD ==========
+.session-card {
+  background-color: $white;
+  border: 1px solid $border-light;
+  border-radius: $radius-xl;
+  padding: $card-padding;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $forest;
+    box-shadow: $shadow-forest;
+  }
+}
+
+.session-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-md;
+}
+
+.session-card-title {
+  font-family: $font-display;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+.session-card-code {
+  font-family: monospace;
+  font-size: $font-size-sm;
+  background-color: $lime;
+  color: $forest;
+  padding: $space-xs $space-sm;
+  border-radius: $radius-sm;
+}
+
+// ========== COMPACT CARD ==========
+.card-compact {
+  .card-body {
+    padding: $card-padding-compact;
+  }
+}
+
+// ========== CARD TITLE ==========
+.card-title {
+  font-family: $font-display;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $space-sm;
+}
+
+.card-subtitle {
+  font-size: $font-size-sm;
+  color: $text-muted;
+  margin-bottom: $space-md;
+}
+
+// ========== CARD IMAGE ==========
+.card-img-top {
+  border-radius: 0;
+}
+
+.card-img-overlay {
+  border-radius: 0;
+}

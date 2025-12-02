@@ -1,0 +1,209 @@
+// TableRonde Design System - Icons
+// Based on official brand guidelines
+
+// ========== ICON CONTAINER ==========
+.icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: $radius-lg;
+  background-color: $lime;
+  color: $forest;
+  font-size: 1.4rem;
+}
+
+// ========== ICON SIZES ==========
+.icon-box-sm {
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+  border-radius: $radius-md;
+}
+
+.icon-box-lg {
+  width: 64px;
+  height: 64px;
+  font-size: 1.75rem;
+  border-radius: $radius-xl;
+}
+
+.icon-box-xl {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+  border-radius: $radius-xl;
+}
+
+// ========== ICON COLORS ==========
+.icon-box-forest {
+  background-color: $forest;
+  color: $white;
+}
+
+.icon-box-tangerine {
+  background-color: $tangerine;
+  color: $white;
+}
+
+.icon-box-bubblegum {
+  background-color: $bubblegum;
+  color: darken($bubblegum, 40%);
+}
+
+.icon-box-sunshine {
+  background-color: $sunshine;
+  color: darken($sunshine, 40%);
+}
+
+.icon-box-cream {
+  background-color: $cream;
+  color: $text-secondary;
+}
+
+.icon-box-white {
+  background-color: $white;
+  color: $text-primary;
+  border: 1px solid $border-light;
+}
+
+// ========== ICON SHAPES ==========
+.icon-box-circle {
+  border-radius: 50%;
+}
+
+.icon-box-square {
+  border-radius: $radius-sm;
+}
+
+// ========== INLINE ICONS ==========
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.icon-sm { font-size: 0.875rem; }
+.icon-md { font-size: 1.25rem; }
+.icon-lg { font-size: 1.5rem; }
+.icon-xl { font-size: 2rem; }
+
+// ========== ICON WITH TEXT ==========
+.icon-text {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-xs;
+}
+
+// ========== EMOJI ICONS (for restaurant types) ==========
+.emoji-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.emoji-icon-sm { font-size: 1rem; }
+.emoji-icon-lg { font-size: 2rem; }
+.emoji-icon-xl { font-size: 3rem; }
+
+// ========== ICON GRID (for icon showcase) ==========
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+}
+
+// ========== LOGO ICON (TR compact) ==========
+.logo-icon-tr {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  .tr-letter {
+    font-family: $font-display;
+    font-weight: $font-weight-bold;
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .plate-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    .plate-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid currentColor;
+    }
+
+    .plate-fork,
+    .plate-knife {
+      position: absolute;
+      width: 3px;
+      height: 18px;
+      border-radius: 2px;
+    }
+
+    .plate-fork {
+      left: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .plate-knife {
+      right: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+// ========== SCALABLE LOGO ==========
+.logo-icon-tr-sm {
+  .tr-letter { font-size: 1.25rem; }
+  .plate-icon {
+    width: 24px;
+    height: 24px;
+    .plate-circle {
+      width: 18px;
+      height: 18px;
+      border-width: 2px;
+    }
+    .plate-fork,
+    .plate-knife {
+      width: 2px;
+      height: 10px;
+    }
+  }
+}
+
+.logo-icon-tr-lg {
+  .tr-letter { font-size: 3rem; }
+  .plate-icon {
+    width: 56px;
+    height: 56px;
+    .plate-circle {
+      width: 44px;
+      height: 44px;
+      border-width: 4px;
+    }
+    .plate-fork,
+    .plate-knife {
+      width: 4px;
+      height: 24px;
+    }
+    .plate-fork { left: 3px; }
+    .plate-knife { right: 3px; }
+  }
+}

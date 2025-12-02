@@ -1,0 +1,81 @@
+// TableRonde Design System - Headings
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: $font-display;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+}
+
+h1, .h1 {
+  font-size: $font-size-display;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+h2, .h2 {
+  font-size: $font-size-3xl;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+h3, .h3 {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+}
+
+h4, .h4 {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+}
+
+h5, .h5 {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+h6, .h6 {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+}
+
+// Display headings
+.display-1 {
+  font-family: $font-display;
+  font-size: 4.5rem;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+}
+
+.display-2 {
+  font-family: $font-display;
+  font-size: $font-size-display;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+}
+
+// Section titles (from design guide)
+.section-title {
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $space-xl;
+  padding-bottom: $space-md;
+  border-bottom: 2px solid $border-light;
+}
+
+.section-subtitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wide;
+  margin-bottom: $space-lg;
+}

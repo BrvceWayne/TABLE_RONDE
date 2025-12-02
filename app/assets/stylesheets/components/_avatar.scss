@@ -1,20 +1,186 @@
+// TableRonde Design System - Avatars
+// Based on official brand guidelines
+
+// ========== BASE AVATAR ==========
 .avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
+  height: 40px;
   border-radius: 50%;
+  overflow: hidden;
+  background-color: $lime;
+  color: $forest;
+  font-family: $font-body;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
+
+// ========== AVATAR SIZES ==========
+.avatar-xs {
+  width: 24px;
+  height: 24px;
+  font-size: $font-size-xs;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: $font-size-xs;
+}
+
+.avatar-md {
+  width: 40px;
+  height: 40px;
+  font-size: $font-size-sm;
+}
+
+.avatar-lg,
 .avatar-large {
   width: 56px;
-  border-radius: 50%;
+  height: 56px;
+  font-size: $font-size-base;
 }
+
+.avatar-xl {
+  width: 80px;
+  height: 80px;
+  font-size: $font-size-lg;
+}
+
+.avatar-2xl {
+  width: 120px;
+  height: 120px;
+  font-size: $font-size-2xl;
+}
+
+// ========== AVATAR VARIANTS ==========
 .avatar-bordered {
-  width: 40px;
-  border-radius: 50%;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  border: white 1px solid;
+  border: 2px solid $white;
+  box-shadow: $shadow-sm;
 }
+
 .avatar-square {
+  border-radius: $radius-md;
+}
+
+.avatar-forest {
+  background-color: $forest;
+  color: $white;
+}
+
+.avatar-tangerine {
+  background-color: $tangerine;
+  color: $white;
+}
+
+.avatar-bubblegum {
+  background-color: $bubblegum;
+  color: darken($bubblegum, 40%);
+}
+
+.avatar-sunshine {
+  background-color: $sunshine;
+  color: darken($sunshine, 40%);
+}
+
+// ========== AVATAR WITH STATUS ==========
+.avatar-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid $white;
+
+  &.status-online {
+    background-color: $forest;
+  }
+
+  &.status-offline {
+    background-color: $text-muted;
+  }
+
+  &.status-busy {
+    background-color: $tangerine;
+  }
+}
+
+// Larger avatars need larger status indicators
+.avatar-lg + .avatar-status,
+.avatar-xl + .avatar-status {
+  width: 16px;
+  height: 16px;
+  border-width: 3px;
+}
+
+// ========== AVATAR GROUP ==========
+.avatar-group {
+  display: flex;
+
+  .avatar {
+    margin-left: -12px;
+    border: 2px solid $white;
+    transition: transform $transition-fast;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:hover {
+      z-index: 1;
+      transform: scale(1.1);
+    }
+  }
+}
+
+.avatar-group-sm {
+  .avatar {
+    margin-left: -8px;
+  }
+}
+
+// ========== AVATAR COUNT ==========
+.avatar-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
-  border-radius: 0px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  border: white 1px solid;
+  height: 40px;
+  margin-left: -12px;
+  border-radius: 50%;
+  background-color: $cream;
+  border: 2px solid $white;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+}
+
+// ========== AVATAR INITIALS ==========
+.avatar-initials {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// ========== AVATAR PLACEHOLDER ==========
+.avatar-placeholder {
+  background-color: $cream;
+  color: $text-muted;
+
+  i, svg {
+    font-size: 1.2em;
+  }
 }
