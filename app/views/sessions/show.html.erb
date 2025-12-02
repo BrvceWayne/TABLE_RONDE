@@ -1,0 +1,10 @@
+<h1>Rejoindre la session</h1>
+
+<div class="card">
+  <div class="card-body text-center">
+    <p>Code de session : <strong><%= @session.share_code %></strong></p>
+    <p>Type de repas : <%= @session.meal_type %></p>
+
+    <%= button_to "Rejoindre", join_session_user_path(@session.share_code), method: :post, class: "btn btn-primary" %>
+  </div>
+</div>

@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
 
   # PHASE 1: Alice crée une nouvelle session
   def new
+    @session = Session.new
   end
 
   def create
@@ -22,7 +23,7 @@ class SessionsController < ApplicationController
         leader: true
       )
 
-      redirect_to dashboard_session_path(@session)
+      redirect_to dashboard_session_path(share_code: @session.share_code)
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,12 +36,12 @@ class SessionsController < ApplicationController
 
   # PHASE 4: Dashboard du leader pour voir qui a terminé
   def dashboard
-    @session_users = @session.session_users.includes(:user, user: :preferences)
+    @session_users = @session.session_users.includes(:user, user: :preference)
     @participants_status = @session_users.map do |su|
       {
         user: su.user,
         leader: su.leader,
-        preferences_completed: su.user.preferences&.present? || false
+        preferences_completed: su.user.preference&.present? || false
       }
     end
   end
@@ -57,7 +58,7 @@ class SessionsController < ApplicationController
     end
 
     # Récupérer tous les participants ayant complété leurs préférences
-    completed_users = @session.users.joins(:preferences).where.not(preferences: { id: nil })
+    completed_users = @session.users.joins(:preference).where.not(preferences: { id: nil })
 
     if completed_users.empty?
       redirect_to dashboard_session_path(@session), alert: "Aucun participant n'a complété le questionnaire"

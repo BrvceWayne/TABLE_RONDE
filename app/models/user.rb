@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_one :preferences, dependent: :destroy
+  has_one :preference, dependent: :destroy
   has_many :session_users, dependent: :destroy
   has_many :sessions, through: :session_users
  

@@ -1,0 +1,7 @@
+<h1>Nouvelle Session</h1>
+
+<%= simple_form_for @session, url: sessions_path do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :meal_type, collection: ['Petit-déjeuner', 'Déjeuner', 'Dîner', 'Brunch'], prompt: 'Choisir un type de repas' %>
+  <%= f.submit 'Créer la session', class: 'btn btn-primary' %>
+<% end %>
