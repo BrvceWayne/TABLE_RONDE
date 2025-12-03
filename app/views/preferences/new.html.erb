@@ -38,6 +38,12 @@
                 <span class="question-tag__label"><%= cuisine %></span>
               </label>
             <% end %>
+
+            <%# Option "Autre" avec input texte %>
+            <div class="question-tag-other question-tag-other--lime">
+              <span class="question-tag-other__label">Autre :</span>
+              <%= f.text_field :other_cuisine, value: nil, class: "question-tag-other__input", placeholder: "Péruvienne, Éthiopienne..." %>
+            </div>
           </div>
         </div>
         <div class="question-card__decoration question-card__decoration--fork"></div>
