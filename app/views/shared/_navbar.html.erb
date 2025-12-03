@@ -5,19 +5,86 @@
   Pas de header visible, se fond dans le décor
 %>
 
-<div data-controller="menu" data-action="keydown.escape@window->menu#closeOnEscape">
-  <%# Bouton burger flottant %>
-  <button
-    class="burger-floating"
-    data-menu-target="burger"
-    data-action="click->menu#toggle"
-    aria-label="Menu"
-    aria-expanded="false"
-  >
-    <span class="burger__line"></span>
-    <span class="burger__line"></span>
-    <span class="burger__line"></span>
-  </button>
+<div data-controller="menu user-menu" data-action="keydown.escape@window->menu#closeOnEscape keydown.escape@window->user-menu#close">
+  <%# Header flottant avec burger + user info %>
+  <div class="floating-header">
+    <%# Bouton burger (icône hamburger food) %>
+    <button
+      class="burger-floating"
+      data-menu-target="burger"
+      data-action="click->menu#toggle"
+      aria-label="Menu"
+      aria-expanded="false"
+    >
+      <span class="burger-icon">
+        <span class="burger-icon__bun-top"></span>
+        <span class="burger-icon__lettuce"></span>
+        <span class="burger-icon__patty"></span>
+        <span class="burger-icon__bun-bottom"></span>
+      </span>
+      <span class="burger-icon__cross">
+        <span class="burger-icon__cross-line"></span>
+        <span class="burger-icon__cross-line"></span>
+      </span>
+    </button>
+
+    <% if user_signed_in? %>
+      <%# Menu utilisateur avec dropdown %>
+      <div class="user-dropdown" data-user-menu-target="container">
+        <button
+          class="floating-header__user"
+          data-action="click->user-menu#toggle"
+          aria-label="Menu utilisateur"
+          aria-expanded="false"
+        >
+          <span class="floating-header__name"><%= current_user.email.split('@').first.capitalize %></span>
+          <span class="avatar avatar-sm">
+            <%= current_user.email.first.upcase %>
+          </span>
+        </button>
+
+        <%# Dropdown menu %>
+        <div class="user-dropdown__menu" data-user-menu-target="menu">
+          <div class="user-dropdown__header">
+            <span class="avatar">
+              <%= current_user.email.first.upcase %>
+            </span>
+            <div class="user-dropdown__info">
+              <span class="user-dropdown__name"><%= current_user.email.split('@').first.capitalize %></span>
+              <span class="user-dropdown__email"><%= current_user.email %></span>
+            </div>
+          </div>
+
+          <div class="user-dropdown__divider"></div>
+
+          <nav class="user-dropdown__nav">
+            <%= link_to "#", class: "user-dropdown__link", data: { action: "click->user-menu#close" } do %>
+              <i class="fa-solid fa-user"></i>
+              Mon profil
+            <% end %>
+            <%= link_to "#", class: "user-dropdown__link", data: { action: "click->user-menu#close" } do %>
+              <i class="fa-solid fa-gear"></i>
+              Paramètres
+            <% end %>
+          </nav>
+
+          <div class="user-dropdown__divider"></div>
+
+          <%= link_to destroy_user_session_path,
+                      data: { turbo_method: :delete, action: "click->user-menu#close" },
+                      class: "user-dropdown__link user-dropdown__link--danger" do %>
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Se déconnecter
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <%# Boutons connexion/inscription %>
+      <div class="floating-header__auth">
+        <%= link_to "Connexion", new_user_session_path, class: "btn btn-sm btn-outline" %>
+      </div>
+    <% end %>
+  </div>
 
   <%# Overlay %>
   <div
@@ -56,37 +123,31 @@
               Mes sessions
             <% end %>
           </li>
-          <li>
-            <%= link_to "#", class: "menu-fullscreen__link", data: { action: "click->menu#close" } do %>
-              <span class="menu-fullscreen__icon">👤</span>
-              Mon profil
-            <% end %>
-          </li>
         <% end %>
+        <li>
+          <%= link_to "#", class: "menu-fullscreen__link", data: { action: "click->menu#close" } do %>
+            <span class="menu-fullscreen__icon">❓</span>
+            Comment ça marche
+          <% end %>
+        </li>
+        <li>
+          <%= link_to "#", class: "menu-fullscreen__link", data: { action: "click->menu#close" } do %>
+            <span class="menu-fullscreen__icon">📧</span>
+            Contact
+          <% end %>
+        </li>
       </ul>
 
-      <div class="menu-fullscreen__actions">
-        <% if user_signed_in? %>
-          <div class="menu-fullscreen__user">
-            <span class="avatar">
-              <%= current_user.email.first.upcase %>
-            </span>
-            <span class="menu-fullscreen__email"><%= current_user.email %></span>
-          </div>
-          <%= link_to destroy_user_session_path,
-                      data: { turbo_method: :delete, action: "click->menu#close" },
-                      class: "btn btn-outline btn-block" do %>
-            Se déconnecter
-          <% end %>
-        <% else %>
+      <% unless user_signed_in? %>
+        <div class="menu-fullscreen__actions">
           <%= link_to "Se connecter", new_user_session_path,
                       class: "btn btn-outline btn-block",
                       data: { action: "click->menu#close" } %>
           <%= link_to "S'inscrire", new_user_registration_path,
                       class: "btn btn-primary btn-block",
                       data: { action: "click->menu#close" } %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
 
     <div class="menu-fullscreen__footer">
