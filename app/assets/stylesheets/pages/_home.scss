@@ -10,7 +10,10 @@
   justify-content: center;
   align-items: center;
   padding: 24px;
-  background-color: #FAFAF8;
+
+  // Fond uni animé - couleurs qui changent
+  background-color: $cream;
+  animation: colorShift 20s ease-in-out infinite;
 }
 
 .home__content {
@@ -42,14 +45,13 @@
   font-family: 'Fraunces', Georgia, serif;
   font-size: 3rem;
   font-weight: 700;
-  color: #016642;
   line-height: 1;
 
-  // Animation : slide depuis la gauche
+  // Animation : slide depuis la gauche + couleur
   opacity: 0;
   transform: translateX(-20px);
-  animation: slideFromLeft 0.5s ease forwards;
-  animation-delay: 0.5s;
+  animation: slideFromLeft 0.5s ease forwards, logoTextColorShift 20s ease-in-out infinite;
+  animation-delay: 0.5s, 0s;
 
   @media (max-width: 576px) {
     font-size: 2.25rem;
@@ -61,14 +63,13 @@
   font-family: 'Fraunces', Georgia, serif;
   font-size: 3rem;
   font-weight: 700;
-  color: #016642;
   line-height: 1;
 
-  // Animation : slide depuis la droite
+  // Animation : slide depuis la droite + couleur
   opacity: 0;
   transform: translateX(20px);
-  animation: slideFromRight 0.5s ease forwards;
-  animation-delay: 0.6s;
+  animation: slideFromRight 0.5s ease forwards, logoTextColorShift 20s ease-in-out infinite;
+  animation-delay: 0.6s, 0s;
 
   @media (max-width: 576px) {
     font-size: 2.25rem;
@@ -100,8 +101,9 @@
 .home__logo-circle {
   width: 42px;
   height: 42px;
-  border: 4px solid #016642;
+  border: 4px solid;
   border-radius: 50%;
+  animation: logoBorderColorShift 20s ease-in-out infinite;
 
   @media (max-width: 576px) {
     width: 32px;
@@ -115,8 +117,8 @@
   position: absolute;
   width: 4px;
   height: 22px;
-  background-color: #016642;
   border-radius: 2px;
+  animation: logoBgColorShift 20s ease-in-out infinite;
 
   @media (max-width: 576px) {
     width: 3px;
@@ -152,14 +154,13 @@
   font-family: 'DM Sans', sans-serif;
   font-size: 1.25rem;
   font-weight: 400;
-  color: #666666;
   line-height: 1.5;
   margin-bottom: 48px;
 
-  // Animation fade in
+  // Animation fade in + couleur
   opacity: 0;
-  animation: fadeIn 0.5s ease forwards;
-  animation-delay: 0.9s;
+  animation: fadeIn 0.5s ease forwards, taglineColorShift 20s ease-in-out infinite;
+  animation-delay: 0.9s, 0s;
 
   @media (max-width: 576px) {
     font-size: 1.125rem;
@@ -224,8 +225,8 @@
   p {
     font-family: 'DM Sans', sans-serif;
     font-size: 0.875rem;
-    color: #BBBBBB;
     margin: 0;
+    animation: footerColorShift 20s ease-in-out infinite;
   }
 }
 
@@ -283,6 +284,119 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes colorShift {
+  0%, 100% {
+    background-color: $cream;
+  }
+  20% {
+    background-color: $lime;
+  }
+  40% {
+    background-color: $sunshine;
+  }
+  60% {
+    background-color: $bubblegum;
+  }
+  80% {
+    background-color: $electric-blue;
+  }
+}
+
+// Couleurs du texte du logo (TableR + nde)
+@keyframes logoTextColorShift {
+  0%, 100% {
+    color: $forest;               // cream → forest
+  }
+  20% {
+    color: $forest;               // lime → forest
+  }
+  40% {
+    color: $charcoal;             // sunshine → charcoal
+  }
+  60% {
+    color: $charcoal;             // bubblegum → charcoal
+  }
+  80% {
+    color: $white;                // electric-blue → white
+  }
+}
+
+// Couleurs du cercle (border)
+@keyframes logoBorderColorShift {
+  0%, 100% {
+    border-color: $forest;        // cream
+  }
+  20% {
+    border-color: $forest;        // lime
+  }
+  40% {
+    border-color: $charcoal;      // sunshine
+  }
+  60% {
+    border-color: $charcoal;      // bubblegum
+  }
+  80% {
+    border-color: $white;         // electric-blue
+  }
+}
+
+// Couleurs des couverts (background)
+@keyframes logoBgColorShift {
+  0%, 100% {
+    background-color: $forest;    // cream
+  }
+  20% {
+    background-color: $forest;    // lime
+  }
+  40% {
+    background-color: $charcoal;  // sunshine
+  }
+  60% {
+    background-color: $charcoal;  // bubblegum
+  }
+  80% {
+    background-color: $white;     // electric-blue
+  }
+}
+
+// Couleurs de la tagline
+@keyframes taglineColorShift {
+  0%, 100% {
+    color: $text-secondary;       // cream
+  }
+  20% {
+    color: darken($forest, 10%);  // lime
+  }
+  40% {
+    color: $charcoal;             // sunshine
+  }
+  60% {
+    color: darken($bubblegum, 40%); // bubblegum
+  }
+  80% {
+    color: rgba(255, 255, 255, 0.85); // electric-blue
+  }
+}
+
+// Couleurs du footer
+@keyframes footerColorShift {
+  0%, 100% {
+    color: $text-muted;           // cream
+  }
+  20% {
+    color: rgba(1, 102, 66, 0.6); // lime
+  }
+  40% {
+    color: rgba(0, 0, 0, 0.5);    // sunshine
+  }
+  60% {
+    color: rgba(0, 0, 0, 0.4);    // bubblegum
+  }
+  80% {
+    color: rgba(255, 255, 255, 0.6); // electric-blue
   }
 }
 
