@@ -116,6 +116,22 @@ export default class extends Controller {
     container.classList.add(`question-stack--bg-${currentBg}`)
   }
 
+  // Navigation directe vers un step
+  goToStep(event) {
+    const targetIndex = parseInt(event.currentTarget.dataset.step, 10)
+    if (targetIndex === this.currentIndex || isNaN(targetIndex)) return
+
+    // Retire les classes d'animation des anciennes cartes
+    this.cardTargets.forEach(card => {
+      card.classList.remove("question-card--exiting")
+    })
+
+    this.currentIndex = targetIndex
+    this.updateStack()
+    this.updateProgress()
+    this.updateBackground()
+  }
+
   // Gestion du swipe sur mobile
   touchStart(event) {
     this.touchStartX = event.touches[0].clientX
