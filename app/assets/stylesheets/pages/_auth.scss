@@ -1,0 +1,405 @@
+// ============================================
+// AUTH PAGES - Login & Register
+// ============================================
+// Style minimaliste centré, cohérent avec la home page
+
+.auth {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $space-lg;
+  background-color: $cream;
+  animation: colorShift 20s ease-in-out infinite;
+}
+
+.auth__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 380px;
+}
+
+// ============================================
+// LOGO (réutilise le style home)
+// ============================================
+
+.auth__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $space-lg;
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+.auth__logo-left,
+.auth__logo-right {
+  font-family: $font-display;
+  font-size: 2.25rem;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  animation: logoTextColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.75rem;
+  }
+}
+
+.auth__logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 2px;
+  position: relative;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.auth__logo-circle {
+  width: 32px;
+  height: 32px;
+  border: 3px solid;
+  border-radius: 50%;
+  animation: logoBorderColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.auth__logo-fork,
+.auth__logo-knife {
+  position: absolute;
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  animation: logoBgColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    height: 13px;
+  }
+}
+
+.auth__logo-fork {
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.auth__logo-knife {
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// ============================================
+// TITRE
+// ============================================
+
+.auth__title {
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  text-align: center;
+  margin-bottom: $space-xl;
+  animation: logoTextColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-lg;
+    margin-bottom: $space-lg;
+  }
+}
+
+// ============================================
+// FORMULAIRE
+// ============================================
+
+.auth__form {
+  width: 100%;
+}
+
+.auth__field {
+  margin-bottom: $space-md;
+}
+
+.auth__label {
+  display: block;
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: $space-xs;
+  animation: taglineColorShift 20s ease-in-out infinite;
+}
+
+.auth__input {
+  width: 100%;
+  padding: $space-md $space-lg;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: $radius-md;
+  color: $charcoal;
+  transition: all $transition-base;
+
+  &::placeholder {
+    color: $text-placeholder;
+  }
+
+  &:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-color: $forest;
+    box-shadow: 0 0 0 3px rgba(1, 102, 66, 0.1);
+  }
+
+  // Adaptations pour le fond animé
+  .auth--on-dark & {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: $white;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Checkbox "Se souvenir de moi"
+.auth__checkbox {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin-bottom: $space-lg;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: $forest;
+    cursor: pointer;
+  }
+
+  span {
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    animation: taglineColorShift 20s ease-in-out infinite;
+  }
+}
+
+// Bouton submit
+.auth__submit {
+  width: 100%;
+  padding: $space-md $space-xl;
+  background: $tangerine;
+  color: $white !important;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    background: darken($tangerine, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 87, 13, 0.35);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(255, 87, 13, 0.25);
+  }
+}
+
+// ============================================
+// LIENS
+// ============================================
+
+.auth__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+  margin-top: $space-xl;
+}
+
+.auth__link {
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  text-decoration: none;
+  transition: opacity $transition-base;
+  animation: taglineColorShift 20s ease-in-out infinite;
+
+  &:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+}
+
+.auth__divider {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  width: 100%;
+  margin: $space-lg 0;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    animation: dividerColorShift 20s ease-in-out infinite;
+  }
+
+  span {
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    animation: taglineColorShift 20s ease-in-out infinite;
+  }
+}
+
+@keyframes dividerColorShift {
+  0%, 100% {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  20% {
+    background: rgba(1, 102, 66, 0.2);
+  }
+  40% {
+    background: rgba(0, 0, 0, 0.15);
+  }
+  60% {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  80% {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+// Lien principal (inscription depuis login)
+.auth__cta-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: $space-md $space-xl;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  text-decoration: none !important;
+  border: 2px solid;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+  animation: ctaLinkColorShift 20s ease-in-out infinite;
+
+  &:hover {
+    transform: translateY(-2px);
+    text-decoration: none !important;
+  }
+}
+
+@keyframes ctaLinkColorShift {
+  0%, 100% {
+    border-color: $forest;
+    color: $forest;
+  }
+  20% {
+    border-color: $forest;
+    color: $forest;
+  }
+  40% {
+    border-color: $charcoal;
+    color: $charcoal;
+  }
+  60% {
+    border-color: $charcoal;
+    color: $charcoal;
+  }
+  80% {
+    border-color: $white;
+    color: $white;
+  }
+}
+
+// ============================================
+// ERREURS
+// ============================================
+
+.auth__error {
+  width: 100%;
+  padding: $space-sm $space-md;
+  margin-bottom: $space-md;
+  background: rgba(255, 87, 13, 0.1);
+  border: 1px solid rgba(255, 87, 13, 0.3);
+  border-radius: $radius-sm;
+  color: darken($tangerine, 10%);
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  text-align: center;
+}
+
+.auth__field-error {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: $tangerine;
+  margin-top: $space-xs;
+}
+
+// ============================================
+// HINT (password)
+// ============================================
+
+.auth__hint {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  margin-top: $space-xs;
+  opacity: 0.6;
+  animation: taglineColorShift 20s ease-in-out infinite;
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: $breakpoint-sm) {
+  .auth {
+    padding: $space-md;
+  }
+
+  .auth__content {
+    max-width: 100%;
+  }
+
+  .auth__input {
+    padding: $space-sm $space-md;
+  }
+
+  .auth__submit {
+    padding: $space-sm $space-lg;
+  }
+}
