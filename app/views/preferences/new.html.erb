@@ -11,11 +11,25 @@
   <%# Header avec progression %>
   <div class="question-stack__header">
     <h1 class="question-stack__title">Vos envies</h1>
-    <div class="question-stack__progress-container">
-      <div class="question-stack__progress-bar">
-        <div class="question-stack__progress-fill" data-question-stack-target="progress"></div>
+    <div class="question-stack__progress-steps" data-question-stack-target="progressSteps">
+      <div class="progress-step progress-step--active" data-step="0">
+        <i class="fa-solid fa-utensils"></i>
       </div>
-      <span class="question-stack__progress-text" data-question-stack-target="progressText">1 / 6</span>
+      <div class="progress-step" data-step="1">
+        <i class="fa-solid fa-leaf"></i>
+      </div>
+      <div class="progress-step" data-step="2">
+        <i class="fa-solid fa-euro-sign"></i>
+      </div>
+      <div class="progress-step" data-step="3">
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+      <div class="progress-step" data-step="4">
+        <i class="fa-solid fa-champagne-glasses"></i>
+      </div>
+      <div class="progress-step" data-step="5">
+        <i class="fa-solid fa-star"></i>
+      </div>
     </div>
   </div>
 
