@@ -1,0 +1,173 @@
+<%#
+  PREFERENCES - Question Cards Stack
+  Système de cartes empilées avec navigation question par question
+  Les réponses servent d'input pour le prompt IA de recommandation
+%>
+
+<div class="question-stack"
+     data-controller="question-stack"
+     data-action="keydown@window->question-stack#keydown touchstart->question-stack#touchStart touchend->question-stack#touchEnd">
+
+  <%# Header avec progression %>
+  <div class="question-stack__header">
+    <h1 class="question-stack__title">Vos envies</h1>
+    <div class="question-stack__progress-container">
+      <div class="question-stack__progress-bar">
+        <div class="question-stack__progress-fill" data-question-stack-target="progress"></div>
+      </div>
+      <span class="question-stack__progress-text" data-question-stack-target="progressText">1 / 6</span>
+    </div>
+  </div>
+
+  <%= form_with model: @preference, url: session_preferences_path(@session), local: true, class: "question-stack__form" do |f| %>
+
+    <%# Container des cartes empilées %>
+    <div class="question-stack__cards">
+
+      <%# Card 1 - Types de cuisine (style Forest/Lime) %>
+      <div class="question-card question-card--forest question-card--active" data-question-stack-target="card">
+        <div class="question-card__number">01</div>
+        <div class="question-card__content">
+          <h2 class="question-card__title">Quelles cuisines vous tentent ?</h2>
+          <p class="question-card__hint">Sélectionnez autant d'options que vous voulez</p>
+
+          <div class="question-card__options question-card__options--grid">
+            <% %w[Française Italienne Japonaise Chinoise Indienne Mexicaine Libanaise Thaïlandaise Américaine Coréenne Vietnamienne Grecque].each do |cuisine| %>
+              <label class="question-tag question-tag--lime">
+                <%= f.check_box :cuisine_types, { multiple: true, checked: @preference.cuisine_types&.include?(cuisine) }, cuisine, nil %>
+                <span class="question-tag__label"><%= cuisine %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+        <div class="question-card__decoration question-card__decoration--fork"></div>
+        <button type="button" class="question-card__next-btn" data-action="click->question-stack#next">
+          Suivant <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <%# Card 2 - Régimes alimentaires (style Tangerine) %>
+      <div class="question-card question-card--tangerine question-card--next" data-question-stack-target="card">
+        <div class="question-card__number">02</div>
+        <div class="question-card__content">
+          <h2 class="question-card__title">Des restrictions alimentaires ?</h2>
+          <p class="question-card__hint">Pour que tout le monde puisse en profiter</p>
+
+          <div class="question-card__options">
+            <% %w[Végétarien Végan Sans\ gluten Halal Casher Sans\ lactose].each do |restriction| %>
+              <label class="question-tag question-tag--white">
+                <%= f.check_box :dietary_restrictions, { multiple: true, checked: @preference.dietary_restrictions&.include?(restriction) }, restriction, nil %>
+                <span class="question-tag__label"><%= restriction %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+        <div class="question-card__decoration question-card__decoration--leaf"></div>
+        <div class="question-card__nav">
+          <button type="button" class="question-card__prev-btn" data-action="click->question-stack#previous">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button type="button" class="question-card__next-btn" data-action="click->question-stack#next">
+            Suivant <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <%# Card 3 - Budget (style Sunshine) %>
+      <div class="question-card question-card--sunshine question-card--next-2" data-question-stack-target="card">
+        <div class="question-card__number">03</div>
+        <div class="question-card__content">
+          <h2 class="question-card__title">Quel budget par personne ?</h2>
+          <p class="question-card__hint">Un ordre de grandeur suffit</p>
+
+          <div class="question-card__budget">
+            <div class="budget-input">
+              <div class="budget-input__field">
+                <label class="budget-input__label">Min</label>
+                <%= f.number_field :budget_min, value: @preference.budget_min || 15, min: 5, max: 200, step: 5, class: "budget-input__number", placeholder: "15" %>
+                <span class="budget-input__currency">€</span>
+              </div>
+              <span class="budget-input__separator">à</span>
+              <div class="budget-input__field">
+                <label class="budget-input__label">Max</label>
+                <%= f.number_field :budget_max, value: @preference.budget_max || 40, min: 5, max: 200, step: 5, class: "budget-input__number", placeholder: "40" %>
+                <span class="budget-input__currency">€</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="question-card__decoration question-card__decoration--coins"></div>
+        <div class="question-card__nav">
+          <button type="button" class="question-card__prev-btn" data-action="click->question-stack#previous">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button type="button" class="question-card__next-btn" data-action="click->question-stack#next">
+            Suivant <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <%# Card 4 - Distance (style Bubblegum) %>
+      <div class="question-card question-card--bubblegum question-card--hidden" data-question-stack-target="card">
+        <div class="question-card__number">04</div>
+        <div class="question-card__content">
+          <h2 class="question-card__title">Jusqu'où êtes-vous prêts à aller ?</h2>
+          <p class="question-card__hint">Distance maximale depuis votre point de rencontre</p>
+
+          <div class="question-card__distance">
+            <%= f.number_field :max_distance, value: @preference.max_distance || 1000, min: 100, max: 10000, step: 100, class: "distance-input__number", placeholder: "1000" %>
+            <span class="distance-input__unit">mètres</span>
+          </div>
+        </div>
+        <div class="question-card__decoration question-card__decoration--pin"></div>
+        <div class="question-card__nav">
+          <button type="button" class="question-card__prev-btn" data-action="click->question-stack#previous">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button type="button" class="question-card__next-btn" data-action="click->question-stack#next">
+            Suivant <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <%# Card 5 - Ambiance (style Electric Blue) %>
+      <div class="question-card question-card--blue question-card--hidden" data-question-stack-target="card">
+        <div class="question-card__number">05</div>
+        <div class="question-card__content">
+          <h2 class="question-card__title">Quelle ambiance recherchez-vous ?</h2>
+          <p class="question-card__hint">Décrivez l'atmosphère idéale pour votre repas</p>
+
+          <%= f.text_field :ambiance, value: @preference.ambiance, class: "question-card__input", placeholder: "Ex: Décontracté, romantique, festif, calme pour discuter..." %>
+        </div>
+        <div class="question-card__decoration question-card__decoration--stars"></div>
+        <div class="question-card__nav">
+          <button type="button" class="question-card__prev-btn" data-action="click->question-stack#previous">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button type="button" class="question-card__next-btn" data-action="click->question-stack#next">
+            Suivant <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <%# Card 6 - Demandes spéciales (style Cream/minimal) %>
+      <div class="question-card question-card--cream question-card--hidden" data-question-stack-target="card">
+        <div class="question-card__number">06</div>
+        <div class="question-card__content">
+          <h2 class="question-card__title">Une dernière chose ?</h2>
+          <p class="question-card__hint">Terrasse, parking, accès PMR... dites-nous tout !</p>
+
+          <%= f.text_area :special_requests, value: @preference.special_requests, placeholder: "Ex: On aimerait une terrasse si possible, et un endroit qui accepte les chiens...", class: "question-card__textarea", rows: 3 %>
+        </div>
+        <div class="question-card__nav question-card__nav--final">
+          <button type="button" class="question-card__prev-btn" data-action="click->question-stack#previous">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <%= f.submit "Valider mes préférences", class: "question-card__submit-btn" %>
+        </div>
+      </div>
+
+    </div>
+
+  <% end %>
+</div>
