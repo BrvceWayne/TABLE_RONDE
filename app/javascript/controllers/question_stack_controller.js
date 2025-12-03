@@ -12,8 +12,10 @@ export default class extends Controller {
   connect() {
     this.currentIndex = 0
     this.totalCards = this.cardTargets.length
+    this.backgrounds = ["forest", "tangerine", "sunshine", "bubblegum", "blue", "cream"]
     this.updateStack()
     this.updateProgress()
+    this.updateBackground()
   }
 
   // Passe à la carte suivante
@@ -28,6 +30,7 @@ export default class extends Controller {
         this.currentIndex++
         this.updateStack()
         this.updateProgress()
+        this.updateBackground()
       }, 300)
     }
   }
@@ -41,6 +44,7 @@ export default class extends Controller {
       prevCard.classList.remove("question-card--exiting")
       this.updateStack()
       this.updateProgress()
+      this.updateBackground()
     }
   }
 
@@ -98,6 +102,34 @@ export default class extends Controller {
         step.classList.add("progress-step--active")
       }
     })
+  }
+
+  // Met à jour le background selon la carte active
+  updateBackground() {
+    const container = this.element
+    // Retire toutes les classes de background
+    this.backgrounds.forEach(bg => {
+      container.classList.remove(`question-stack--bg-${bg}`)
+    })
+    // Ajoute la classe correspondante à la carte active
+    const currentBg = this.backgrounds[this.currentIndex] || "cream"
+    container.classList.add(`question-stack--bg-${currentBg}`)
+  }
+
+  // Navigation directe vers un step
+  goToStep(event) {
+    const targetIndex = parseInt(event.currentTarget.dataset.step, 10)
+    if (targetIndex === this.currentIndex || isNaN(targetIndex)) return
+
+    // Retire les classes d'animation des anciennes cartes
+    this.cardTargets.forEach(card => {
+      card.classList.remove("question-card--exiting")
+    })
+
+    this.currentIndex = targetIndex
+    this.updateStack()
+    this.updateProgress()
+    this.updateBackground()
   }
 
   // Gestion du swipe sur mobile
