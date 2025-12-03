@@ -1,0 +1,320 @@
+// ============================================
+// NEW SESSION PAGE - Choix du type de repas
+// ============================================
+// Style minimaliste avec cards illustrées
+
+.new-session {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $space-lg;
+  background-color: $cream;
+  animation: colorShift 20s ease-in-out infinite;
+}
+
+.new-session__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+// ============================================
+// LOGO
+// ============================================
+
+.new-session__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $space-lg;
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+.new-session__logo-left,
+.new-session__logo-right {
+  font-family: $font-display;
+  font-size: 2rem;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  animation: logoTextColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.5rem;
+  }
+}
+
+.new-session__logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 2px;
+  position: relative;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.new-session__logo-circle {
+  width: 28px;
+  height: 28px;
+  border: 3px solid;
+  border-radius: 50%;
+  animation: logoBorderColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.new-session__logo-fork,
+.new-session__logo-knife {
+  position: absolute;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  animation: logoBgColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    height: 11px;
+  }
+}
+
+.new-session__logo-fork {
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.new-session__logo-knife {
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// ============================================
+// TITRE
+// ============================================
+
+.new-session__title {
+  font-family: $font-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-semibold;
+  text-align: center;
+  margin-bottom: $space-xl;
+  animation: logoTextColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-xl;
+    margin-bottom: $space-lg;
+  }
+}
+
+// ============================================
+// FORMULAIRE
+// ============================================
+
+.new-session__form {
+  width: 100%;
+}
+
+// ============================================
+// GRILLE DE CARDS REPAS
+// ============================================
+
+.new-session__meals {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-md;
+  margin-bottom: $space-xl;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+    gap: $space-sm;
+  }
+}
+
+.new-session__meal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $space-lg $space-md;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  // État sélectionné
+  &:has(.new-session__meal-input:checked) {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: $forest;
+    box-shadow: 0 0 0 3px rgba(1, 102, 66, 0.15);
+
+    .new-session__meal-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .new-session__meal-icon {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Input radio caché
+.new-session__meal-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Icône emoji
+.new-session__meal-icon {
+  font-size: 2.5rem;
+  margin-bottom: $space-sm;
+  transition: transform $transition-base;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 2rem;
+  }
+}
+
+// Label principal
+.new-session__meal-label {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $charcoal;
+  margin-bottom: $space-xs;
+}
+
+// Sous-label
+.new-session__meal-sublabel {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}
+
+// Check mark
+.new-session__meal-check {
+  position: absolute;
+  top: $space-sm;
+  right: $space-sm;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $forest;
+  color: $white;
+  border-radius: 50%;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all $transition-bounce;
+}
+
+// ============================================
+// BOUTON SUBMIT
+// ============================================
+
+.new-session__submit {
+  width: 100%;
+  padding: $space-md $space-xl;
+  background: $tangerine;
+  color: $white !important;
+  font-family: $font-body;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    background: darken($tangerine, 5%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 87, 13, 0.35);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(255, 87, 13, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: $breakpoint-sm) {
+  .new-session {
+    padding: $space-md;
+  }
+
+  .new-session__content {
+    max-width: 100%;
+  }
+
+  .new-session__meal-card {
+    flex-direction: row;
+    padding: $space-md;
+    gap: $space-md;
+
+    &:has(.new-session__meal-input:checked) {
+      .new-session__meal-icon {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .new-session__meal-icon {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .new-session__meal-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .new-session__meal-label {
+    margin-bottom: 2px;
+  }
+
+  .new-session__submit {
+    padding: $space-md $space-lg;
+    font-size: $font-size-base;
+  }
+}
