@@ -5,20 +5,22 @@ export default class extends Controller {
 
   copy() {
     navigator.clipboard.writeText(this.textValue).then(() => {
-      // Feedback visuel
-      const btn = this.element.querySelector('.dashboard__copy-btn') || this.element
-      const originalText = btn.querySelector('.dashboard__copy-text')
+      const textEl = this.element.querySelector('.dashboard__copy-text')
+      const iconEl = this.element.querySelector('.dashboard__copy-icon')
 
-      if (originalText) {
-        const original = originalText.textContent
-        originalText.textContent = "Copié !"
-        btn.style.background = "#016642"
-        btn.style.color = "#fff"
+      if (textEl) {
+        const originalText = textEl.textContent
+        const originalIcon = iconEl ? iconEl.textContent : null
+
+        textEl.textContent = "Copié !"
+        if (iconEl) iconEl.textContent = "✓"
+
+        this.element.classList.add('dashboard__copy-btn--copied')
 
         setTimeout(() => {
-          originalText.textContent = original
-          btn.style.background = ""
-          btn.style.color = ""
+          textEl.textContent = originalText
+          if (iconEl && originalIcon) iconEl.textContent = originalIcon
+          this.element.classList.remove('dashboard__copy-btn--copied')
         }, 2000)
       }
     })

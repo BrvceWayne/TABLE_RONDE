@@ -1,4 +1,4 @@
-<div class="dashboard" data-controller="auto-refresh clipboard" data-auto-refresh-interval-value="5000">
+<div class="dashboard" data-controller="auto-refresh" data-auto-refresh-interval-value="5000">
 
   <%# Header avec logo %>
   <header class="dashboard__header">
@@ -25,6 +25,7 @@
           <% end %>
         </div>
         <button class="dashboard__copy-btn"
+                data-controller="clipboard"
                 data-action="click->clipboard#copy"
                 data-clipboard-text-value="<%= join_session_url(@session.share_code) %>">
           <span class="dashboard__copy-icon">📋</span>
@@ -65,7 +66,9 @@
               <% if p[:preferences_completed] %>
                 <span class="dashboard__status-badge dashboard__status-badge--success">✓</span>
               <% else %>
-                <span class="dashboard__status-badge dashboard__status-badge--pending">...</span>
+                <span class="dashboard__status-badge dashboard__status-badge--pending">
+                  <span class="dashboard__hourglass">⏳</span>
+                </span>
               <% end %>
             </div>
           </div>
