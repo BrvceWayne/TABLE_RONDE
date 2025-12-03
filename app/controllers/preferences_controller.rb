@@ -15,6 +15,7 @@ class PreferencesController < ApplicationController
     @preference = user.preference || user.build_preference
 
     @preference.assign_attributes(preference_params)
+    merge_other_cuisine
 
     if @preference.save
       # Si c'est un guest user, proposer de créer un compte
@@ -33,7 +34,10 @@ class PreferencesController < ApplicationController
   end
 
   def update
-    if @preference.update(preference_params)
+    @preference.assign_attributes(preference_params)
+    merge_other_cuisine
+
+    if @preference.save
       redirect_to @session, notice: "Vos préférences ont été mises à jour"
     else
       render :edit, status: :unprocessable_entity
@@ -58,8 +62,22 @@ class PreferencesController < ApplicationController
       :budget_max,
       :ambiance,
       :special_requests,
+      :other_cuisine,
       dietary_restrictions: [],
       cuisine_types: []
     )
+  end
+
+  def merge_other_cuisine
+    other = params.dig(:preference, :other_cuisine)
+    return if other.blank?
+
+    # Sépare les cuisines par virgule et nettoie
+    custom_cuisines = other.split(",").map(&:strip).reject(&:blank?)
+    return if custom_cuisines.empty?
+
+    # Ajoute les cuisines personnalisées au tableau existant
+    current = @preference.cuisine_types || []
+    @preference.cuisine_types = (current + custom_cuisines).uniq
   end
 end

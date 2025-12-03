@@ -516,6 +516,47 @@
   }
 }
 
+// Option "Autre" avec input texte
+.question-tag-other {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-basis: 100%;
+  margin-top: $space-sm;
+
+  &--lime {
+    .question-tag-other__label {
+      font-family: $font-body;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .question-tag-other__input {
+      flex: 1;
+      max-width: 200px;
+      padding: $space-xs $space-md;
+      font-family: $font-body;
+      font-size: $font-size-sm;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: $radius-full;
+      color: $white;
+      transition: all $transition-base;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      &:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.25);
+        border-color: $lime;
+      }
+    }
+  }
+}
+
 // Budget input
 .budget-input {
   display: flex;
