@@ -156,6 +156,12 @@
   &:active {
     transform: scale(0.98);
   }
+
+  &--copied {
+    background: $forest;
+    color: $white;
+    border-color: $forest;
+  }
 }
 
 .dashboard__copy-icon {
@@ -297,8 +303,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   font-size: $font-size-sm;
   font-weight: $font-weight-bold;
@@ -309,10 +315,36 @@
   }
 
   &--pending {
-    background: $border-light;
-    color: $text-muted;
-    font-size: $font-size-xs;
-    letter-spacing: -1px;
+    background: $cream;
+    border: 2px solid $border-light;
+  }
+}
+
+// ============================================
+// HOURGLASS ANIMATION
+// ============================================
+
+.dashboard__hourglass {
+  display: inline-block;
+  font-size: 1rem;
+  animation: hourglassFlip 2s ease-in-out infinite;
+}
+
+@keyframes hourglassFlip {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
