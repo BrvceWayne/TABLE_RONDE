@@ -47,10 +47,10 @@
   font-weight: 700;
   line-height: 1;
 
-  // Animation : slide depuis la gauche + couleur
+  // Animation : slide depuis la droite + couleur
   opacity: 0;
-  transform: translateX(-20px);
-  animation: slideFromLeft 0.5s ease forwards, logoTextColorShift 20s ease-in-out infinite;
+  transform: translateX(20px);
+  animation: slideFromRight 0.5s ease forwards, logoTextColorShift 20s ease-in-out infinite;
   animation-delay: 0.5s, 0s;
 
   @media (max-width: 576px) {
@@ -65,10 +65,10 @@
   font-weight: 700;
   line-height: 1;
 
-  // Animation : slide depuis la droite + couleur
+  // Animation : slide depuis la gauche (sort de l'assiette) + couleur
   opacity: 0;
-  transform: translateX(20px);
-  animation: slideFromRight 0.5s ease forwards, logoTextColorShift 20s ease-in-out infinite;
+  transform: translateX(-20px);
+  animation: slideFromLeft 0.5s ease forwards, logoTextColorShift 20s ease-in-out infinite;
   animation-delay: 0.6s, 0s;
 
   @media (max-width: 576px) {
@@ -86,11 +86,11 @@
   margin: 0 2px;
   position: relative;
 
-  // Animation : scale + fade
+  // Animation : scale + fade + rotation continue
   opacity: 0;
   transform: scale(0.5);
-  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation-delay: 0s;
+  animation: popInAndSpin 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, spinSlow 15s linear infinite;
+  animation-delay: 0s, 0.8s;
 
   @media (max-width: 576px) {
     width: 44px;
@@ -242,6 +242,28 @@
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+// Animation d'entrée avec rotation initiale
+@keyframes popInAndSpin {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+// Rotation lente continue
+@keyframes spinSlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
