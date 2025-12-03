@@ -56,6 +56,7 @@ export default class extends Controller {
         "question-card--active",
         "question-card--next",
         "question-card--next-2",
+        "question-card--next-3",
         "question-card--hidden"
       )
 
@@ -70,8 +71,11 @@ export default class extends Controller {
         // Prochaine carte (visible derrière)
         card.classList.add("question-card--next")
       } else if (index === this.currentIndex + 2) {
-        // Carte d'après (légèrement visible)
+        // Carte d'après
         card.classList.add("question-card--next-2")
+      } else if (index === this.currentIndex + 3) {
+        // Troisième carte visible
+        card.classList.add("question-card--next-3")
       } else {
         // Cartes plus loin (cachées)
         card.classList.add("question-card--hidden")
