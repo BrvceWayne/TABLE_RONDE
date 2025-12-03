@@ -43,7 +43,7 @@
         <div class="question-card__number">01</div>
         <div class="question-card__content">
           <h2 class="question-card__title">Quelles cuisines vous tentent ?</h2>
-          <p class="question-card__hint">Sélectionnez autant d'options que vous voulez</p>
+          <p class="question-card__hint">Plusieurs choix possibles</p>
 
           <div class="question-card__options question-card__options--grid">
             <% %w[Française Italienne Japonaise Chinoise Indienne Mexicaine Libanaise Thaïlandaise Américaine Coréenne Vietnamienne Grecque].each do |cuisine| %>
@@ -71,7 +71,7 @@
         <div class="question-card__number">02</div>
         <div class="question-card__content">
           <h2 class="question-card__title">Des restrictions alimentaires ?</h2>
-          <p class="question-card__hint">Pour que tout le monde puisse en profiter</p>
+          <p class="question-card__hint">Optionnel</p>
 
           <div class="question-card__options">
             <% %w[Végétarien Végan Sans\ gluten Halal Casher Sans\ lactose].each do |restriction| %>
@@ -98,7 +98,7 @@
         <div class="question-card__number">03</div>
         <div class="question-card__content">
           <h2 class="question-card__title">Quel budget par personne ?</h2>
-          <p class="question-card__hint">Un ordre de grandeur suffit</p>
+          <p class="question-card__hint">Approximatif</p>
 
           <div class="question-card__budget">
             <div class="budget-input">
@@ -132,31 +132,29 @@
         <div class="question-card__number">04</div>
         <div class="question-card__content">
           <h2 class="question-card__title">Où êtes-vous ?</h2>
-          <p class="question-card__hint">Partagez votre position pour trouver un lieu accessible à tous</p>
+          <p class="question-card__hint">Pour trouver un lieu accessible à tous</p>
 
           <%# Champs cachés pour lat/lng %>
           <%= f.hidden_field :latitude, data: { geolocation_target: "latitude" } %>
           <%= f.hidden_field :longitude, data: { geolocation_target: "longitude" } %>
 
           <%# Bouton de géolocalisation %>
-          <div class="geolocation-container mb-3">
-            <button type="button" class="btn btn-outline-primary geolocation-btn" data-geolocation-target="button" data-action="click->geolocation#locate">
+          <div class="geolocation-container">
+            <button type="button" class="geolocation-btn" data-geolocation-target="button" data-action="click->geolocation#locate">
               <i class="fa-solid fa-location-crosshairs"></i> Me localiser
             </button>
             <span class="geolocation-status" data-geolocation-target="status"></span>
           </div>
 
           <%# Adresse (affichée après géoloc ou saisie manuelle) %>
-          <div class="mb-3">
-            <%= f.text_field :address, class: "form-control", placeholder: "Ou entrez votre adresse manuellement...", data: { geolocation_target: "address" } %>
-          </div>
+          <%= f.text_field :address, class: "question-card__input", placeholder: "Ou saisissez une adresse...", data: { geolocation_target: "address" } %>
 
-          <hr class="my-3">
+          <div class="question-card__separator"></div>
 
-          <h3 class="h6">Distance maximale acceptable</h3>
+          <h3 class="question-card__subtitle">Distance max</h3>
           <div class="question-card__distance">
-            <%= f.number_field :max_distance, value: @preference.max_distance || 1000, min: 100, max: 10000, step: 100, class: "distance-input__number", placeholder: "1000" %>
-            <span class="distance-input__unit">mètres</span>
+            <%= f.number_field :max_distance, value: (@preference.max_distance || 1000) / 1000.0, min: 0.5, max: 20, step: 0.5, class: "distance-input__number", placeholder: "1" %>
+            <span class="distance-input__unit">km</span>
           </div>
         </div>
         <div class="question-card__decoration question-card__decoration--pin"></div>
@@ -174,8 +172,8 @@
       <div class="question-card question-card--blue question-card--hidden" data-question-stack-target="card">
         <div class="question-card__number">05</div>
         <div class="question-card__content">
-          <h2 class="question-card__title">Quelle ambiance recherchez-vous ?</h2>
-          <p class="question-card__hint">Décrivez l'atmosphère idéale pour votre repas</p>
+          <h2 class="question-card__title">Quelle ambiance ?</h2>
+          <p class="question-card__hint">Décrivez l'atmosphère idéale</p>
 
           <%= f.text_field :ambiance, value: @preference.ambiance, class: "question-card__input", placeholder: "Ex: Décontracté, romantique, festif, calme pour discuter..." %>
         </div>
@@ -195,7 +193,7 @@
         <div class="question-card__number">06</div>
         <div class="question-card__content">
           <h2 class="question-card__title">Une dernière chose ?</h2>
-          <p class="question-card__hint">Terrasse, parking, accès PMR... dites-nous tout !</p>
+          <p class="question-card__hint">Terrasse, parking, accès PMR...</p>
 
           <%= f.text_area :special_requests, value: @preference.special_requests, placeholder: "Ex: On aimerait une terrasse si possible, et un endroit qui accepte les chiens...", class: "question-card__textarea", rows: 3 %>
         </div>

@@ -49,7 +49,7 @@ class PreferencesController < ApplicationController
   end
 
   def preference_params
-    params.require(:preference).permit(
+    permitted = params.require(:preference).permit(
       :max_distance,
       :budget_min,
       :budget_max,
@@ -61,6 +61,13 @@ class PreferencesController < ApplicationController
       dietary_restrictions: [],
       cuisine_types: []
     )
+
+    # Convertit km en mètres pour le stockage
+    if permitted[:max_distance].present?
+      permitted[:max_distance] = (permitted[:max_distance].to_f * 1000).to_i
+    end
+
+    permitted
   end
 
   def merge_other_cuisine

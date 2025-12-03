@@ -203,11 +203,11 @@
 
 .question-stack__cards {
   position: relative;
-  min-height: 450px;
+  height: 520px;
   perspective: 1200px;
 
   @media (max-width: $breakpoint-sm) {
-    min-height: 420px;
+    height: 480px;
   }
 }
 
@@ -220,6 +220,7 @@
   top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   padding: $space-xl;
   padding-bottom: 80px; // Espace fixe pour la navigation
   border-radius: $radius-2xl;
@@ -326,6 +327,11 @@
   position: relative;
   z-index: 1;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; // Centre horizontalement les enfants
+  overflow: hidden; // Pas de scroll
 }
 
 .question-card__title {
@@ -334,7 +340,8 @@
   font-weight: $font-weight-semibold;
   margin-bottom: $space-xs;
   line-height: $line-height-snug;
-  padding-right: $space-2xl;
+  text-align: center;
+  width: 100%;
 
   @media (max-width: $breakpoint-sm) {
     font-size: $font-size-lg;
@@ -344,8 +351,12 @@
 .question-card__hint {
   font-family: $font-body;
   font-size: $font-size-sm;
-  margin-bottom: $space-lg;
-  opacity: 0.7;
+  margin-bottom: $space-md;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  width: 100%;
 }
 
 // ============================================
@@ -576,6 +587,7 @@
 .question-card__options {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: $space-sm;
 
   &--grid {
@@ -650,8 +662,9 @@
 .question-tag-other {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $space-sm;
-  flex-basis: 100%;
+  width: 100%;
   margin-top: $space-sm;
 
   &--lime {
@@ -663,8 +676,7 @@
     }
 
     .question-tag-other__input {
-      flex: 1;
-      max-width: 200px;
+      max-width: 180px;
       padding: $space-xs $space-md;
       font-family: $font-body;
       font-size: $font-size-sm;
@@ -756,14 +768,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $space-sm;
+  gap: $space-xs;
 }
 
 .distance-input__number {
-  width: 120px;
-  padding: $space-sm $space-md;
+  width: 80px;
+  padding: $space-xs $space-sm;
   font-family: $font-display;
-  font-size: $font-size-xl;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   text-align: center;
   background: rgba(0, 0, 0, 0.08);
@@ -788,16 +800,116 @@
 
 .distance-input__unit {
   font-family: $font-body;
-  font-size: $font-size-base;
+  font-size: $font-size-sm;
   opacity: 0.7;
+}
+
+// ============================================
+// GEOLOCATION (Card 4 - Bubblegum)
+// ============================================
+
+.geolocation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xs;
+  margin-bottom: $space-md;
+}
+
+.geolocation-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-lg;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  background: rgba(255, 255, 255, 0.2);
+  color: $white;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  i {
+    font-size: 1em;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.geolocation-status {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.8);
+  min-height: 1.2em;
+
+  &--loading {
+    color: rgba(255, 255, 255, 0.7);
+
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-left: $space-xs;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: $white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  }
+
+  &--success {
+    color: $lime;
+  }
+
+  &--error {
+    color: $sunshine;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Separator et subtitle génériques
+.question-card__separator {
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  margin: $space-md 0;
+}
+
+.question-card__subtitle {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: inherit;
+  text-align: center;
+  margin-bottom: $space-sm;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 // Text input
 .question-card__input {
   width: 100%;
-  padding: $space-md $space-lg;
+  max-width: 320px;
+  padding: $space-sm $space-md;
   font-family: $font-body;
-  font-size: $font-size-base;
+  font-size: $font-size-sm;
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: $radius-md;
@@ -818,15 +930,16 @@
 // Textarea
 .question-card__textarea {
   width: 100%;
-  padding: $space-md $space-lg;
+  max-width: 360px;
+  padding: $space-sm $space-md;
   font-family: $font-body;
-  font-size: $font-size-base;
+  font-size: $font-size-sm;
   background: $cream;
   border: 2px solid $border-light;
   border-radius: $radius-md;
   color: $charcoal;
-  resize: vertical;
-  min-height: 100px;
+  resize: none;
+  min-height: 80px;
   transition: all $transition-base;
 
   &::placeholder {
@@ -935,13 +1048,9 @@
     padding-top: $space-lg;
   }
 
-  .question-stack__cards {
-    min-height: 380px;
-  }
-
   .question-card {
-    padding: $space-lg;
-    padding-bottom: $space-2xl;
+    padding: $space-md;
+    padding-bottom: $space-xl;
   }
 
   .question-card__title {
@@ -956,5 +1065,13 @@
   .budget-input__number {
     width: 70px;
     font-size: $font-size-lg;
+  }
+
+  .question-card__input {
+    max-width: 280px;
+  }
+
+  .question-card__textarea {
+    max-width: 300px;
   }
 }
