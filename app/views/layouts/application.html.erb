@@ -2,9 +2,14 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>TableRonde - On mange où ?</title>
+        <title>TableRonde - On mange où ?</title>
     <meta name="description" content="TableRonde - L'app qui aide les groupes d'amis à choisir où manger ensemble">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= tag.link rel: "manifest", href: webmanifest_path(format: :json) %>
+    <%= tag.link rel: "icon", href: image_url("app-icon-512.png"), type: "image/png" %>
+    <%= tag.link rel: "apple-touch-icon", href: image_url("app-icon-512.png") %>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
