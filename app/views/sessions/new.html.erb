@@ -1,7 +1,41 @@
-<h1>Nouvelle Session</h1>
+<div class="new-session">
+  <div class="new-session__content">
 
-<%= simple_form_for @session, url: sessions_path do |f| %>
-  <%= f.error_notification %>
-  <%= f.input :meal_type, collection: ['Petit-déjeuner', 'Déjeuner', 'Dîner', 'Brunch'], prompt: 'Choisir un type de repas' %>
-  <%= f.submit 'Créer la session', class: 'btn btn-primary' %>
-<% end %>
+    <%# Logo cliquable vers home %>
+    <%= link_to root_path, class: "new-session__logo" do %>
+      <span class="new-session__logo-left">TableR</span>
+      <span class="new-session__logo-icon">
+        <span class="new-session__logo-circle"></span>
+        <span class="new-session__logo-fork"></span>
+        <span class="new-session__logo-knife"></span>
+      </span>
+      <span class="new-session__logo-right">nde</span>
+    <% end %>
+
+    <h1 class="new-session__title">C'est pour quand ?</h1>
+
+    <%= simple_form_for @session, url: sessions_path, html: { class: "new-session__form" } do |f| %>
+      <%= f.error_notification %>
+
+      <div class="new-session__meals">
+        <% [
+          { value: 'Petit-déjeuner', icon: '🥐', label: 'Petit-déjeuner', sublabel: 'Café, croissants...' },
+          { value: 'Brunch', icon: '☀️', label: 'Brunch', sublabel: 'Le meilleur des deux' },
+          { value: 'Déjeuner', icon: '🍽️', label: 'Déjeuner', sublabel: 'Pause du midi' },
+          { value: 'Dîner', icon: '🌙', label: 'Dîner', sublabel: 'Soirée entre amis' }
+        ].each do |meal| %>
+          <label class="new-session__meal-card">
+            <%= f.radio_button :meal_type, meal[:value], class: "new-session__meal-input" %>
+            <span class="new-session__meal-icon"><%= meal[:icon] %></span>
+            <span class="new-session__meal-label"><%= meal[:label] %></span>
+            <span class="new-session__meal-sublabel"><%= meal[:sublabel] %></span>
+            <span class="new-session__meal-check">✓</span>
+          </label>
+        <% end %>
+      </div>
+
+      <%= f.submit "C'est parti !", class: "new-session__submit" %>
+    <% end %>
+
+  </div>
+</div>
