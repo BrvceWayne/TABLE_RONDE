@@ -39,38 +39,73 @@
   }
 }
 
-// Progress bar
-.question-stack__progress-container {
+// Progress steps avec icônes
+.question-stack__progress-steps {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $space-md;
-  max-width: 300px;
+  gap: $space-xs;
   margin: 0 auto;
+
+  @media (max-width: $breakpoint-sm) {
+    gap: 4px;
+  }
 }
 
-.question-stack__progress-bar {
-  flex: 1;
-  height: 6px;
+.progress-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   background: $border-light;
-  border-radius: $radius-full;
-  overflow: hidden;
-}
+  color: $text-muted;
+  font-size: $font-size-base;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 
-.question-stack__progress-fill {
-  height: 100%;
-  width: 16.66%;
-  background: linear-gradient(90deg, $forest, $lime);
-  border-radius: $radius-full;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  @media (max-width: $breakpoint-sm) {
+    width: 36px;
+    height: 36px;
+    font-size: $font-size-sm;
+  }
 
-.question-stack__progress-text {
-  font-family: $font-body;
-  font-size: $font-size-sm;
-  color: $text-secondary;
-  font-weight: $font-weight-medium;
-  min-width: 40px;
+  // Connecteur entre les steps
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: $space-xs;
+    height: 3px;
+    background: $border-light;
+    transition: background 0.3s ease;
+
+    @media (max-width: $breakpoint-sm) {
+      width: 4px;
+      height: 2px;
+    }
+  }
+
+  // État actif
+  &--active {
+    background: $forest;
+    color: $white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(1, 102, 66, 0.3);
+  }
+
+  // État complété
+  &--done {
+    background: $lime;
+    color: $forest;
+
+    &::after {
+      background: $lime;
+    }
+  }
 }
 
 .question-stack__form {
