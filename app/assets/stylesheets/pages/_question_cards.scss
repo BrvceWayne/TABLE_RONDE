@@ -1,0 +1,793 @@
+// ============================================
+// QUESTION CARDS - Stack Dynamique
+// ============================================
+// Système de cartes empilées avec navigation
+// Chaque card a un style unique tout en respectant la DA TableRonde
+
+// ============================================
+// STACK CONTAINER
+// ============================================
+
+.question-stack {
+  min-height: 100vh;
+  padding: $space-lg;
+  padding-top: $space-2xl;
+  background-color: $cream;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: $breakpoint-md) {
+    padding: $space-2xl;
+    padding-top: $space-3xl;
+  }
+}
+
+.question-stack__header {
+  text-align: center;
+  margin-bottom: $space-xl;
+}
+
+.question-stack__title {
+  font-family: $font-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $forest;
+  margin-bottom: $space-md;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-xl;
+  }
+}
+
+// Progress bar
+.question-stack__progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-md;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.question-stack__progress-bar {
+  flex: 1;
+  height: 6px;
+  background: $border-light;
+  border-radius: $radius-full;
+  overflow: hidden;
+}
+
+.question-stack__progress-fill {
+  height: 100%;
+  width: 16.66%;
+  background: linear-gradient(90deg, $forest, $lime);
+  border-radius: $radius-full;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.question-stack__progress-text {
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+  min-width: 40px;
+}
+
+.question-stack__form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+// ============================================
+// CARDS CONTAINER - Stack Effect
+// ============================================
+
+.question-stack__cards {
+  position: relative;
+  min-height: 450px;
+  perspective: 1000px;
+
+  @media (max-width: $breakpoint-sm) {
+    min-height: 420px;
+  }
+}
+
+// ============================================
+// BASE QUESTION CARD
+// ============================================
+
+.question-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: $space-xl;
+  padding-bottom: $space-3xl;
+  border-radius: $radius-2xl;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+
+  // Par défaut : première carte visible (fallback sans JS)
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  z-index: 1;
+
+  // Cartes suivantes cachées par défaut
+  &:nth-child(n+2) {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100px) scale(0.9);
+    z-index: 0;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $space-lg;
+    padding-bottom: $space-2xl;
+  }
+
+  // Carte active (devant) - quand JS est chargé
+  &--active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) scale(1) !important;
+    z-index: 30 !important;
+  }
+
+  // Prochaine carte (visible derrière)
+  &--next {
+    opacity: 0.7 !important;
+    pointer-events: none !important;
+    transform: translateY(20px) scale(0.95) !important;
+    z-index: 20 !important;
+    filter: brightness(0.95);
+  }
+
+  // Carte d'après (légèrement visible)
+  &--next-2 {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+    transform: translateY(40px) scale(0.9) !important;
+    z-index: 10 !important;
+    filter: brightness(0.9);
+  }
+
+  // Cartes cachées
+  &--hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(60px) scale(0.85) !important;
+    z-index: 0 !important;
+  }
+
+  // Animation de sortie
+  &--exiting {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateX(-120%) rotate(-10deg) !important;
+    z-index: 40 !important;
+  }
+}
+
+.question-card__number {
+  position: absolute;
+  top: $space-md;
+  right: $space-lg;
+  font-family: $font-display;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  opacity: 0.15;
+  line-height: 1;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-2xl;
+    top: $space-sm;
+    right: $space-md;
+  }
+}
+
+.question-card__content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.question-card__title {
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $space-xs;
+  line-height: $line-height-snug;
+  padding-right: $space-2xl;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: $font-size-lg;
+  }
+}
+
+.question-card__hint {
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  margin-bottom: $space-lg;
+  opacity: 0.7;
+}
+
+// ============================================
+// CARD VARIANTS
+// ============================================
+
+// Forest (vert profond avec accents lime)
+.question-card--forest {
+  background: linear-gradient(135deg, $forest 0%, darken($forest, 8%) 100%);
+  color: $white;
+  box-shadow: $shadow-forest;
+
+  .question-card__number { color: $lime; opacity: 0.3; }
+  .question-card__hint { color: rgba(255, 255, 255, 0.7); }
+}
+
+// Tangerine (orange énergique)
+.question-card--tangerine {
+  background: linear-gradient(135deg, $tangerine 0%, darken($tangerine, 8%) 100%);
+  color: $white;
+  box-shadow: $shadow-tangerine;
+
+  .question-card__number { color: $white; opacity: 0.2; }
+  .question-card__hint { color: rgba(255, 255, 255, 0.8); }
+}
+
+// Sunshine (jaune chaleureux)
+.question-card--sunshine {
+  background: linear-gradient(135deg, $sunshine 0%, darken($sunshine, 5%) 100%);
+  color: $charcoal;
+  box-shadow: 0 8px 24px rgba(255, 232, 118, 0.4);
+
+  .question-card__number { color: $tangerine; opacity: 0.25; }
+}
+
+// Bubblegum (rose fun)
+.question-card--bubblegum {
+  background: linear-gradient(135deg, $bubblegum 0%, darken($bubblegum, 8%) 100%);
+  color: $charcoal;
+  box-shadow: 0 8px 24px rgba(255, 166, 213, 0.4);
+
+  .question-card__number { color: $tangerine; opacity: 0.3; }
+}
+
+// Electric Blue
+.question-card--blue {
+  background: linear-gradient(135deg, $electric-blue 0%, darken($electric-blue, 10%) 100%);
+  color: $white;
+  box-shadow: 0 8px 24px rgba(0, 89, 219, 0.3);
+
+  .question-card__number { color: $lime; opacity: 0.25; }
+  .question-card__hint { color: rgba(255, 255, 255, 0.75); }
+}
+
+// Cream (minimaliste)
+.question-card--cream {
+  background: $white;
+  color: $charcoal;
+  border: 2px solid $border-light;
+  box-shadow: $shadow-md;
+
+  .question-card__number { color: $forest; opacity: 0.1; }
+}
+
+// ============================================
+// NAVIGATION BUTTONS
+// ============================================
+
+.question-card__nav {
+  position: absolute;
+  bottom: $space-lg;
+  left: $space-xl;
+  right: $space-xl;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: $breakpoint-sm) {
+    left: $space-lg;
+    right: $space-lg;
+    bottom: $space-md;
+  }
+
+  &--final {
+    justify-content: space-between;
+  }
+}
+
+.question-card__next-btn {
+  position: absolute;
+  bottom: $space-lg;
+  right: $space-xl;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-lg;
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(4px);
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    right: $space-lg;
+    bottom: $space-md;
+    padding: $space-xs $space-md;
+    font-size: $font-size-sm;
+  }
+
+  // Ajustements pour les cards claires - style plus visible
+  .question-card--sunshine & {
+    background: $forest;
+    color: $white;
+    border-color: $forest;
+
+    &:hover {
+      background: darken($forest, 5%);
+      box-shadow: 0 4px 12px rgba(1, 102, 66, 0.3);
+    }
+  }
+
+  .question-card--bubblegum & {
+    background: $forest;
+    color: $white;
+    border-color: $forest;
+
+    &:hover {
+      background: darken($forest, 5%);
+      box-shadow: 0 4px 12px rgba(1, 102, 66, 0.3);
+    }
+  }
+
+  .question-card--cream & {
+    background: $tangerine;
+    color: $white;
+    border-color: $tangerine;
+
+    &:hover {
+      background: darken($tangerine, 5%);
+      box-shadow: 0 4px 12px rgba(255, 87, 13, 0.3);
+    }
+  }
+}
+
+.question-card__prev-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.15);
+  color: inherit;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(-4px);
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    width: 40px;
+    height: 40px;
+  }
+
+  // Ajustements pour les cards claires - style plus visible
+  .question-card--sunshine &,
+  .question-card--bubblegum & {
+    background: $forest;
+    color: $white;
+    border-color: $forest;
+
+    &:hover {
+      background: darken($forest, 5%);
+    }
+  }
+
+  .question-card--cream & {
+    background: $charcoal;
+    color: $white;
+    border-color: $charcoal;
+
+    &:hover {
+      background: lighten($charcoal, 10%);
+    }
+  }
+}
+
+.question-card__submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-lg;
+  background: $tangerine;
+  color: $white;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  border: none;
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: all $transition-base;
+  box-shadow: $shadow-tangerine;
+
+  &:hover {
+    background: darken($tangerine, 5%);
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(255, 87, 13, 0.4);
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $space-xs $space-md;
+    font-size: $font-size-sm;
+  }
+}
+
+// ============================================
+// FORM ELEMENTS
+// ============================================
+
+// Options grid (tags)
+.question-card__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+
+  &--grid {
+    gap: $space-xs;
+  }
+}
+
+// Question tags (checkboxes stylisés)
+.question-tag {
+  position: relative;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .question-tag__label {
+    display: inline-block;
+    padding: $space-sm $space-md;
+    border-radius: $radius-full;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    transition: all $transition-base;
+  }
+
+  // Variante Lime (sur fond forest)
+  &--lime {
+    .question-tag__label {
+      background: rgba(255, 255, 255, 0.15);
+      color: $white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    input:checked + .question-tag__label {
+      background: $lime;
+      color: $forest;
+      border-color: $lime;
+      transform: scale(1.05);
+    }
+
+    &:hover .question-tag__label {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  // Variante White (sur fond tangerine)
+  &--white {
+    .question-tag__label {
+      background: rgba(255, 255, 255, 0.2);
+      color: $white;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    input:checked + .question-tag__label {
+      background: $white;
+      color: $tangerine;
+      border-color: $white;
+      transform: scale(1.05);
+    }
+
+    &:hover .question-tag__label {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+// Budget input
+.budget-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-md;
+}
+
+.budget-input__field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xs;
+}
+
+.budget-input__label {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wide;
+  opacity: 0.7;
+}
+
+.budget-input__number {
+  width: 80px;
+  padding: $space-sm $space-md;
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  border-radius: $radius-md;
+  color: inherit;
+  transition: all $transition-base;
+
+  &:focus {
+    outline: none;
+    border-color: $charcoal;
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  // Hide number spinners
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
+}
+
+.budget-input__currency {
+  font-family: $font-display;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  opacity: 0.6;
+}
+
+.budget-input__separator {
+  font-family: $font-body;
+  font-size: $font-size-lg;
+  opacity: 0.5;
+}
+
+// Distance input
+.question-card__distance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+}
+
+.distance-input__number {
+  width: 120px;
+  padding: $space-sm $space-md;
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: $radius-md;
+  color: inherit;
+  transition: all $transition-base;
+
+  &:focus {
+    outline: none;
+    border-color: $charcoal;
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
+}
+
+.distance-input__unit {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  opacity: 0.7;
+}
+
+// Text input
+.question-card__input {
+  width: 100%;
+  padding: $space-md $space-lg;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: $radius-md;
+  color: $white;
+  transition: all $transition-base;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// Textarea
+.question-card__textarea {
+  width: 100%;
+  padding: $space-md $space-lg;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  background: $cream;
+  border: 2px solid $border-light;
+  border-radius: $radius-md;
+  color: $charcoal;
+  resize: vertical;
+  min-height: 100px;
+  transition: all $transition-base;
+
+  &::placeholder {
+    color: $text-placeholder;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $forest;
+    box-shadow: 0 0 0 3px rgba(1, 102, 66, 0.1);
+  }
+}
+
+// ============================================
+// DECORATIONS
+// ============================================
+
+.question-card__decoration {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.1;
+
+  &--fork {
+    bottom: 40px;
+    right: -10px;
+    width: 120px;
+    height: 120px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CAFF8D'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+    transform: rotate(15deg);
+  }
+
+  &--leaf {
+    bottom: 50px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+    transform: rotate(-20deg);
+  }
+
+  &--coins {
+    bottom: 50px;
+    right: 10px;
+    width: 90px;
+    height: 90px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF570D'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+  }
+
+  &--pin {
+    bottom: 50px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF570D'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+  }
+
+  &--stars {
+    bottom: 60px;
+    right: 15px;
+    width: 70px;
+    height: 70px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CAFF8D'%3E%3Cpath d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+    opacity: 0.2;
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes qcFadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qcFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: $breakpoint-sm) {
+  .question-stack {
+    padding: $space-md;
+    padding-top: $space-lg;
+  }
+
+  .question-stack__cards {
+    min-height: 380px;
+  }
+
+  .question-card {
+    padding: $space-lg;
+    padding-bottom: $space-2xl;
+  }
+
+  .question-card__title {
+    font-size: $font-size-lg;
+  }
+
+  .budget-input {
+    flex-direction: row;
+    gap: $space-sm;
+  }
+
+  .budget-input__number {
+    width: 70px;
+    font-size: $font-size-lg;
+  }
+}

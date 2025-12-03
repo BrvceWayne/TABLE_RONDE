@@ -6,13 +6,13 @@ class PreferencesController < ApplicationController
   # PHASE 3: Page du questionnaire
   def new
     user = current_or_guest_user
-    @preference = user.preferences || user.build_preferences
+    @preference = user.preference || user.build_preference
   end
 
   # PHASE 3: Création des préférences (première sauvegarde)
   def create
     user = current_or_guest_user
-    @preference = user.preferences || user.build_preferences
+    @preference = user.preference || user.build_preference
 
     @preference.assign_attributes(preference_params)
 
@@ -43,12 +43,12 @@ class PreferencesController < ApplicationController
   private
 
   def find_session
-    @session = Session.find(params[:session_id])
+    @session = Session.find_by!(share_code: params[:session_share_code])
   end
 
   def set_preference
     user = current_or_guest_user
-    @preference = user.preferences
+    @preference = user.preference
   end
 
   def preference_params
