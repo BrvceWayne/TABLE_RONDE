@@ -13,6 +13,7 @@ class PreferencesController < ApplicationController
     @preference = user.preference || user.build_preference
 
     @preference.assign_attributes(preference_params)
+    merge_other_cuisine
 
     if @preference.save
       if user.guest?
@@ -60,5 +61,18 @@ class PreferencesController < ApplicationController
       dietary_restrictions: [],
       cuisine_types: []
     )
+  end
+
+  def merge_other_cuisine
+    other = params.dig(:preference, :other_cuisine)
+    return if other.blank?
+
+    # Sépare les cuisines par virgule et nettoie
+    custom_cuisines = other.split(",").map(&:strip).reject(&:blank?)
+    return if custom_cuisines.empty?
+
+    # Ajoute les cuisines personnalisées au tableau existant
+    current = @preference.cuisine_types || []
+    @preference.cuisine_types = (current + custom_cuisines).uniq
   end
 end

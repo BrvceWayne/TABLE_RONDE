@@ -15,10 +15,83 @@
   background-color: $cream;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.5s ease, background 0.5s ease;
 
   @media (min-width: $breakpoint-md) {
     padding: $space-2xl;
     padding-top: $space-3xl;
+  }
+
+  // Backgrounds dynamiques selon la carte active
+  &--bg-forest {
+    background: linear-gradient(160deg, darken($lime, 10%) 0%, $lime 50%, lighten($lime, 5%) 100%);
+
+    .question-stack__title { color: $forest; }
+    .progress-step { background: rgba(1, 102, 66, 0.15); color: rgba(1, 102, 66, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(1, 102, 66, 0.15); }
+    .progress-step--active { background: $forest; color: $lime; }
+    .progress-step--done { background: rgba(1, 102, 66, 0.4); color: $white; }
+    .progress-step--done::after { background: rgba(1, 102, 66, 0.4); }
+  }
+
+  &--bg-tangerine {
+    // Fond cream/blanc pour contraster avec la carte orange
+    background: linear-gradient(160deg, darken($cream, 5%) 0%, $cream 50%, $white 100%);
+
+    .question-stack__title { color: $tangerine; }
+    .progress-step { background: rgba(255, 87, 13, 0.15); color: rgba(255, 87, 13, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 87, 13, 0.15); }
+    .progress-step--active { background: $tangerine; color: $white; }
+    .progress-step--done { background: rgba(255, 87, 13, 0.3); color: $white; }
+    .progress-step--done::after { background: rgba(255, 87, 13, 0.3); }
+  }
+
+  &--bg-sunshine {
+    // Fond forest pour contraster avec la carte jaune
+    background: linear-gradient(160deg, darken($forest, 10%) 0%, $forest 50%, darken($forest, 5%) 100%);
+
+    .question-stack__title { color: $sunshine; }
+    .progress-step { background: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 255, 255, 0.15); }
+    .progress-step--active { background: $sunshine; color: $forest; }
+    .progress-step--done { background: rgba(255, 232, 118, 0.5); color: $forest; }
+    .progress-step--done::after { background: rgba(255, 232, 118, 0.5); }
+  }
+
+  &--bg-bubblegum {
+    // Fond electric-blue pour contraster avec la carte rose
+    background: linear-gradient(160deg, darken($electric-blue, 10%) 0%, $electric-blue 50%, darken($electric-blue, 5%) 100%);
+
+    .question-stack__title { color: $bubblegum; }
+    .progress-step { background: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 255, 255, 0.15); }
+    .progress-step--active { background: $bubblegum; color: $electric-blue; }
+    .progress-step--done { background: rgba(255, 166, 213, 0.5); color: $electric-blue; }
+    .progress-step--done::after { background: rgba(255, 166, 213, 0.5); }
+  }
+
+  &--bg-blue {
+    // Fond bubblegum pour contraster avec la carte bleue
+    background: linear-gradient(160deg, darken($bubblegum, 5%) 0%, $bubblegum 50%, lighten($bubblegum, 5%) 100%);
+
+    .question-stack__title { color: $electric-blue; }
+    .progress-step { background: rgba(0, 89, 219, 0.15); color: rgba(0, 89, 219, 0.4); }
+    .progress-step:not(:last-child)::after { background: rgba(0, 89, 219, 0.15); }
+    .progress-step--active { background: $electric-blue; color: $white; }
+    .progress-step--done { background: rgba(0, 89, 219, 0.35); color: $white; }
+    .progress-step--done::after { background: rgba(0, 89, 219, 0.35); }
+  }
+
+  &--bg-cream {
+    // Fond tangerine pour contraster avec la carte cream
+    background: linear-gradient(160deg, darken($tangerine, 5%) 0%, $tangerine 50%, lighten($tangerine, 5%) 100%);
+
+    .question-stack__title { color: $white; }
+    .progress-step { background: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.6); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 255, 255, 0.2); }
+    .progress-step--active { background: $white; color: $tangerine; }
+    .progress-step--done { background: rgba(255, 255, 255, 0.6); color: $tangerine; }
+    .progress-step--done::after { background: rgba(255, 255, 255, 0.6); }
   }
 }
 
@@ -39,38 +112,80 @@
   }
 }
 
-// Progress bar
-.question-stack__progress-container {
+// Progress steps avec icônes
+.question-stack__progress-steps {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $space-md;
-  max-width: 300px;
+  gap: $space-xs;
   margin: 0 auto;
+
+  @media (max-width: $breakpoint-sm) {
+    gap: 4px;
+  }
 }
 
-.question-stack__progress-bar {
-  flex: 1;
-  height: 6px;
+.progress-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   background: $border-light;
-  border-radius: $radius-full;
-  overflow: hidden;
-}
+  color: $text-muted;
+  font-size: $font-size-base;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
+  border: none;
 
-.question-stack__progress-fill {
-  height: 100%;
-  width: 16.66%;
-  background: linear-gradient(90deg, $forest, $lime);
-  border-radius: $radius-full;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  &:hover:not(&--active) {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
 
-.question-stack__progress-text {
-  font-family: $font-body;
-  font-size: $font-size-sm;
-  color: $text-secondary;
-  font-weight: $font-weight-medium;
-  min-width: 40px;
+  @media (max-width: $breakpoint-sm) {
+    width: 36px;
+    height: 36px;
+    font-size: $font-size-sm;
+  }
+
+  // Connecteur entre les steps
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: $space-xs;
+    height: 3px;
+    background: $border-light;
+    transition: background 0.3s ease;
+
+    @media (max-width: $breakpoint-sm) {
+      width: 4px;
+      height: 2px;
+    }
+  }
+
+  // État actif
+  &--active {
+    background: $forest;
+    color: $white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(1, 102, 66, 0.3);
+  }
+
+  // État complété
+  &--done {
+    background: $lime;
+    color: $forest;
+
+    &::after {
+      background: $lime;
+    }
+  }
 }
 
 .question-stack__form {
@@ -89,7 +204,7 @@
 .question-stack__cards {
   position: relative;
   min-height: 450px;
-  perspective: 1000px;
+  perspective: 1200px;
 
   @media (max-width: $breakpoint-sm) {
     min-height: 420px;
@@ -106,63 +221,78 @@
   left: 0;
   right: 0;
   padding: $space-xl;
-  padding-bottom: $space-3xl;
+  padding-bottom: 80px; // Espace fixe pour la navigation
   border-radius: $radius-2xl;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
+  transform-origin: center left;
+  box-shadow: -8px 8px 24px rgba(0, 0, 0, 0.15);
 
   // Par défaut : première carte visible (fallback sans JS)
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0) scale(1);
+  transform: translateX(0) rotateY(0);
   z-index: 1;
 
   // Cartes suivantes cachées par défaut
   &:nth-child(n+2) {
     opacity: 0;
     pointer-events: none;
-    transform: translateY(100px) scale(0.9);
+    transform: translateX(30px) rotateY(-8deg);
     z-index: 0;
   }
 
   @media (max-width: $breakpoint-sm) {
     padding: $space-lg;
-    padding-bottom: $space-2xl;
+    padding-bottom: 70px; // Espace fixe pour la navigation
   }
 
   // Carte active (devant) - quand JS est chargé
   &--active {
     opacity: 1 !important;
     pointer-events: auto !important;
-    transform: translateY(0) scale(1) !important;
+    transform: translateX(0) rotateY(0) !important;
     z-index: 30 !important;
+    box-shadow: -12px 12px 32px rgba(0, 0, 0, 0.2) !important;
   }
 
-  // Prochaine carte (visible derrière)
+  // Prochaine carte (visible derrière à droite)
   &--next {
-    opacity: 0.7 !important;
+    opacity: 0.9 !important;
     pointer-events: none !important;
-    transform: translateY(20px) scale(0.95) !important;
+    transform: translateX(20px) rotateY(-5deg) !important;
     z-index: 20 !important;
     filter: brightness(0.95);
+    box-shadow: -6px 6px 20px rgba(0, 0, 0, 0.12) !important;
   }
 
-  // Carte d'après (légèrement visible)
+  // Carte d'après (plus en arrière)
   &--next-2 {
-    opacity: 0.4 !important;
+    opacity: 0.7 !important;
     pointer-events: none !important;
-    transform: translateY(40px) scale(0.9) !important;
+    transform: translateX(40px) rotateY(-10deg) !important;
     z-index: 10 !important;
-    filter: brightness(0.9);
+    filter: brightness(0.88);
+    box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  // Troisième carte visible
+  &--next-3 {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+    transform: translateX(60px) rotateY(-15deg) !important;
+    z-index: 5 !important;
+    filter: brightness(0.82);
+    box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.05) !important;
   }
 
   // Cartes cachées
   &--hidden {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translateY(60px) scale(0.85) !important;
+    transform: translateX(80px) rotateY(-20deg) !important;
     z-index: 0 !important;
   }
 
@@ -170,7 +300,7 @@
   &--exiting {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translateX(-120%) rotate(-10deg) !important;
+    transform: translateX(-120%) rotateY(15deg) !important;
     z-index: 40 !important;
   }
 }
@@ -292,6 +422,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 10;
 
   @media (max-width: $breakpoint-sm) {
     left: $space-lg;
@@ -305,9 +436,6 @@
 }
 
 .question-card__next-btn {
-  position: absolute;
-  bottom: $space-lg;
-  right: $space-xl;
   display: inline-flex;
   align-items: center;
   gap: $space-sm;
@@ -322,38 +450,36 @@
   cursor: pointer;
   transition: all $transition-base;
 
+  // Position absolue seulement quand il est seul (pas dans .question-card__nav)
+  .question-card > & {
+    position: absolute;
+    bottom: $space-lg;
+    right: $space-xl;
+
+    @media (max-width: $breakpoint-sm) {
+      right: $space-lg;
+      bottom: $space-md;
+    }
+  }
+
   &:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: translateX(4px);
   }
 
   @media (max-width: $breakpoint-sm) {
-    right: $space-lg;
-    bottom: $space-md;
     padding: $space-xs $space-md;
     font-size: $font-size-sm;
   }
 
-  // Ajustements pour les cards claires - style plus visible
-  .question-card--sunshine & {
-    background: $forest;
-    color: $white;
-    border-color: $forest;
-
-    &:hover {
-      background: darken($forest, 5%);
-      box-shadow: 0 4px 12px rgba(1, 102, 66, 0.3);
-    }
-  }
-
+  // Ajustements pour les cards claires
+  .question-card--sunshine &,
   .question-card--bubblegum & {
-    background: $forest;
-    color: $white;
-    border-color: $forest;
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.2);
 
     &:hover {
-      background: darken($forest, 5%);
-      box-shadow: 0 4px 12px rgba(1, 102, 66, 0.3);
+      background: rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -392,15 +518,14 @@
     height: 40px;
   }
 
-  // Ajustements pour les cards claires - style plus visible
+  // Ajustements pour les cards claires
   .question-card--sunshine &,
   .question-card--bubblegum & {
-    background: $forest;
-    color: $white;
-    border-color: $forest;
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.2);
 
     &:hover {
-      background: darken($forest, 5%);
+      background: rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -517,6 +642,47 @@
 
     &:hover .question-tag__label {
       background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+// Option "Autre" avec input texte
+.question-tag-other {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-basis: 100%;
+  margin-top: $space-sm;
+
+  &--lime {
+    .question-tag-other__label {
+      font-family: $font-body;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .question-tag-other__input {
+      flex: 1;
+      max-width: 200px;
+      padding: $space-xs $space-md;
+      font-family: $font-body;
+      font-size: $font-size-sm;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: $radius-full;
+      color: $white;
+      transition: all $transition-base;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      &:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.25);
+        border-color: $lime;
+      }
     }
   }
 }
@@ -682,10 +848,11 @@
   position: absolute;
   pointer-events: none;
   opacity: 0.1;
+  z-index: 0; // Derrière la navigation
 
   &--fork {
-    bottom: 40px;
-    right: -10px;
+    top: 50%;
+    right: -20px;
     width: 120px;
     height: 120px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CAFF8D'%3E%3Cpath d='M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z'/%3E%3C/svg%3E") no-repeat center;
@@ -694,8 +861,8 @@
   }
 
   &--leaf {
-    bottom: 50px;
-    right: 20px;
+    top: 40%;
+    right: 10px;
     width: 100px;
     height: 100px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z'/%3E%3C/svg%3E") no-repeat center;
@@ -704,8 +871,8 @@
   }
 
   &--coins {
-    bottom: 50px;
-    right: 10px;
+    top: 30%;
+    right: -10px;
     width: 90px;
     height: 90px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF570D'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z'/%3E%3C/svg%3E") no-repeat center;
@@ -713,8 +880,8 @@
   }
 
   &--pin {
-    bottom: 50px;
-    right: 20px;
+    top: 35%;
+    right: 5px;
     width: 80px;
     height: 80px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF570D'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E") no-repeat center;
@@ -722,8 +889,8 @@
   }
 
   &--stars {
-    bottom: 60px;
-    right: 15px;
+    top: 20%;
+    right: 10px;
     width: 70px;
     height: 70px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CAFF8D'%3E%3Cpath d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/%3E%3C/svg%3E") no-repeat center;

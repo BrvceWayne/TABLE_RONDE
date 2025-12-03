@@ -11,11 +11,25 @@
   <%# Header avec progression %>
   <div class="question-stack__header">
     <h1 class="question-stack__title">Vos envies</h1>
-    <div class="question-stack__progress-container">
-      <div class="question-stack__progress-bar">
-        <div class="question-stack__progress-fill" data-question-stack-target="progress"></div>
-      </div>
-      <span class="question-stack__progress-text" data-question-stack-target="progressText">1 / 6</span>
+    <div class="question-stack__progress-steps" data-question-stack-target="progressSteps">
+      <button type="button" class="progress-step progress-step--active" data-step="0" data-action="click->question-stack#goToStep">
+        <i class="fa-solid fa-utensils"></i>
+      </button>
+      <button type="button" class="progress-step" data-step="1" data-action="click->question-stack#goToStep">
+        <i class="fa-solid fa-leaf"></i>
+      </button>
+      <button type="button" class="progress-step" data-step="2" data-action="click->question-stack#goToStep">
+        <i class="fa-solid fa-euro-sign"></i>
+      </button>
+      <button type="button" class="progress-step" data-step="3" data-action="click->question-stack#goToStep">
+        <i class="fa-solid fa-location-dot"></i>
+      </button>
+      <button type="button" class="progress-step" data-step="4" data-action="click->question-stack#goToStep">
+        <i class="fa-solid fa-champagne-glasses"></i>
+      </button>
+      <button type="button" class="progress-step" data-step="5" data-action="click->question-stack#goToStep">
+        <i class="fa-solid fa-star"></i>
+      </button>
     </div>
   </div>
 
@@ -38,6 +52,12 @@
                 <span class="question-tag__label"><%= cuisine %></span>
               </label>
             <% end %>
+
+            <%# Option "Autre" avec input texte %>
+            <div class="question-tag-other question-tag-other--lime">
+              <span class="question-tag-other__label">Autre :</span>
+              <%= f.text_field :other_cuisine, value: nil, class: "question-tag-other__input", placeholder: "Péruvienne, Éthiopienne..." %>
+            </div>
           </div>
         </div>
         <div class="question-card__decoration question-card__decoration--fork"></div>
