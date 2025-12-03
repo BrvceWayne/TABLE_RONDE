@@ -1,3 +1,5 @@
+<div data-controller="auto-refresh" data-auto-refresh-interval-value="5000">
+
 <h1>Dashboard - Session <%= @session.share_code %></h1>
 
 <div class="card mb-4">
@@ -51,4 +53,6 @@
   <% else %>
     <span class="text-muted align-self-center">En attente de la génération par le leader...</span>
   <% end %>
+</div>
+
 </div>
