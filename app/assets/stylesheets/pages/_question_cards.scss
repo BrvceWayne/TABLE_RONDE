@@ -15,10 +15,83 @@
   background-color: $cream;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.5s ease, background 0.5s ease;
 
   @media (min-width: $breakpoint-md) {
     padding: $space-2xl;
     padding-top: $space-3xl;
+  }
+
+  // Backgrounds dynamiques selon la carte active
+  &--bg-forest {
+    background: linear-gradient(160deg, darken($lime, 10%) 0%, $lime 50%, lighten($lime, 5%) 100%);
+
+    .question-stack__title { color: $forest; }
+    .progress-step { background: rgba(1, 102, 66, 0.15); color: rgba(1, 102, 66, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(1, 102, 66, 0.15); }
+    .progress-step--active { background: $forest; color: $lime; }
+    .progress-step--done { background: rgba(1, 102, 66, 0.4); color: $white; }
+    .progress-step--done::after { background: rgba(1, 102, 66, 0.4); }
+  }
+
+  &--bg-tangerine {
+    // Fond cream/blanc pour contraster avec la carte orange
+    background: linear-gradient(160deg, darken($cream, 5%) 0%, $cream 50%, $white 100%);
+
+    .question-stack__title { color: $tangerine; }
+    .progress-step { background: rgba(255, 87, 13, 0.15); color: rgba(255, 87, 13, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 87, 13, 0.15); }
+    .progress-step--active { background: $tangerine; color: $white; }
+    .progress-step--done { background: rgba(255, 87, 13, 0.3); color: $white; }
+    .progress-step--done::after { background: rgba(255, 87, 13, 0.3); }
+  }
+
+  &--bg-sunshine {
+    // Fond forest pour contraster avec la carte jaune
+    background: linear-gradient(160deg, darken($forest, 10%) 0%, $forest 50%, darken($forest, 5%) 100%);
+
+    .question-stack__title { color: $sunshine; }
+    .progress-step { background: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 255, 255, 0.15); }
+    .progress-step--active { background: $sunshine; color: $forest; }
+    .progress-step--done { background: rgba(255, 232, 118, 0.5); color: $forest; }
+    .progress-step--done::after { background: rgba(255, 232, 118, 0.5); }
+  }
+
+  &--bg-bubblegum {
+    // Fond electric-blue pour contraster avec la carte rose
+    background: linear-gradient(160deg, darken($electric-blue, 10%) 0%, $electric-blue 50%, darken($electric-blue, 5%) 100%);
+
+    .question-stack__title { color: $bubblegum; }
+    .progress-step { background: rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.5); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 255, 255, 0.15); }
+    .progress-step--active { background: $bubblegum; color: $electric-blue; }
+    .progress-step--done { background: rgba(255, 166, 213, 0.5); color: $electric-blue; }
+    .progress-step--done::after { background: rgba(255, 166, 213, 0.5); }
+  }
+
+  &--bg-blue {
+    // Fond bubblegum pour contraster avec la carte bleue
+    background: linear-gradient(160deg, darken($bubblegum, 5%) 0%, $bubblegum 50%, lighten($bubblegum, 5%) 100%);
+
+    .question-stack__title { color: $electric-blue; }
+    .progress-step { background: rgba(0, 89, 219, 0.15); color: rgba(0, 89, 219, 0.4); }
+    .progress-step:not(:last-child)::after { background: rgba(0, 89, 219, 0.15); }
+    .progress-step--active { background: $electric-blue; color: $white; }
+    .progress-step--done { background: rgba(0, 89, 219, 0.35); color: $white; }
+    .progress-step--done::after { background: rgba(0, 89, 219, 0.35); }
+  }
+
+  &--bg-cream {
+    // Fond tangerine pour contraster avec la carte cream
+    background: linear-gradient(160deg, darken($tangerine, 5%) 0%, $tangerine 50%, lighten($tangerine, 5%) 100%);
+
+    .question-stack__title { color: $white; }
+    .progress-step { background: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.6); }
+    .progress-step:not(:last-child)::after { background: rgba(255, 255, 255, 0.2); }
+    .progress-step--active { background: $white; color: $tangerine; }
+    .progress-step--done { background: rgba(255, 255, 255, 0.6); color: $tangerine; }
+    .progress-step--done::after { background: rgba(255, 255, 255, 0.6); }
   }
 }
 
