@@ -6,7 +6,7 @@
 %>
 
 <div data-controller="menu" data-action="keydown.escape@window->menu#closeOnEscape">
-  <%# Bouton burger flottant %>
+  <%# Bouton burger flottant (icône hamburger food) %>
   <button
     class="burger-floating"
     data-menu-target="burger"
@@ -14,9 +14,16 @@
     aria-label="Menu"
     aria-expanded="false"
   >
-    <span class="burger__line"></span>
-    <span class="burger__line"></span>
-    <span class="burger__line"></span>
+    <span class="burger-icon">
+      <span class="burger-icon__bun-top"></span>
+      <span class="burger-icon__lettuce"></span>
+      <span class="burger-icon__patty"></span>
+      <span class="burger-icon__bun-bottom"></span>
+    </span>
+    <span class="burger-icon__cross">
+      <span class="burger-icon__cross-line"></span>
+      <span class="burger-icon__cross-line"></span>
+    </span>
   </button>
 
   <%# Overlay %>

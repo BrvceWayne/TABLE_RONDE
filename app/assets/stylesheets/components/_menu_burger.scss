@@ -17,57 +17,167 @@
   background: transparent !important;
   border: none !important;
   cursor: pointer;
-  padding: 12px;
+  padding: 8px;
   border-radius: 12px;
 
-  // Flexbox pour les lignes
+  // Flexbox pour le contenu
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 48px;
   height: 48px;
-  gap: 6px;
 
   // Transition hover
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.05);
+
+    // Séparation des ingrédients au hover
+    .burger-icon__bun-top {
+      transform: translateY(-4px);
+    }
+
+    .burger-icon__lettuce {
+      transform: translateY(-2px);
+    }
+
+    .burger-icon__patty {
+      transform: translateY(2px);
+    }
+
+    .burger-icon__bun-bottom {
+      transform: translateY(4px);
+    }
   }
 
   &:focus {
     outline: none;
   }
 
-  // Les 3 lignes
-  .burger__line {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background-color: #1A1A1A;
-    border-radius: 2px;
-    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
-    transform-origin: center;
+  // Icône hamburger (nourriture)
+  .burger-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
-  // Animation vers la croix
+  // Pain du haut (arrondi)
+  .burger-icon__bun-top {
+    width: 24px;
+    height: 8px;
+    background-color: #D4A574;
+    border-radius: 12px 12px 2px 2px;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    // Graines de sésame
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 3px;
+      height: 2px;
+      background-color: #F5E6D3;
+      border-radius: 50%;
+      top: 2px;
+    }
+    &::before {
+      left: 5px;
+    }
+    &::after {
+      right: 5px;
+    }
+  }
+
+  // Salade
+  .burger-icon__lettuce {
+    width: 26px;
+    height: 3px;
+    background-color: #7CB342;
+    border-radius: 1px;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: 0.02s;
+
+    // Effet ondulé
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        #8BC34A 20%,
+        transparent 40%,
+        #8BC34A 60%,
+        transparent 80%,
+        #8BC34A 100%
+      );
+      border-radius: 1px;
+    }
+  }
+
+  // Steak
+  .burger-icon__patty {
+    width: 22px;
+    height: 4px;
+    background-color: #5D4037;
+    border-radius: 1px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: 0.04s;
+  }
+
+  // Pain du bas
+  .burger-icon__bun-bottom {
+    width: 24px;
+    height: 6px;
+    background-color: #D4A574;
+    border-radius: 2px 2px 8px 8px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: 0.06s;
+  }
+
+  // Croix (cachée par défaut)
+  .burger-icon__cross {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .burger-icon__cross-line {
+    position: absolute;
+    width: 24px;
+    height: 3px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    &:nth-child(2) {
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+
+  // Animation vers la croix quand actif
   &.is-active {
-    .burger__line {
-      background-color: #FFFFFF;
-    }
-
-    .burger__line:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-
-    .burger__line:nth-child(2) {
+    .burger-icon {
       opacity: 0;
-      transform: scaleX(0);
+      transform: scale(0.5) rotate(45deg);
     }
 
-    .burger__line:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
+    .burger-icon__cross {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
     }
   }
 }
