@@ -9,7 +9,7 @@ class SessionUsersController < ApplicationController
 
     # Vérifier si l'utilisateur fait déjà partie de la session
     if @session.session_users.exists?(user: user)
-      redirect_to session_preferences_path(@session), notice: "Vous êtes déjà dans cette session"
+      redirect_to new_session_preference_path(session_share_code: @session.share_code), notice: "Vous êtes déjà dans cette session"
       return
     end
 
@@ -21,9 +21,9 @@ class SessionUsersController < ApplicationController
     )
 
     if session_user.save
-      redirect_to session_preferences_path(@session)
+      redirect_to new_session_preference_path(session_share_code: @session.share_code)
     else
-      redirect_to session_path(@session.share_code), alert: "Impossible de rejoindre la session"
+      redirect_to join_session_path(@session.share_code), alert: "Impossible de rejoindre la session"
     end
   end
 

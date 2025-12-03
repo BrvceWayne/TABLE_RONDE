@@ -3,13 +3,11 @@ class PreferencesController < ApplicationController
   before_action :find_session
   before_action :set_preference, only: [:edit, :update]
 
-  # PHASE 3: Page du questionnaire
   def new
     user = current_or_guest_user
     @preference = user.preference || user.build_preference
   end
 
-  # PHASE 3: Création des préférences (première sauvegarde)
   def create
     user = current_or_guest_user
     @preference = user.preference || user.build_preference
@@ -17,24 +15,22 @@ class PreferencesController < ApplicationController
     @preference.assign_attributes(preference_params)
 
     if @preference.save
-      # Si c'est un guest user, proposer de créer un compte
       if user.guest?
-        redirect_to @session, notice: "Vos préférences ont été enregistrées. Créez un compte pour les sauvegarder !"
+        redirect_to dashboard_session_path(share_code: @session.share_code), notice: "Vos préférences ont été enregistrées. Créez un compte pour les sauvegarder !"
       else
-        redirect_to @session, notice: "Vos préférences ont été enregistrées"
+        redirect_to dashboard_session_path(share_code: @session.share_code), notice: "Vos préférences ont été enregistrées"
       end
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  # PHASE 3: Modification des préférences
   def edit
   end
 
   def update
     if @preference.update(preference_params)
-      redirect_to @session, notice: "Vos préférences ont été mises à jour"
+      redirect_to dashboard_session_path(share_code: @session.share_code), notice: "Vos préférences ont été mises à jour"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -58,6 +54,9 @@ class PreferencesController < ApplicationController
       :budget_max,
       :ambiance,
       :special_requests,
+      :latitude,
+      :longitude,
+      :address,
       dietary_restrictions: [],
       cuisine_types: []
     )
