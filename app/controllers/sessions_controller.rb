@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   before_action :set_session, only: [:show, :dashboard, :generate_recommendations]
-  skip_before_action :authenticate_user!, only: [:show]
+  skip_before_action :authenticate_user!, only: [:show, :dashboard]
 
   # PHASE 1: Alice crée une nouvelle session
   def new
@@ -34,7 +34,7 @@ class SessionsController < ApplicationController
     # Cette page permet aux invités d'entrer leur prénom
   end
 
-  # PHASE 4: Dashboard du leader pour voir qui a terminé
+  # PHASE 4: Dashboard pour voir qui a terminé (accessible aux guests)
   def dashboard
     @session_users = @session.session_users.includes(:user, user: :preference)
     @participants_status = @session_users.map do |su|
@@ -44,6 +44,12 @@ class SessionsController < ApplicationController
         preferences_completed: su.user.preference&.present? || false
       }
     end
+
+    # Vérifier si l'utilisateur actuel est le leader
+    user = current_or_guest_user
+    session_user = @session.session_users.find_by(user: user)
+    @is_leader = session_user&.leader? || false
+    @is_participant = session_user.present?
   end
 
   # PHASE 4: Le leader lance la génération
@@ -65,11 +71,11 @@ class SessionsController < ApplicationController
       return
     end
 
-    # TODO: Appeler le service d'IA pour générer les recommandations
-    # GenerateRestaurantsService.new(@session, completed_users).call
+    # Appeler le service pour générer les recommandations
+    GenerateRestaurantsService.new(@session).call
 
     @session.update(completed_at: Time.current)
-    redirect_to session_restaurants_path(@session)
+    redirect_to session_restaurants_path(@session), notice: "Recommandations générées avec succès !"
   end
 
   private

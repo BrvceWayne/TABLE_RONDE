@@ -1,9 +1,54 @@
-<h1>Session créée</h1>
+<h1>Dashboard - Session <%= @session.share_code %></h1>
 
-<div class="card">
+<div class="card mb-4">
   <div class="card-body text-center">
-    <p>Partagez ce code avec vos amis :</p>
-    <h2 class="display-4"><%= @session.share_code %></h2>
+    <% if @is_leader %>
+      <p>Partagez ce code avec vos amis :</p>
+      <h2 class="display-4"><%= @session.share_code %></h2>
+      <p><%= link_to "Lien d'invitation", join_session_url(@session.share_code) %></p>
+    <% end %>
     <p class="text-muted">Type de repas : <%= @session.meal_type %></p>
   </div>
+</div>
+
+<h3>Participants (<%= @participants_status.size %>)</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Participant</th>
+      <th>Rôle</th>
+      <th>Préférences</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @participants_status.each do |p| %>
+      <tr>
+        <td><%= p[:user].guest? ? "Invité" : p[:user].email %></td>
+        <td><%= p[:leader] ? "Leader" : "Participant" %></td>
+        <td>
+          <% if p[:preferences_completed] %>
+            <span class="badge bg-success">Complétées</span>
+          <% else %>
+            <span class="badge bg-warning">En attente</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="d-flex gap-2">
+  <% if @is_participant %>
+    <%= link_to "Remplir mes préférences", new_session_preference_path(session_share_code: @session.share_code), class: "btn btn-outline-primary" %>
+  <% else %>
+    <%= link_to "Rejoindre la session", join_session_path(@session.share_code), class: "btn btn-outline-secondary" %>
+  <% end %>
+
+  <% if @is_leader %>
+    <%= button_to "Générer les recommandations", generate_recommendations_session_path(share_code: @session.share_code), method: :post, class: "btn btn-primary" %>
+  <% elsif @session.restaurants.any? %>
+    <%= link_to "Voir les recommandations", session_restaurants_path(session_share_code: @session.share_code), class: "btn btn-success" %>
+  <% else %>
+    <span class="text-muted align-self-center">En attente de la génération par le leader...</span>
+  <% end %>
 </div>

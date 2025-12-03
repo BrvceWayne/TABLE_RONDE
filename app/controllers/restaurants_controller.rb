@@ -27,17 +27,17 @@ class RestaurantsController < ApplicationController
     end
 
     # Récupérer les IDs des restaurants déjà proposés pour les exclure
-    excluded_ids = @session.restaurants.pluck(:google_place_id)
+    excluded_ids = @session.restaurants.pluck(:google_place_id).compact
 
-    # TODO: Appeler le service d'IA avec les IDs exclus
-    # GenerateRestaurantsService.new(@session, excluded_ids).call
+    # Appeler le service avec les IDs exclus pour obtenir de nouvelles recommandations
+    GenerateRestaurantsService.new(@session, excluded_place_ids: excluded_ids).call
 
-    redirect_to session_restaurants_path(@session), notice: "Nouvelles recommandations en cours de génération..."
+    redirect_to session_restaurants_path(@session), notice: "Nouvelles recommandations générées !"
   end
 
   private
 
   def find_session
-    @session = Session.find(params[:session_id])
+    @session = Session.find_by!(share_code: params[:session_share_code])
   end
 end

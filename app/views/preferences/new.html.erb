@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <%= form_with model: @preference, url: session_preferences_path(@session), local: true, class: "question-stack__form" do |f| %>
+  <%= form_with model: @preference, url: session_preferences_path(session_share_code: @session.share_code), method: :post, local: true, class: "question-stack__form" do |f| %>
 
     <%# Container des cartes empilées %>
     <div class="question-stack__cards">
@@ -127,13 +127,33 @@
         </div>
       </div>
 
-      <%# Card 4 - Distance (style Bubblegum) %>
-      <div class="question-card question-card--bubblegum question-card--hidden" data-question-stack-target="card">
+      <%# Card 4 - Localisation et Distance (style Bubblegum) %>
+      <div class="question-card question-card--bubblegum question-card--hidden" data-question-stack-target="card" data-controller="geolocation">
         <div class="question-card__number">04</div>
         <div class="question-card__content">
-          <h2 class="question-card__title">Jusqu'où êtes-vous prêts à aller ?</h2>
-          <p class="question-card__hint">Distance maximale depuis votre point de rencontre</p>
+          <h2 class="question-card__title">Où êtes-vous ?</h2>
+          <p class="question-card__hint">Partagez votre position pour trouver un lieu accessible à tous</p>
 
+          <%# Champs cachés pour lat/lng %>
+          <%= f.hidden_field :latitude, data: { geolocation_target: "latitude" } %>
+          <%= f.hidden_field :longitude, data: { geolocation_target: "longitude" } %>
+
+          <%# Bouton de géolocalisation %>
+          <div class="geolocation-container mb-3">
+            <button type="button" class="btn btn-outline-primary geolocation-btn" data-geolocation-target="button" data-action="click->geolocation#locate">
+              <i class="fa-solid fa-location-crosshairs"></i> Me localiser
+            </button>
+            <span class="geolocation-status" data-geolocation-target="status"></span>
+          </div>
+
+          <%# Adresse (affichée après géoloc ou saisie manuelle) %>
+          <div class="mb-3">
+            <%= f.text_field :address, class: "form-control", placeholder: "Ou entrez votre adresse manuellement...", data: { geolocation_target: "address" } %>
+          </div>
+
+          <hr class="my-3">
+
+          <h3 class="h6">Distance maximale acceptable</h3>
           <div class="question-card__distance">
             <%= f.number_field :max_distance, value: @preference.max_distance || 1000, min: 100, max: 10000, step: 100, class: "distance-input__number", placeholder: "1000" %>
             <span class="distance-input__unit">mètres</span>
