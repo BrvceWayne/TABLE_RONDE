@@ -92,7 +92,7 @@
         <%= button_to generate_recommendations_session_path(share_code: @session.share_code),
             method: :post,
             class: "dashboard__btn dashboard__btn--primary",
-            data: { turbo_confirm: "Générer les recommandations ?" } do %>
+            data: { turbo: false } do %>
           <span>✨</span> Générer les restos
         <% end %>
       <% elsif @session.restaurants.any? %>
