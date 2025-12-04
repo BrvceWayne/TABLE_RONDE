@@ -73,14 +73,10 @@ class SessionsController < ApplicationController
     end
 
     # Appeler le service pour générer les recommandations
-    begin
-      GenerateRestaurantsService.new(@session).call
-      @session.update(completed_at: Time.current)
-      redirect_to session_restaurants_path(session_share_code: @session.share_code), notice: "Recommandations générées avec succès !"
-    rescue => e
-      Rails.logger.error "Erreur génération restaurants: #{e.message}"
-      redirect_to dashboard_session_path(share_code: @session.share_code), alert: "Erreur: #{e.message}"
-    end
+    GenerateRestaurantsService.new(@session).call
+
+    @session.update(completed_at: Time.current)
+    redirect_to session_restaurants_path(session_share_code: @session.share_code), notice: "Recommandations générées avec succès !", status: :see_other
   end
 
   private
