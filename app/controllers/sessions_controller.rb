@@ -76,7 +76,7 @@ class SessionsController < ApplicationController
     GenerateRestaurantsService.new(@session).call
 
     @session.update(completed_at: Time.current)
-    redirect_to session_restaurants_path(@session), notice: "Recommandations générées avec succès !"
+    redirect_to session_restaurants_path(session_share_code: @session.share_code), notice: "Recommandations générées avec succès !", status: :see_other
   end
 
   private
