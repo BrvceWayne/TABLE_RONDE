@@ -1,0 +1,196 @@
+<div class="restaurant-show">
+
+  <header class="restaurant-show__header">
+    <%= link_to session_restaurants_path(session_share_code: @session.share_code), class: "restaurant-show__back" do %>
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    <% end %>
+  </header>
+
+  <div class="restaurant-show__card">
+
+    <div class="restaurant-show__rank">
+      <% if @restaurant.rank == 1 %>
+        <span class="restaurant-show__rank-badge restaurant-show__rank-badge--gold">
+          <i class="fa-solid fa-crown"></i> Meilleur choix
+        </span>
+      <% else %>
+        <span class="restaurant-show__rank-badge">
+          Alternative #<%= @restaurant.rank %>
+        </span>
+      <% end %>
+    </div>
+
+    <h1 class="restaurant-show__name"><%= @restaurant.name %></h1>
+
+    <% if @google_details %>
+      <% if @google_details.rating %>
+        <div class="restaurant-show__rating">
+          <span class="restaurant-show__stars">
+            <% @google_details.rating.round.times do %>
+              <i class="fa-solid fa-star"></i>
+            <% end %>
+            <% (5 - @google_details.rating.round).times do %>
+              <i class="fa-regular fa-star"></i>
+            <% end %>
+          </span>
+          <span class="restaurant-show__rating-value"><%= @google_details.rating %>/5</span>
+          <% if @google_details.respond_to?(:user_ratings_total) && @google_details.user_ratings_total %>
+            <span class="restaurant-show__rating-count">(<%= @google_details.user_ratings_total %> avis)</span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if @google_details.price_level %>
+        <div class="restaurant-show__price">
+          <% @google_details.price_level.times do %>
+            <span class="restaurant-show__price-active">€</span>
+          <% end %>
+          <% (4 - @google_details.price_level).times do %>
+            <span class="restaurant-show__price-inactive">€</span>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
+
+    <% if @restaurant.ai_explanation.present? %>
+      <div class="restaurant-show__explanation">
+        <i class="fa-solid fa-robot"></i>
+        <p><%= @restaurant.ai_explanation %></p>
+      </div>
+    <% end %>
+
+
+    <div class="restaurant-show__info">
+      <div class="restaurant-show__info-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <span><%= @restaurant.address %></span>
+      </div>
+
+      <% if @restaurant.phone.present? %>
+        <div class="restaurant-show__info-item">
+          <i class="fa-solid fa-phone"></i>
+          <a href="tel:<%= @restaurant.phone %>"><%= @restaurant.phone %></a>
+        </div>
+      <% end %>
+
+      <% if @google_details&.respond_to?(:website) && @google_details.website.present? %>
+        <div class="restaurant-show__info-item">
+          <i class="fa-solid fa-globe"></i>
+          <%= link_to "Site web", @google_details.website, target: "_blank", rel: "noopener" %>
+        </div>
+      <% end %>
+
+      <% if @google_details&.respond_to?(:url) && @google_details.url.present? %>
+        <div class="restaurant-show__info-item">
+          <i class="fa-brands fa-google"></i>
+          <%= link_to "Voir sur Google Maps", @google_details.url, target: "_blank", rel: "noopener" %>
+        </div>
+      <% end %>
+    </div>
+
+
+    <% if @google_details&.respond_to?(:opening_hours) && @google_details.opening_hours.present? %>
+      <div class="restaurant-show__hours">
+        <h3 class="restaurant-show__section-title">
+          <i class="fa-solid fa-clock"></i> Horaires
+        </h3>
+        <% if @google_details.opening_hours.respond_to?(:open_now) %>
+          <p class="restaurant-show__open-status <%= @google_details.opening_hours.open_now ? 'restaurant-show__open-status--open' : 'restaurant-show__open-status--closed' %>">
+            <%= @google_details.opening_hours.open_now ? "Ouvert actuellement" : "Fermé actuellement" %>
+          </p>
+        <% end %>
+        <% if @google_details.opening_hours.respond_to?(:weekday_text) && @google_details.opening_hours.weekday_text.present? %>
+          <ul class="restaurant-show__hours-list">
+            <% @google_details.opening_hours.weekday_text.each do |day| %>
+              <li><%= day %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+
+    <% if @google_details&.respond_to?(:photos) && @google_details.photos.present? %>
+      <div class="restaurant-show__photos">
+        <h3 class="restaurant-show__section-title">
+          <i class="fa-solid fa-images"></i> Photos
+        </h3>
+        <div class="restaurant-show__photos-grid">
+          <% @google_details.photos.first(6).each do |photo| %>
+            <% if photo.respond_to?(:fetch_url) %>
+              <div class="restaurant-show__photo">
+                <%= image_tag photo.fetch_url(800), alt: @restaurant.name %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+
+    <% if @google_details&.respond_to?(:reviews) && @google_details.reviews.present? %>
+      <div class="restaurant-show__reviews">
+        <h3 class="restaurant-show__section-title">
+          <i class="fa-solid fa-comments"></i> Avis récents
+        </h3>
+        <div class="restaurant-show__reviews-list">
+          <% @google_details.reviews.first(5).each do |review| %>
+            <div class="restaurant-show__review">
+              <div class="restaurant-show__review-header">
+                <span class="restaurant-show__review-author"><%= review.author_name %></span>
+                <span class="restaurant-show__review-rating">
+                  <% review.rating.to_i.times do %>
+                    <i class="fa-solid fa-star"></i>
+                  <% end %>
+                </span>
+              </div>
+              <p class="restaurant-show__review-text"><%= review.text %></p>
+              <% if review.respond_to?(:relative_time_description) %>
+                <span class="restaurant-show__review-date"><%= review.relative_time_description %></span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+
+    <% if @restaurant.latitude.present? && @restaurant.longitude.present? %>
+      <div class="restaurant-show__map">
+        <h3 class="restaurant-show__section-title">
+          <i class="fa-solid fa-map"></i> Localisation
+        </h3>
+        <div class="restaurant-show__map-container">
+          <iframe
+            width="100%"
+            height="300"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=<%= ENV['GOOGLE_PLACES_API_KEY'] %>&q=<%= CGI.escape(@restaurant.name) %>,<%= CGI.escape(@restaurant.address || '') %>&center=<%= @restaurant.latitude %>,<%= @restaurant.longitude %>&zoom=16">
+          </iframe>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="restaurant-show__actions">
+    <%= link_to session_restaurants_path(session_share_code: @session.share_code), class: "restaurant-show__btn restaurant-show__btn--secondary" do %>
+      <i class="fa-solid fa-arrow-left"></i> Autres choix
+    <% end %>
+
+    <% if @google_details&.respond_to?(:url) && @google_details.url.present? %>
+      <%= link_to @google_details.url, target: "_blank", rel: "noopener", class: "restaurant-show__btn restaurant-show__btn--primary" do %>
+        <i class="fa-solid fa-diamond-turn-right"></i> Y aller
+      <% end %>
+    <% elsif @restaurant.latitude.present? && @restaurant.longitude.present? %>
+      <%= link_to "https://www.google.com/maps/dir/?api=1&destination=#{@restaurant.latitude},#{@restaurant.longitude}", target: "_blank", rel: "noopener", class: "restaurant-show__btn restaurant-show__btn--primary" do %>
+        <i class="fa-solid fa-diamond-turn-right"></i> Y aller
+      <% end %>
+    <% end %>
+  </div>
+
+</div>

@@ -14,6 +14,17 @@ class RestaurantsController < ApplicationController
   # PHASE 5: Détails d'un restaurant spécifique
   def show
     @restaurant = @session.restaurants.find(params[:id])
+
+    # Récupérer les détails Google Places si on a un place_id
+    if @restaurant.google_place_id.present?
+      begin
+        google_service = GooglePlacesService.new
+        @google_details = google_service.get_details(@restaurant.google_place_id)
+      rescue => e
+        Rails.logger.error "Google Places error: #{e.message}"
+        @google_details = nil
+      end
+    end
   end
 
   # PHASE 6: Demander une nouvelle recommandation (alternative aux 3 proposées)
