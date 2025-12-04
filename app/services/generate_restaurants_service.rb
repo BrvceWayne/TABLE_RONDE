@@ -3,7 +3,6 @@ class GenerateRestaurantsService
     @session = session
     @excluded_place_ids = excluded_place_ids
     @gemini_service = GeminiService.new
-    @google_service = GooglePlacesService.new
     @location = location
   end
 
@@ -17,7 +16,7 @@ class GenerateRestaurantsService
     # Récupérer les noms des restaurants déjà exclus
     excluded_names = @session.restaurants.where(google_place_id: @excluded_place_ids).pluck(:name)
 
-    # 1. Gemini recommande les restaurants
+    # Gemini recommande les restaurants avec toutes les infos
     gemini_recommendations = @gemini_service.recommend_restaurants(
       preferences,
       location: location,
@@ -26,12 +25,8 @@ class GenerateRestaurantsService
 
     return [] if gemini_recommendations.empty?
 
-    # 2. Google Places récupère les infos détaillées
-    restaurant_names = gemini_recommendations.map { |r| r['name'] }
-    google_details = @google_service.find_restaurants(restaurant_names, location)
-
-    # 3. Créer les restaurants en base
-    create_restaurants(gemini_recommendations, google_details)
+    # Créer les restaurants en base directement avec les données Gemini
+    create_restaurants(gemini_recommendations)
   end
 
   private
@@ -64,21 +59,14 @@ class GenerateRestaurantsService
     "Paris"
   end
 
-  def create_restaurants(gemini_recommendations, google_details)
+  def create_restaurants(gemini_recommendations)
     @session.restaurants.destroy_all
 
     gemini_recommendations.each_with_index.map do |recommendation, index|
-      # Trouver les détails Google correspondants
-      google_info = google_details.find { |g| g[:name]&.downcase&.include?(recommendation['name'].downcase.split.first) }
-
       @session.restaurants.create!(
         rank: index + 1,
-        google_place_id: google_info&.dig(:google_place_id),
-        name: google_info&.dig(:name) || recommendation['name'],
-        address: google_info&.dig(:address) || recommendation['address'],
-        latitude: google_info&.dig(:latitude),
-        longitude: google_info&.dig(:longitude),
-        phone: google_info&.dig(:phone),
+        name: recommendation['name'],
+        address: recommendation['address'],
         ai_explanation: recommendation['explanation']
       )
     end
