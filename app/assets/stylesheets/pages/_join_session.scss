@@ -1,0 +1,302 @@
+// ============================================
+// JOIN SESSION PAGE - Rejoindre une session
+// ============================================
+
+.join-session {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $space-lg;
+  background-color: $cream;
+  animation: colorShift 20s ease-in-out infinite;
+}
+
+.join-session__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+}
+
+// ============================================
+// LOGO
+// ============================================
+
+.join-session__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $space-xl;
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+.join-session__logo-left,
+.join-session__logo-right {
+  font-family: $font-display;
+  font-size: 2rem;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  animation: logoTextColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.5rem;
+  }
+}
+
+.join-session__logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 2px;
+  position: relative;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.join-session__logo-circle {
+  width: 28px;
+  height: 28px;
+  border: 3px solid;
+  border-radius: 50%;
+  animation: logoBorderColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.join-session__logo-fork,
+.join-session__logo-knife {
+  position: absolute;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  animation: logoBgColorShift 20s ease-in-out infinite;
+
+  @media (max-width: $breakpoint-sm) {
+    height: 11px;
+  }
+}
+
+.join-session__logo-fork {
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.join-session__logo-knife {
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// ============================================
+// CARD D'INVITATION
+// ============================================
+
+.join-session__card {
+  width: 100%;
+  background: $white;
+  border-radius: $radius-xl;
+  padding: $space-xl;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.join-session__header {
+  margin-bottom: $space-lg;
+}
+
+.join-session__emoji {
+  display: block;
+  font-size: 4rem;
+  margin-bottom: $space-sm;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.join-session__title {
+  font-family: $font-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $charcoal;
+  margin: 0;
+}
+
+// ============================================
+// INFO SESSION
+// ============================================
+
+.join-session__info {
+  display: flex;
+  justify-content: center;
+  gap: $space-lg;
+  margin-bottom: $space-lg;
+  padding: $space-md 0;
+  border-top: 1px solid $border-light;
+  border-bottom: 1px solid $border-light;
+}
+
+.join-session__meal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xs;
+}
+
+.join-session__meal-icon {
+  font-size: 1.75rem;
+}
+
+.join-session__meal-type {
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $charcoal;
+}
+
+.join-session__code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-xs;
+}
+
+.join-session__code-label {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.join-session__code-value {
+  font-family: $font-display;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $forest;
+  background: rgba($forest, 0.08);
+  padding: $space-xs $space-md;
+  border-radius: $radius-md;
+  letter-spacing: 2px;
+}
+
+// ============================================
+// DESCRIPTION
+// ============================================
+
+.join-session__description {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  color: $text-secondary;
+  line-height: 1.6;
+  margin-bottom: $space-lg;
+}
+
+// ============================================
+// BOUTON REJOINDRE
+// ============================================
+
+.join-session__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  width: 100%;
+  padding: $space-md $space-xl;
+  background: linear-gradient(135deg, $tangerine 0%, darken($tangerine, 8%) 100%);
+  color: $white !important;
+  font-family: $font-body;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  border: none;
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 87, 13, 0.35);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 87, 13, 0.45);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255, 87, 13, 0.3);
+  }
+}
+
+.join-session__btn-icon {
+  font-size: 1.25rem;
+}
+
+// Style pour le form wrapper de button_to
+.join-session__card form {
+  width: 100%;
+}
+
+// ============================================
+// FOOTER
+// ============================================
+
+.join-session__footer {
+  margin-top: $space-lg;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  text-align: center;
+  max-width: 300px;
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: $breakpoint-sm) {
+  .join-session {
+    padding: $space-md;
+  }
+
+  .join-session__content {
+    max-width: 100%;
+  }
+
+  .join-session__card {
+    padding: $space-lg;
+  }
+
+  .join-session__emoji {
+    font-size: 3rem;
+  }
+
+  .join-session__title {
+    font-size: $font-size-xl;
+  }
+
+  .join-session__info {
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  .join-session__btn {
+    padding: $space-md $space-lg;
+    font-size: $font-size-base;
+  }
+}

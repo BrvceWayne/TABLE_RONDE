@@ -1,10 +1,72 @@
-<h1>Rejoindre la session</h1>
+<div class="join-session">
+  <div class="join-session__content">
 
-<div class="card">
-  <div class="card-body text-center">
-    <p>Code de session : <strong><%= @session.share_code %></strong></p>
-    <p>Type de repas : <%= @session.meal_type %></p>
+    <%# Logo cliquable vers home %>
+    <%= link_to root_path, class: "join-session__logo" do %>
+      <span class="join-session__logo-left">TableR</span>
+      <span class="join-session__logo-icon">
+        <span class="join-session__logo-circle"></span>
+        <span class="join-session__logo-fork"></span>
+        <span class="join-session__logo-knife"></span>
+      </span>
+      <span class="join-session__logo-right">nde</span>
+    <% end %>
 
-    <%= button_to "Rejoindre", join_session_user_path(@session.share_code), method: :post, class: "btn btn-primary" %>
+    <%# Card d'invitation %>
+    <div class="join-session__card">
+
+      <%# Header avec emoji %>
+      <div class="join-session__header">
+        <span class="join-session__emoji">🍽️</span>
+        <h1 class="join-session__title">Tu es invité !</h1>
+      </div>
+
+      <%# Info session %>
+      <div class="join-session__info">
+        <div class="join-session__meal">
+          <span class="join-session__meal-icon">
+            <% case @session.meal_type %>
+            <% when 'Petit-déjeuner' %>
+              🥐
+            <% when 'Brunch' %>
+              ☀️
+            <% when 'Déjeuner' %>
+              🍽️
+            <% when 'Dîner' %>
+              🌙
+            <% else %>
+              🍴
+            <% end %>
+          </span>
+          <span class="join-session__meal-type"><%= @session.meal_type %></span>
+        </div>
+
+        <div class="join-session__code">
+          <span class="join-session__code-label">Code de session</span>
+          <span class="join-session__code-value"><%= @session.share_code %></span>
+        </div>
+      </div>
+
+      <%# Description %>
+      <p class="join-session__description">
+        Rejoins la table pour donner tes préférences et trouver le resto parfait ensemble !
+      </p>
+
+      <%# Bouton rejoindre %>
+      <%= button_to join_session_user_path(@session.share_code),
+          method: :post,
+          class: "join-session__btn",
+          data: { turbo: false } do %>
+        <span class="join-session__btn-icon">🚀</span>
+        <span>Rejoindre la table</span>
+      <% end %>
+
+    </div>
+
+    <%# Footer %>
+    <p class="join-session__footer">
+      Tu vas pouvoir répondre à quelques questions pour aider à choisir le restaurant idéal.
+    </p>
+
   </div>
 </div>
