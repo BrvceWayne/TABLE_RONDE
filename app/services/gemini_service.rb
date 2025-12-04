@@ -76,11 +76,12 @@ class GeminiService
       Réponds UNIQUEMENT en JSON valide (sans ```, sans markdown):
       [
         {
-          "name": "Nom exact du restaurant",
-          "cuisine_type": "Type",
+          "name": "Nom exact du restaurant (tel qu'il apparaît sur Google Maps)",
+          "cuisine_type": "Type de cuisine (ex: Italien, Japonais, Français...)",
           "address": "Adresse complète avec code postal",
-          "price_range": "€€",
-          "explanation": "Distance approximative depuis le point central et pourquoi ce choix"
+          "price_range": "€, €€, €€€ ou €€€€",
+          "rating": 4.5,
+          "explanation": "2-3 phrases expliquant pourquoi ce restaurant est parfait pour le groupe"
         }
       ]
     PROMPT

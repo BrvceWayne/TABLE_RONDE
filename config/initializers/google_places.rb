@@ -1,1 +1,0 @@
-GOOGLE_PLACES_CLIENT = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API_KEY'])
