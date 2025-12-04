@@ -28,6 +28,16 @@
         <article class="carousel__card" data-carousel-target="card">
           <div class="restaurant-card <%= 'restaurant-card--featured' if restaurant.rank == 1 %>">
 
+            <% if restaurant.rank == 1 %>
+              <%# Particules d'étoiles autour du winner %>
+              <div class="restaurant-card__particles">
+                <% 12.times do |i| %>
+                  <span class="restaurant-card__particle restaurant-card__particle--<%= i + 1 %>"></span>
+                <% end %>
+              </div>
+              <div class="restaurant-card__glow"></div>
+            <% end %>
+
             <%# Badge %>
             <div class="restaurant-card__badge">
               <span class="restaurant-card__rank <%= restaurant.rank == 1 ? 'restaurant-card__rank--winner' : 'restaurant-card__rank--alternative' %>">
