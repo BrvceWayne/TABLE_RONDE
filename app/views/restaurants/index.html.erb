@@ -38,6 +38,13 @@
               <div class="restaurant-card__glow"></div>
             <% end %>
 
+            <%# Photo du restaurant (si disponible) %>
+            <% if restaurant.photo_url.present? %>
+              <div class="restaurant-card__photo">
+                <%= image_tag restaurant.photo_url, alt: restaurant.name %>
+              </div>
+            <% end %>
+
             <%# Badge %>
             <div class="restaurant-card__badge">
               <span class="restaurant-card__rank <%= restaurant.rank == 1 ? 'restaurant-card__rank--winner' : 'restaurant-card__rank--alternative' %>">
@@ -53,6 +60,25 @@
                 </span>
               <% end %>
               <h2 class="restaurant-card__name"><%= restaurant.name %></h2>
+
+              <%# Infos rapides : cuisine, rating, prix %>
+              <div class="restaurant-card__meta">
+                <% if restaurant.cuisine_type.present? %>
+                  <span class="restaurant-card__cuisine"><%= restaurant.cuisine_type %></span>
+                <% end %>
+                <% if restaurant.rating.present? %>
+                  <span class="restaurant-card__rating">
+                    <span class="restaurant-card__rating-star">★</span>
+                    <%= number_with_precision(restaurant.rating, precision: 1) %>
+                  </span>
+                <% end %>
+                <% if restaurant.price_level.present? %>
+                  <span class="restaurant-card__price">
+                    <%= '€' * restaurant.price_level %><span class="restaurant-card__price-faded"><%= '€' * (4 - restaurant.price_level) %></span>
+                  </span>
+                <% end %>
+              </div>
+
               <p class="restaurant-card__address">
                 <span class="restaurant-card__address-icon">📍</span>
                 <span><%= restaurant.address %></span>
@@ -61,16 +87,44 @@
 
             <%# Body %>
             <div class="restaurant-card__body">
+              <%# Statut ouvert/fermé %>
+              <% if restaurant.is_open_now != nil %>
+                <div class="restaurant-card__status <%= restaurant.is_open_now ? 'restaurant-card__status--open' : 'restaurant-card__status--closed' %>">
+                  <span class="restaurant-card__status-dot"></span>
+                  <%= restaurant.is_open_now ? 'Ouvert' : 'Fermé' %>
+                </div>
+              <% end %>
+
               <div class="restaurant-card__explanation">
                 <%= restaurant.ai_explanation %>
               </div>
 
-              <% if restaurant.phone.present? %>
-                <div class="restaurant-card__phone">
-                  <span>📞</span>
-                  <%= link_to restaurant.phone, "tel:#{restaurant.phone}" %>
-                </div>
-              <% end %>
+              <%# Actions %>
+              <div class="restaurant-card__actions">
+                <% if restaurant.phone.present? %>
+                  <%= link_to "tel:#{restaurant.phone}", class: "restaurant-card__action" do %>
+                    <span>📞</span> Appeler
+                  <% end %>
+                <% end %>
+
+                <% if restaurant.google_place_id.present? %>
+                  <%= link_to "https://www.google.com/maps/place/?q=place_id:#{restaurant.google_place_id}",
+                      target: "_blank",
+                      rel: "noopener",
+                      class: "restaurant-card__action restaurant-card__action--primary" do %>
+                    <span>📍</span> Itinéraire
+                  <% end %>
+                <% end %>
+
+                <% if restaurant.website.present? %>
+                  <%= link_to restaurant.website,
+                      target: "_blank",
+                      rel: "noopener",
+                      class: "restaurant-card__action" do %>
+                    <span>🌐</span> Site
+                  <% end %>
+                <% end %>
+              </div>
             </div>
 
           </div>

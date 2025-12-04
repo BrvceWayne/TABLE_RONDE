@@ -3,6 +3,7 @@ class GenerateRestaurantsService
     @session = session
     @excluded_place_ids = excluded_place_ids
     @gemini_service = GeminiService.new
+    @google_places_service = GooglePlacesService.new
     @location = location
   end
 
@@ -63,12 +64,52 @@ class GenerateRestaurantsService
     @session.restaurants.destroy_all
 
     gemini_recommendations.each_with_index.map do |recommendation, index|
-      @session.restaurants.create!(
+      # Données de base depuis Gemini
+      restaurant_data = {
         rank: index + 1,
         name: recommendation['name'],
         address: recommendation['address'],
-        ai_explanation: recommendation['explanation']
+        cuisine_type: recommendation['cuisine_type'],
+        ai_explanation: recommendation['explanation'],
+        rating: recommendation['rating'],
+        price_level: parse_price_level(recommendation['price_range'])
+      }
+
+      # Enrichir avec Google Places (photo, horaires, etc.)
+      enriched_data = @google_places_service.enrich_restaurant(
+        recommendation['name'],
+        recommendation['address']
       )
+
+      if enriched_data
+        restaurant_data.merge!(
+          google_place_id: enriched_data[:google_place_id],
+          phone: enriched_data[:phone],
+          website: enriched_data[:website],
+          latitude: enriched_data[:latitude],
+          longitude: enriched_data[:longitude],
+          photo_url: enriched_data[:photo_url],
+          is_open_now: enriched_data[:is_open_now],
+          opening_hours: enriched_data[:opening_hours]
+        )
+        # Utiliser le rating Google Places si disponible (plus fiable)
+        restaurant_data[:rating] = enriched_data[:rating] if enriched_data[:rating]
+        restaurant_data[:price_level] = enriched_data[:price_level] if enriched_data[:price_level]
+      end
+
+      @session.restaurants.create!(restaurant_data)
+    end
+  end
+
+  def parse_price_level(price_range)
+    return nil unless price_range
+
+    case price_range.to_s.count('€')
+    when 1 then 1
+    when 2 then 2
+    when 3 then 3
+    when 4 then 4
+    else 2 # Défaut
     end
   end
 end
