@@ -23,7 +23,8 @@ class SessionsController < ApplicationController
         leader: true
       )
 
-      redirect_to dashboard_session_path(share_code: @session.share_code)
+      # Rediriger le leader vers ses préférences d'abord
+      redirect_to new_session_preference_path(session_share_code: @session.share_code)
     else
       render :new, status: :unprocessable_entity
     end
