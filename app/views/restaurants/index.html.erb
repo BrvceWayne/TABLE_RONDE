@@ -1,33 +1,98 @@
-<h1>Recommandations</h1>
-<p class="text-muted">Session : <%= @session.share_code %></p>
+<div class="restaurants">
 
-<% @restaurants.each do |restaurant| %>
-  <div class="card mb-3 <%= 'border-primary' if restaurant.rank == 1 %>">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <span>
-        <% if restaurant.rank == 1 %>
-          <strong>Notre meilleur choix</strong>
-        <% else %>
-          Alternative #<%= restaurant.rank %>
-        <% end %>
+  <%# Header avec logo %>
+  <header class="restaurants__header">
+    <%= link_to root_path, class: "restaurants__logo" do %>
+      <span class="restaurants__logo-left">TableR</span>
+      <span class="restaurants__logo-icon">
+        <span class="restaurants__logo-circle"></span>
+        <span class="restaurants__logo-fork"></span>
+        <span class="restaurants__logo-knife"></span>
       </span>
-      <span class="badge bg-secondary">#<%= restaurant.rank %></span>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title"><%= restaurant.name %></h5>
-      <p class="card-text text-muted"><%= restaurant.address %></p>
-      <p class="card-text"><em><%= restaurant.ai_explanation %></em></p>
+      <span class="restaurants__logo-right">nde</span>
+    <% end %>
+  </header>
 
-      <% if restaurant.phone.present? %>
-        <p><strong>Tél :</strong> <%= restaurant.phone %></p>
+  <%# Titre %>
+  <div class="restaurants__title">
+    <span class="restaurants__title-icon">🎉</span>
+    <h1 class="restaurants__title-text">Nos recommandations</h1>
+    <p class="restaurants__subtitle">Basées sur les préférences de tous les participants</p>
+  </div>
+
+  <%# Carousel 3D %>
+  <div class="carousel" data-controller="carousel">
+    <div class="carousel__stage">
+
+      <% @restaurants.sort_by(&:rank).each do |restaurant| %>
+        <article class="carousel__card" data-carousel-target="card">
+          <div class="restaurant-card <%= 'restaurant-card--featured' if restaurant.rank == 1 %>">
+
+            <%# Badge %>
+            <div class="restaurant-card__badge">
+              <span class="restaurant-card__rank <%= restaurant.rank == 1 ? 'restaurant-card__rank--winner' : 'restaurant-card__rank--alternative' %>">
+                <%= restaurant.rank == 1 ? '🏆' : "##{restaurant.rank}" %>
+              </span>
+            </div>
+
+            <%# Header %>
+            <div class="restaurant-card__header">
+              <% if restaurant.rank == 1 %>
+                <span class="restaurant-card__winner-label">
+                  <span>⭐</span> Notre meilleur choix
+                </span>
+              <% end %>
+              <h2 class="restaurant-card__name"><%= restaurant.name %></h2>
+              <p class="restaurant-card__address">
+                <span class="restaurant-card__address-icon">📍</span>
+                <span><%= restaurant.address %></span>
+              </p>
+            </div>
+
+            <%# Body %>
+            <div class="restaurant-card__body">
+              <div class="restaurant-card__explanation">
+                <%= restaurant.ai_explanation %>
+              </div>
+
+              <% if restaurant.phone.present? %>
+                <div class="restaurant-card__phone">
+                  <span>📞</span>
+                  <%= link_to restaurant.phone, "tel:#{restaurant.phone}" %>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+        </article>
       <% end %>
 
-      <%= link_to "Voir les détails", session_restaurant_path(session_share_code: @session.share_code, id: restaurant.id), class: "btn btn-outline-primary btn-sm" %>
     </div>
-  </div>
-<% end %>
 
-<div class="d-flex gap-2 mt-4">
-  <%= link_to "Retour au dashboard", dashboard_session_path(share_code: @session.share_code), class: "btn btn-outline-secondary" %>
-  <%= button_to "Nouvelles recommandations", regenerate_session_restaurants_path(session_share_code: @session.share_code), method: :post, class: "btn btn-warning" %>
+    <%# Navigation %>
+    <button class="carousel__nav carousel__nav--prev" data-carousel-target="prev" data-action="click->carousel#prev">
+      <span>‹</span>
+    </button>
+    <button class="carousel__nav carousel__nav--next" data-carousel-target="next" data-action="click->carousel#next">
+      <span>›</span>
+    </button>
+
+    <%# Dots %>
+    <div class="carousel__dots"></div>
+  </div>
+
+  <%# Actions %>
+  <section class="restaurants__actions">
+    <%= link_to dashboard_session_path(share_code: @session.share_code), class: "restaurants__btn restaurants__btn--secondary" do %>
+      <span>←</span> Retour au dashboard
+    <% end %>
+
+    <%= button_to regenerate_session_restaurants_path(session_share_code: @session.share_code),
+        method: :post,
+        class: "restaurants__btn restaurants__btn--warning",
+        data: { turbo: false } do %>
+      <span>🔄</span> Nouvelles recommandations
+    <% end %>
+  </section>
+
 </div>
