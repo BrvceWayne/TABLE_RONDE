@@ -89,6 +89,19 @@
 }
 
 // ============================================
+// SESSION NAME
+// ============================================
+
+.dashboard__session-name {
+  font-family: $font-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $charcoal;
+  text-align: center;
+  margin: 0 0 $space-lg;
+}
+
+// ============================================
 // SHARE CODE SECTION
 // ============================================
 

@@ -5,8 +5,11 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
 
+  # Mes sessions (liste des sessions de l'utilisateur)
+  get '/sessions', to: 'sessions#index', as: :sessions
+
   # PHASE 1 & 2: Création et accès aux sessions
-  resources :sessions, only: [:new, :create], param: :share_code do
+  resources :sessions, only: [:new, :create, :destroy], param: :share_code do
     member do
       get :dashboard       # PHASE 4: Dashboard du leader
       post :generate_recommendations  # PHASE 4: Lancer la génération

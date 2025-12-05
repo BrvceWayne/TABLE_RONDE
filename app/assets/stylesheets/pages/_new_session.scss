@@ -131,6 +131,54 @@
 }
 
 // ============================================
+// CHAMP NOM DE SESSION
+// ============================================
+
+.new-session__name-field {
+  width: 100%;
+  margin-bottom: $space-xl;
+
+  .input {
+    margin-bottom: 0;
+  }
+}
+
+.new-session__name-input {
+  width: 100%;
+  padding: $space-md $space-lg;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: $radius-lg;
+  font-family: $font-body;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $charcoal;
+  text-align: center;
+  transition: all $transition-base;
+
+  &::placeholder {
+    color: $text-muted;
+    font-weight: $font-weight-normal;
+  }
+
+  &:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.95);
+    border-color: $forest;
+    box-shadow: 0 0 0 3px rgba($forest, 0.1);
+  }
+}
+
+.new-session__section-title {
+  font-family: $font-display;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  text-align: center;
+  margin-bottom: $space-md;
+  color: $charcoal;
+}
+
+// ============================================
 // GRILLE DE CARDS REPAS
 // ============================================
 
