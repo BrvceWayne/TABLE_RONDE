@@ -16,6 +16,9 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%# Google Maps Places API (New) for address autocomplete %>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_PLACES_API_KEY'] %>&libraries=places&loading=async"></script>
   </head>
 
   <body>

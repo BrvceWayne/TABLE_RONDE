@@ -102,10 +102,10 @@
 
           <div class="question-card__budget-levels">
             <% [
-              { value: '€', label: '€', sublabel: '< 15€', min: 0, max: 15 },
-              { value: '€€', label: '€€', sublabel: '15-30€', min: 15, max: 30 },
-              { value: '€€€', label: '€€€', sublabel: '30-50€', min: 30, max: 50 },
-              { value: '€€€€', label: '€€€€', sublabel: '50€+', min: 50, max: 200 }
+              { value: '€', label: '€', sublabel: 'Moins de 15€', min: 0, max: 15 },
+              { value: '€€', label: '€€', sublabel: '15 à 30€', min: 15, max: 30 },
+              { value: '€€€', label: '€€€', sublabel: '30 à 50€', min: 30, max: 50 },
+              { value: '€€€€', label: '€€€€', sublabel: '50€ et plus', min: 50, max: 200 }
             ].each do |budget| %>
               <label class="budget-level">
                 <%= f.radio_button :budget_level, budget[:value],
@@ -153,8 +153,8 @@
             <span class="geolocation-status" data-geolocation-target="status"></span>
           </div>
 
-          <%# Adresse (affichée après géoloc ou saisie manuelle) %>
-          <%= f.text_field :address, class: "question-card__input", placeholder: "Ou saisissez une adresse...", data: { geolocation_target: "address" } %>
+          <%# Adresse (affichée après géoloc ou saisie manuelle - avec Google Places Autocomplete) %>
+          <%= f.text_field :address, class: "question-card__input", placeholder: "Ou saisissez une adresse...", autocomplete: "off", data: { geolocation_target: "address" } %>
 
           <div class="question-card__separator"></div>
 
