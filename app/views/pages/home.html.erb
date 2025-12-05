@@ -30,6 +30,12 @@
     <%= link_to new_session_path, class: "home__cta" do %>
       On mange où ?
     <% end %>
+
+    <%# Join Session Form %>
+    <%= form_with url: "/join", method: :get, class: "home__join-form", local: true do |f| %>
+      <%= f.text_field :share_code, placeholder: "Code", class: "home__join-input", required: true %>
+      <%= f.submit "Rejoindre", class: "home__join-btn" %>
+    <% end %>
   </div>
 
   <%# Footer discret %>
