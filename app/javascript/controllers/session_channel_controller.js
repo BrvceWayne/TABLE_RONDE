@@ -24,7 +24,7 @@ export default class extends Controller {
   }
 
   handleMessage(data) {
-    if (data.type === "participant_joined" || data.type === "preferences_updated") {
+    if (data.type === "participant_joined" || data.type === "preferences_updated" || data.type === "restaurants_generated") {
       Turbo.visit(window.location.href, { action: "replace" })
     }
   }

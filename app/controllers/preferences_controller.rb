@@ -16,6 +16,12 @@ class PreferencesController < ApplicationController
     merge_other_cuisine
 
     if @preference.save
+      # Broadcast pour rafraîchir le dashboard en temps réel
+      ActionCable.server.broadcast(
+        "session_#{@session.share_code}",
+        { type: "preferences_updated", user_id: user.id }
+      )
+
       if user.guest?
         redirect_to dashboard_session_path(share_code: @session.share_code), notice: "Vos préférences ont été enregistrées. Créez un compte pour les sauvegarder !"
       else
@@ -31,6 +37,11 @@ class PreferencesController < ApplicationController
 
   def update
     if @preference.update(preference_params)
+      # Broadcast pour rafraîchir le dashboard en temps réel
+      ActionCable.server.broadcast(
+        "session_#{@session.share_code}",
+        { type: "preferences_updated", user_id: current_or_guest_user.id }
+      )
       redirect_to dashboard_session_path(share_code: @session.share_code), notice: "Vos préférences ont été mises à jour"
     else
       render :edit, status: :unprocessable_entity
