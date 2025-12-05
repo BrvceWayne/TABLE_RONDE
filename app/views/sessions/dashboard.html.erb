@@ -57,11 +57,19 @@
         <% @participants_status.each do |p| %>
           <div class="dashboard__participant-card <%= 'dashboard__participant-card--completed' if p[:preferences_completed] %>">
             <div class="dashboard__participant-avatar">
-              <%= p[:user].guest? ? '👤' : p[:user].email[0].upcase %>
+              <% if p[:user].guest? %>
+                <%= p[:guest_name].present? ? p[:guest_name][0].upcase : '👤' %>
+              <% else %>
+                <%= p[:user].email[0].upcase %>
+              <% end %>
             </div>
             <div class="dashboard__participant-info">
               <span class="dashboard__participant-name">
-                <%= p[:user].guest? ? "Invité" : p[:user].email.split('@').first %>
+                <% if p[:user].guest? %>
+                  <%= p[:guest_name].presence || "Invité" %>
+                <% else %>
+                  <%= p[:user].email.split('@').first %>
+                <% end %>
               </span>
               <% if p[:leader] %>
                 <span class="dashboard__participant-role">Leader</span>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_05_101508) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_05_132818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_05_101508) do
     t.boolean "leader"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "guest_name"
     t.index ["session_id"], name: "index_session_users_on_session_id"
     t.index ["user_id"], name: "index_session_users_on_user_id"
   end

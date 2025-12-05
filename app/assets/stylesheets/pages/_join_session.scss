@@ -211,6 +211,52 @@
 }
 
 // ============================================
+// CHAMP NOM (optionnel)
+// ============================================
+
+.join-session__form {
+  width: 100%;
+}
+
+.join-session__name-field {
+  margin-bottom: $space-lg;
+  text-align: left;
+}
+
+.join-session__name-label {
+  display: block;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+  margin-bottom: $space-xs;
+}
+
+.join-session__name-input {
+  width: 100%;
+  padding: $space-sm $space-md;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  color: $charcoal;
+  background: $cream;
+  border: 2px solid $border-light;
+  border-radius: $radius-lg;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: $text-secondary;
+    opacity: 0.6;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $forest;
+    background: $white;
+    box-shadow: 0 0 0 3px rgba($forest, 0.1);
+  }
+}
+
+// ============================================
 // BOUTON REJOINDRE
 // ============================================
 
