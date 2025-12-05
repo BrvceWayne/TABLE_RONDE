@@ -1,7 +1,8 @@
 <div class="dashboard" data-controller="session-channel" data-session-channel-share-code-value="<%= @session.share_code %>">
 
-  <%# Header avec logo %>
-  <header class="dashboard__header">
+  <div class="dashboard__content">
+
+    <%# Logo centré %>
     <%= link_to root_path, class: "dashboard__logo" do %>
       <span class="dashboard__logo-left">TableR</span>
       <span class="dashboard__logo-icon">
@@ -11,9 +12,6 @@
       </span>
       <span class="dashboard__logo-right">nde</span>
     <% end %>
-  </header>
-
-  <div class="dashboard__content">
 
     <%# Nom de la session %>
     <% if @session.name.present? %>

@@ -10,21 +10,15 @@
 }
 
 // ============================================
-// HEADER
+// LOGO (intégré au contenu)
 // ============================================
-
-.dashboard__header {
-  display: flex;
-  justify-content: center;
-  padding: $space-lg;
-  background: $white;
-  border-bottom: 1px solid $border-light;
-}
 
 .dashboard__logo {
   display: flex;
   align-items: center;
+  justify-content: center;
   text-decoration: none !important;
+  margin-bottom: $space-lg;
 
   &:hover {
     text-decoration: none !important;
