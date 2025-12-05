@@ -19,7 +19,7 @@
       <div class="auth__error"><%= alert %></div>
     <% end %>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth__form" }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: user_session_path, html: { class: "auth__form" }) do |f| %>
 
       <div class="auth__field">
         <%= f.label :email, "Email", class: "auth__label" %>
