@@ -21,6 +21,11 @@ class SessionUsersController < ApplicationController
     )
 
     if session_user.save
+      # Broadcast pour rafraîchir le dashboard en temps réel
+      ActionCable.server.broadcast(
+        "session_#{@session.share_code}",
+        { type: "participant_joined", user_id: user.id }
+      )
       redirect_to new_session_preference_path(session_share_code: @session.share_code)
     else
       redirect_to join_session_path(@session.share_code), alert: "Impossible de rejoindre la session"

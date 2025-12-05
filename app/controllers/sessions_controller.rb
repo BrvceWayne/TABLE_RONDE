@@ -93,6 +93,13 @@ class SessionsController < ApplicationController
     GenerateRestaurantsService.new(@session).call
 
     @session.update(completed_at: Time.current)
+
+    # Broadcast pour notifier les invités que les restos sont prêts
+    ActionCable.server.broadcast(
+      "session_#{@session.share_code}",
+      { type: "restaurants_generated" }
+    )
+
     redirect_to session_restaurants_path(session_share_code: @session.share_code), notice: "Recommandations générées avec succès !", status: :see_other
   end
 
