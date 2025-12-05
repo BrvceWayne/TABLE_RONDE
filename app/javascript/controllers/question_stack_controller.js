@@ -7,7 +7,7 @@ import { Controller } from "@hotwired/stimulus"
  * question par question. Chaque validation fait passer à la carte suivante.
  */
 export default class extends Controller {
-  static targets = ["card", "progressSteps", "submitBtn"]
+  static targets = ["card", "progressSteps", "submitBtn", "budgetMin", "budgetMax", "ambianceHidden"]
 
   connect() {
     this.currentIndex = 0
@@ -16,6 +16,9 @@ export default class extends Controller {
     this.updateStack()
     this.updateProgress()
     this.updateBackground()
+    this.setupBudgetLevelListeners()
+    this.setupAmbianceTagListeners()
+    this.updateAllNextButtons()
   }
 
   // Passe à la carte suivante
@@ -182,5 +185,98 @@ export default class extends Controller {
       event.preventDefault()
       this.previous()
     }
+  }
+
+  // Configure les listeners pour les niveaux de budget
+  setupBudgetLevelListeners() {
+    const budgetInputs = this.element.querySelectorAll('.budget-level__input')
+    budgetInputs.forEach(input => {
+      input.addEventListener('change', (e) => {
+        const min = e.target.dataset.budgetMin
+        const max = e.target.dataset.budgetMax
+        if (this.hasBudgetMinTarget) this.budgetMinTarget.value = min
+        if (this.hasBudgetMaxTarget) this.budgetMaxTarget.value = max
+        this.updateNextButtonForCard(2) // Card 3 (index 2)
+      })
+    })
+  }
+
+  // Configure les listeners pour les tags d'ambiance
+  setupAmbianceTagListeners() {
+    const ambianceCheckboxes = this.element.querySelectorAll('input[name="preference[ambiance_tags][]"]')
+    ambianceCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        this.updateAmbianceHidden()
+        this.updateNextButtonForCard(4) // Card 5 (index 4)
+      })
+    })
+  }
+
+  // Met à jour le champ caché ambiance avec les valeurs sélectionnées
+  updateAmbianceHidden() {
+    const checkedBoxes = this.element.querySelectorAll('input[name="preference[ambiance_tags][]"]:checked')
+    const values = Array.from(checkedBoxes).map(cb => cb.value)
+    if (this.hasAmbianceHiddenTarget) {
+      this.ambianceHiddenTarget.value = values.join(', ')
+    }
+  }
+
+  // Met à jour le texte du bouton suivant selon si des données sont entrées
+  updateNextButtonForCard(cardIndex) {
+    const card = this.cardTargets[cardIndex]
+    if (!card) return
+
+    const nextBtn = card.querySelector('.question-card__next-btn')
+    if (!nextBtn) return
+
+    const hasInput = this.cardHasInput(cardIndex)
+    const icon = nextBtn.querySelector('i')
+    const iconHtml = icon ? icon.outerHTML : '<i class="fa-solid fa-arrow-right"></i>'
+
+    if (hasInput) {
+      nextBtn.innerHTML = `Suivant ${iconHtml}`
+    } else {
+      nextBtn.innerHTML = `Pas de préférence ${iconHtml}`
+    }
+  }
+
+  // Vérifie si une carte a des données entrées
+  cardHasInput(cardIndex) {
+    const card = this.cardTargets[cardIndex]
+    if (!card) return false
+
+    // Checkboxes cochées
+    const checkedCheckboxes = card.querySelectorAll('input[type="checkbox"]:checked')
+    if (checkedCheckboxes.length > 0) return true
+
+    // Radio buttons cochés (sauf ceux avec valeur par défaut)
+    const checkedRadios = card.querySelectorAll('input[type="radio"]:checked')
+    if (checkedRadios.length > 0) return true
+
+    // Inputs texte non vides
+    const textInputs = card.querySelectorAll('input[type="text"], textarea')
+    for (let input of textInputs) {
+      if (input.value.trim() !== '') return true
+    }
+
+    return false
+  }
+
+  // Met à jour tous les boutons au chargement
+  updateAllNextButtons() {
+    for (let i = 0; i < this.totalCards; i++) {
+      this.updateNextButtonForCard(i)
+    }
+
+    // Ajoute des listeners sur tous les inputs pour mettre à jour les boutons
+    this.cardTargets.forEach((card, index) => {
+      const inputs = card.querySelectorAll('input, textarea')
+      inputs.forEach(input => {
+        input.addEventListener('change', () => this.updateNextButtonForCard(index))
+        if (input.type === 'text' || input.tagName === 'TEXTAREA') {
+          input.addEventListener('input', () => this.updateNextButtonForCard(index))
+        }
+      })
+    })
   }
 }

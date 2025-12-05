@@ -53,19 +53,26 @@ class PreferencesController < ApplicationController
       :max_distance,
       :budget_min,
       :budget_max,
+      :budget_level,
       :ambiance,
       :special_requests,
       :latitude,
       :longitude,
       :address,
       dietary_restrictions: [],
-      cuisine_types: []
+      cuisine_types: [],
+      ambiance_tags: []
     )
 
-    # Convertit km en mètres pour le stockage
-    if permitted[:max_distance].present?
-      permitted[:max_distance] = (permitted[:max_distance].to_f * 1000).to_i
+    # max_distance est déjà en mètres depuis les pills (500, 1000, 2000, etc.)
+    # Donc pas besoin de conversion
+
+    # Si ambiance_tags est fourni, on le convertit en string pour ambiance
+    if permitted[:ambiance_tags].present?
+      permitted[:ambiance] = permitted[:ambiance_tags].reject(&:blank?).join(', ')
     end
+    permitted.delete(:ambiance_tags)
+    permitted.delete(:budget_level) # On ne stocke pas budget_level, seulement min/max
 
     permitted
   end

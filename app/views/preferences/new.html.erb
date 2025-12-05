@@ -98,23 +98,30 @@
         <div class="question-card__number">03</div>
         <div class="question-card__content">
           <h2 class="question-card__title">Quel budget par personne ?</h2>
-          <p class="question-card__hint">Approximatif</p>
+          <p class="question-card__hint">Choisissez une gamme de prix</p>
 
-          <div class="question-card__budget">
-            <div class="budget-input">
-              <div class="budget-input__field">
-                <label class="budget-input__label">Min</label>
-                <%= f.number_field :budget_min, value: @preference.budget_min || 15, min: 5, max: 200, step: 5, class: "budget-input__number", placeholder: "15" %>
-                <span class="budget-input__currency">€</span>
-              </div>
-              <span class="budget-input__separator">à</span>
-              <div class="budget-input__field">
-                <label class="budget-input__label">Max</label>
-                <%= f.number_field :budget_max, value: @preference.budget_max || 40, min: 5, max: 200, step: 5, class: "budget-input__number", placeholder: "40" %>
-                <span class="budget-input__currency">€</span>
-              </div>
-            </div>
+          <div class="question-card__budget-levels">
+            <% [
+              { value: '€', label: '€', sublabel: '< 15€', min: 0, max: 15 },
+              { value: '€€', label: '€€', sublabel: '15-30€', min: 15, max: 30 },
+              { value: '€€€', label: '€€€', sublabel: '30-50€', min: 30, max: 50 },
+              { value: '€€€€', label: '€€€€', sublabel: '50€+', min: 50, max: 200 }
+            ].each do |budget| %>
+              <label class="budget-level">
+                <%= f.radio_button :budget_level, budget[:value],
+                    class: "budget-level__input",
+                    data: { budget_min: budget[:min], budget_max: budget[:max] } %>
+                <span class="budget-level__card">
+                  <span class="budget-level__label"><%= budget[:label] %></span>
+                  <span class="budget-level__sublabel"><%= budget[:sublabel] %></span>
+                </span>
+              </label>
+            <% end %>
           </div>
+
+          <%# Champs cachés pour stocker les valeurs min/max %>
+          <%= f.hidden_field :budget_min, value: @preference.budget_min, data: { question_stack_target: "budgetMin" } %>
+          <%= f.hidden_field :budget_max, value: @preference.budget_max, data: { question_stack_target: "budgetMax" } %>
         </div>
         <div class="question-card__decoration question-card__decoration--coins"></div>
         <div class="question-card__nav">
@@ -152,9 +159,21 @@
           <div class="question-card__separator"></div>
 
           <h3 class="question-card__subtitle">Distance max</h3>
-          <div class="question-card__distance">
-            <%= f.number_field :max_distance, value: (@preference.max_distance || 1000) / 1000.0, min: 0.5, max: 20, step: 0.5, class: "distance-input__number", placeholder: "1" %>
-            <span class="distance-input__unit">km</span>
+          <div class="question-card__distance-pills">
+            <% [
+              { value: 500, label: '500m' },
+              { value: 1000, label: '1 km' },
+              { value: 2000, label: '2 km' },
+              { value: 5000, label: '5 km' },
+              { value: 10000, label: '10 km' }
+            ].each do |distance| %>
+              <label class="distance-pill">
+                <%= f.radio_button :max_distance, distance[:value],
+                    class: "distance-pill__input",
+                    checked: @preference.max_distance == distance[:value] || (@preference.max_distance.nil? && distance[:value] == 2000) %>
+                <span class="distance-pill__label"><%= distance[:label] %></span>
+              </label>
+            <% end %>
           </div>
         </div>
         <div class="question-card__decoration question-card__decoration--pin"></div>
@@ -173,9 +192,19 @@
         <div class="question-card__number">05</div>
         <div class="question-card__content">
           <h2 class="question-card__title">Quelle ambiance ?</h2>
-          <p class="question-card__hint">Décrivez l'atmosphère idéale</p>
+          <p class="question-card__hint">Plusieurs choix possibles</p>
 
-          <%= f.text_field :ambiance, value: @preference.ambiance, class: "question-card__input", placeholder: "Ex: Décontracté, romantique, festif, calme pour discuter..." %>
+          <div class="question-card__options">
+            <% %w[Décontracté Romantique Festif Calme Branché Familial Cosy Animé Chic Intime].each do |ambiance| %>
+              <label class="question-tag question-tag--blue">
+                <%= f.check_box :ambiance_tags, { multiple: true, checked: @preference.ambiance&.include?(ambiance) }, ambiance, nil %>
+                <span class="question-tag__label"><%= ambiance %></span>
+              </label>
+            <% end %>
+          </div>
+
+          <%# Champ caché pour stocker la valeur combinée %>
+          <%= f.hidden_field :ambiance, value: @preference.ambiance, data: { question_stack_target: "ambianceHidden" } %>
         </div>
         <div class="question-card__decoration question-card__decoration--stars"></div>
         <div class="question-card__nav">

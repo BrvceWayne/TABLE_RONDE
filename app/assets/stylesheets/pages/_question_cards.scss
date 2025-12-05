@@ -370,7 +370,8 @@
   box-shadow: $shadow-forest;
 
   .question-card__number { color: $lime; opacity: 0.3; }
-  .question-card__hint { color: rgba(255, 255, 255, 0.7); }
+  .question-card__title { color: $lime; }
+  .question-card__hint { color: rgba(202, 255, 141, 0.85); }
 }
 
 // Tangerine (orange énergique)
@@ -408,7 +409,8 @@
   box-shadow: 0 8px 24px rgba(0, 89, 219, 0.3);
 
   .question-card__number { color: $lime; opacity: 0.25; }
-  .question-card__hint { color: rgba(255, 255, 255, 0.75); }
+  .question-card__title { color: $white; }
+  .question-card__hint { color: rgba(255, 255, 255, 0.85); }
 }
 
 // Cream (minimaliste)
@@ -656,6 +658,26 @@
       background: rgba(255, 255, 255, 0.3);
     }
   }
+
+  // Variante Blue (sur fond electric-blue)
+  &--blue {
+    .question-tag__label {
+      background: rgba(255, 255, 255, 0.15);
+      color: $white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    input:checked + .question-tag__label {
+      background: $lime;
+      color: $forest;
+      border-color: $lime;
+      transform: scale(1.05);
+    }
+
+    &:hover .question-tag__label {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
 }
 
 // Option "Autre" avec input texte
@@ -699,109 +721,135 @@
   }
 }
 
-// Budget input
-.budget-input {
+// Budget level selector
+.question-card__budget-levels {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: $space-md;
+  gap: $space-sm;
+  flex-wrap: wrap;
+
+  @media (max-width: $breakpoint-sm) {
+    gap: $space-xs;
+  }
 }
 
-.budget-input__field {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-xs;
-}
+.budget-level {
+  cursor: pointer;
 
-.budget-input__label {
-  font-family: $font-body;
-  font-size: $font-size-xs;
-  text-transform: uppercase;
-  letter-spacing: $letter-spacing-wide;
-  opacity: 0.7;
-}
-
-.budget-input__number {
-  width: 80px;
-  padding: $space-sm $space-md;
-  font-family: $font-display;
-  font-size: $font-size-xl;
-  font-weight: $font-weight-bold;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.1);
-  border: 2px solid rgba(0, 0, 0, 0.15);
-  border-radius: $radius-md;
-  color: inherit;
-  transition: all $transition-base;
-
-  &:focus {
-    outline: none;
-    border-color: $charcoal;
-    background: rgba(0, 0, 0, 0.15);
+  .budget-level__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
 
-  // Hide number spinners
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  .budget-level__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(0, 0, 0, 0.12);
+    border-radius: $radius-lg;
+    transition: all $transition-base;
+
+    @media (max-width: $breakpoint-sm) {
+      width: 70px;
+      height: 70px;
+    }
   }
-  -moz-appearance: textfield;
-}
 
-.budget-input__currency {
-  font-family: $font-display;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  opacity: 0.6;
-}
+  .budget-level__label {
+    font-family: $font-display;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $charcoal;
+    line-height: 1;
 
-.budget-input__separator {
-  font-family: $font-body;
-  font-size: $font-size-lg;
-  opacity: 0.5;
-}
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-lg;
+    }
+  }
 
-// Distance input
-.question-card__distance {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-xs;
-}
+  .budget-level__sublabel {
+    font-family: $font-body;
+    font-size: $font-size-xs;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 2px;
+  }
 
-.distance-input__number {
-  width: 80px;
-  padding: $space-xs $space-sm;
-  font-family: $font-display;
-  font-size: $font-size-lg;
-  font-weight: $font-weight-bold;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.08);
-  border: 2px solid rgba(0, 0, 0, 0.12);
-  border-radius: $radius-md;
-  color: inherit;
-  transition: all $transition-base;
-
-  &:focus {
-    outline: none;
-    border-color: $charcoal;
+  &:hover .budget-level__card {
     background: rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
   }
 
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  .budget-level__input:checked + .budget-level__card {
+    background: $tangerine;
+    border-color: $tangerine;
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(255, 87, 13, 0.3);
+
+    .budget-level__label {
+      color: $white;
+    }
+
+    .budget-level__sublabel {
+      color: rgba(255, 255, 255, 0.9);
+    }
   }
-  -moz-appearance: textfield;
 }
 
-.distance-input__unit {
-  font-family: $font-body;
-  font-size: $font-size-sm;
-  opacity: 0.7;
+// Distance pills selector
+.question-card__distance-pills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $space-xs;
+}
+
+.distance-pill {
+  cursor: pointer;
+
+  .distance-pill__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .distance-pill__label {
+    display: inline-block;
+    padding: $space-sm $space-md;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    background: rgba(255, 255, 255, 0.2);
+    color: $white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: $radius-full;
+    transition: all $transition-base;
+
+    @media (max-width: $breakpoint-sm) {
+      padding: $space-xs $space-sm;
+      font-size: $font-size-xs;
+    }
+  }
+
+  &:hover .distance-pill__label {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .distance-pill__input:checked + .distance-pill__label {
+    background: $white;
+    color: $electric-blue;
+    border-color: $white;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
 }
 
 // ============================================
