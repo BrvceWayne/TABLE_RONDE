@@ -59,6 +59,7 @@ class SessionsController < ApplicationController
       {
         user: su.user,
         leader: su.leader,
+        guest_name: su.guest_name,
         preferences_completed: su.user.preference&.present? || false
       }
     end

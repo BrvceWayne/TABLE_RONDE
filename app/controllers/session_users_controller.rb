@@ -17,7 +17,8 @@ class SessionUsersController < ApplicationController
     session_user = SessionUser.new(
       session: @session,
       user: user,
-      leader: false
+      leader: false,
+      guest_name: params[:guest_name].presence&.strip
     )
 
     if session_user.save
