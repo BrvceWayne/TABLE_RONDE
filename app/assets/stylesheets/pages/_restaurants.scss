@@ -8,74 +8,6 @@
   overflow-x: hidden;
 }
 
-// ============================================
-// HEADER
-// ============================================
-
-.restaurants__header {
-  display: flex;
-  justify-content: center;
-  padding: $space-lg;
-  background: $white;
-  border-bottom: 1px solid $border-light;
-}
-
-.restaurants__logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none !important;
-
-  &:hover {
-    text-decoration: none !important;
-  }
-}
-
-.restaurants__logo-left,
-.restaurants__logo-right {
-  font-family: $font-display;
-  font-size: 1.5rem;
-  font-weight: $font-weight-bold;
-  line-height: 1;
-  color: $forest;
-}
-
-.restaurants__logo-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  margin: 0 2px;
-  position: relative;
-}
-
-.restaurants__logo-circle {
-  width: 22px;
-  height: 22px;
-  border: 2px solid $forest;
-  border-radius: 50%;
-}
-
-.restaurants__logo-fork,
-.restaurants__logo-knife {
-  position: absolute;
-  width: 2px;
-  height: 11px;
-  border-radius: 2px;
-  background: $forest;
-}
-
-.restaurants__logo-fork {
-  left: 3px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.restaurants__logo-knife {
-  right: 3px;
-  top: 50%;
-  transform: translateY(-50%);
-}
 
 // ============================================
 // TITLE
@@ -83,7 +15,7 @@
 
 .restaurants__title {
   text-align: center;
-  padding: $space-xl $space-lg $space-md;
+  padding: 100px $space-lg $space-md; // Espace pour le menu burger flottant
 }
 
 .restaurants__title-icon {
