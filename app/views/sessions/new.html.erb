@@ -12,10 +12,19 @@
       <span class="new-session__logo-right">nde</span>
     <% end %>
 
-    <h1 class="new-session__title">C'est pour quand ?</h1>
+    <h1 class="new-session__title">Nouvelle session</h1>
 
     <%= simple_form_for @session, url: sessions_path, html: { class: "new-session__form" } do |f| %>
       <%= f.error_notification %>
+
+      <div class="new-session__name-field">
+        <%= f.input :name,
+            label: false,
+            placeholder: "Nom de la session (ex: Anniv Marie, Resto du samedi...)",
+            input_html: { class: "new-session__name-input", autofocus: true } %>
+      </div>
+
+      <p class="new-session__section-title">C'est pour quand ?</p>
 
       <div class="new-session__meals">
         <% [

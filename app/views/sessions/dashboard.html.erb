@@ -15,6 +15,11 @@
 
   <div class="dashboard__content">
 
+    <%# Nom de la session %>
+    <% if @session.name.present? %>
+      <h1 class="dashboard__session-name"><%= @session.name %></h1>
+    <% end %>
+
     <%# Section code de partage (leader only) %>
     <% if @is_leader %>
       <section class="dashboard__share">

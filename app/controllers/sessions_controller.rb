@@ -1,6 +1,13 @@
 class SessionsController < ApplicationController
-  before_action :set_session, only: [:show, :dashboard, :generate_recommendations]
+  before_action :set_session, only: [:show, :dashboard, :generate_recommendations, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :dashboard]
+
+  # Mes sessions - Liste de toutes les sessions de l'utilisateur
+  def index
+    @sessions = current_user.sessions
+                            .includes(:users, :restaurants)
+                            .order(created_at: :desc)
+  end
 
   # PHASE 1: Alice crée une nouvelle session
   def new
@@ -79,6 +86,19 @@ class SessionsController < ApplicationController
     redirect_to session_restaurants_path(session_share_code: @session.share_code), notice: "Recommandations générées avec succès !", status: :see_other
   end
 
+  # Supprimer une session (leader uniquement)
+  def destroy
+    session_user = @session.session_users.find_by(user: current_user)
+
+    unless session_user&.leader?
+      redirect_to sessions_path, alert: "Seul le leader peut supprimer cette session"
+      return
+    end
+
+    @session.destroy
+    redirect_to sessions_path, notice: "Session supprimée avec succès", status: :see_other
+  end
+
   private
 
   def set_session
@@ -86,7 +106,7 @@ class SessionsController < ApplicationController
   end
 
   def session_params
-    params.require(:session).permit(:meal_type)
+    params.require(:session).permit(:name, :meal_type)
   end
 
   def generate_share_code

@@ -1,0 +1,118 @@
+<div class="my-sessions">
+  <%# Header %>
+  <header class="my-sessions__header">
+    <%= link_to root_path, class: "my-sessions__logo" do %>
+      <span class="my-sessions__logo-left">TableR</span>
+      <span class="my-sessions__logo-icon">
+        <span class="my-sessions__logo-circle"></span>
+        <span class="my-sessions__logo-fork"></span>
+        <span class="my-sessions__logo-knife"></span>
+      </span>
+      <span class="my-sessions__logo-right">nde</span>
+    <% end %>
+  </header>
+
+  <div class="my-sessions__content">
+    <%# Titre %>
+    <div class="my-sessions__title-section">
+      <h1 class="my-sessions__title">
+        <span class="my-sessions__title-icon">📅</span>
+        Mes sessions
+      </h1>
+      <p class="my-sessions__subtitle">
+        <%= @sessions.count %> session<%= @sessions.count > 1 ? 's' : '' %> au total
+      </p>
+    </div>
+
+    <%# Liste des sessions %>
+    <% if @sessions.any? %>
+      <div class="my-sessions__list">
+        <% @sessions.each do |session| %>
+          <%
+            session_user = session.session_users.find_by(user: current_user)
+            is_leader = session_user&.leader?
+            has_restaurants = session.restaurants.any?
+            participants_count = session.users.count
+            meal_icons = { 'Petit-déjeuner' => '🥐', 'Brunch' => '☀️', 'Déjeuner' => '🍽️', 'Dîner' => '🌙' }
+          %>
+
+          <div class="session-card-wrapper">
+            <%= link_to dashboard_session_path(session), class: "session-card #{'session-card--completed' if has_restaurants}" do %>
+              <div class="session-card__header">
+                <div class="session-card__meal">
+                  <span class="session-card__meal-icon"><%= meal_icons[session.meal_type] || '🍴' %></span>
+                  <div class="session-card__meal-info">
+                    <span class="session-card__meal-name"><%= session.name.presence || session.meal_type %></span>
+                    <% if session.name.present? %>
+                      <span class="session-card__meal-type-small"><%= session.meal_type %></span>
+                    <% end %>
+                  </div>
+                </div>
+                <% if is_leader %>
+                  <span class="session-card__badge session-card__badge--leader">Leader</span>
+                <% end %>
+              </div>
+
+              <div class="session-card__body">
+                <div class="session-card__code">
+                  <span class="session-card__code-label">Code</span>
+                  <span class="session-card__code-value"><%= session.share_code %></span>
+                </div>
+
+                <div class="session-card__meta">
+                  <div class="session-card__participants">
+                    <span class="session-card__participants-icon">👥</span>
+                    <span><%= participants_count %> participant<%= participants_count > 1 ? 's' : '' %></span>
+                  </div>
+                  <div class="session-card__date">
+                    <%= time_ago_in_words(session.created_at) %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="session-card__footer">
+                <% if has_restaurants %>
+                  <span class="session-card__status session-card__status--success">
+                    <span class="session-card__status-dot"></span>
+                    Terminée
+                  </span>
+                  <span class="session-card__arrow">Voir les restos →</span>
+                <% else %>
+                  <span class="session-card__status session-card__status--pending">
+                    <span class="session-card__status-dot"></span>
+                    En cours
+                  </span>
+                  <span class="session-card__arrow">Continuer →</span>
+                <% end %>
+              </div>
+            <% end %>
+
+            <% if is_leader %>
+              <%= button_to session_path(session),
+                  method: :delete,
+                  class: "session-card__delete",
+                  title: "Supprimer cette session",
+                  data: { turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette session ? Cette action est irréversible." } do %>
+                <span>🗑️</span>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <%# État vide %>
+      <div class="my-sessions__empty">
+        <div class="my-sessions__empty-icon">🍽️</div>
+        <h2 class="my-sessions__empty-title">Aucune session</h2>
+        <p class="my-sessions__empty-text">Créez votre première session pour trouver le restaurant parfait avec vos amis !</p>
+      </div>
+    <% end %>
+
+    <%# Bouton créer %>
+    <div class="my-sessions__actions">
+      <%= link_to new_session_path, class: "my-sessions__btn my-sessions__btn--primary" do %>
+        <span>✨</span> Nouvelle session
+      <% end %>
+    </div>
+  </div>
+</div>
