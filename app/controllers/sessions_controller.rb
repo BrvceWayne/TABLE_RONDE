@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   before_action :set_session, only: [:show, :dashboard, :generate_recommendations, :destroy]
-  skip_before_action :authenticate_user!, only: [:show, :dashboard]
+  skip_before_action :authenticate_user!, only: [:show, :dashboard, :join_redirect]
 
   # Mes sessions - Liste de toutes les sessions de l'utilisateur
   def index
@@ -34,6 +34,16 @@ class SessionsController < ApplicationController
       redirect_to new_session_preference_path(session_share_code: @session.share_code)
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  # Redirect from home page join form
+  def join_redirect
+    share_code = params[:share_code].to_s.strip.upcase
+    if share_code.present?
+      redirect_to join_session_path(share_code: share_code)
+    else
+      redirect_to root_path, alert: "Veuillez entrer un code de session"
     end
   end
 

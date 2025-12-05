@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   end
 
   # PHASE 2: Rejoindre une session via le share_code
+  get '/join', to: 'sessions#join_redirect'  # Redirect from home page form
   get '/join/:share_code', to: 'sessions#show', as: :join_session
   post '/join/:share_code', to: 'session_users#create', as: :join_session_user
 
