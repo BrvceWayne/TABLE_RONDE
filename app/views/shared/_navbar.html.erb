@@ -112,27 +112,27 @@
       <ul class="menu-fullscreen__nav">
         <li>
           <%= link_to root_path, class: "menu-fullscreen__link", data: { action: "click->menu#close" } do %>
-            <span class="menu-fullscreen__icon">🏠</span>
+            <span class="menu-fullscreen__icon menu-fullscreen__icon--home"><i class="fa-solid fa-house"></i></span>
             Accueil
           <% end %>
         </li>
         <% if user_signed_in? %>
           <li>
             <%= link_to sessions_path, class: "menu-fullscreen__link", data: { action: "click->menu#close" } do %>
-              <span class="menu-fullscreen__icon">📅</span>
+              <span class="menu-fullscreen__icon menu-fullscreen__icon--sessions"><i class="fa-solid fa-users"></i></span>
               Mes sessions
             <% end %>
           </li>
         <% end %>
         <li>
           <%= link_to "#", class: "menu-fullscreen__link", data: { action: "click->menu#close" } do %>
-            <span class="menu-fullscreen__icon">❓</span>
+            <span class="menu-fullscreen__icon menu-fullscreen__icon--how"><i class="fa-solid fa-lightbulb"></i></span>
             Comment ça marche
           <% end %>
         </li>
         <li>
           <%= link_to "#", class: "menu-fullscreen__link", data: { action: "click->menu#close" } do %>
-            <span class="menu-fullscreen__icon">📧</span>
+            <span class="menu-fullscreen__icon menu-fullscreen__icon--contact"><i class="fa-solid fa-envelope"></i></span>
             Contact
           <% end %>
         </li>

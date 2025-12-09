@@ -514,11 +514,55 @@
   border-radius: 12px;
   font-size: 1.125rem;
   transition: all 0.2s ease;
+
+  // Couleurs par défaut des icônes
+  i {
+    transition: color 0.2s ease;
+  }
+
+  // Accueil - Forest green
+  &--home {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    i { color: #016642; }
+  }
+
+  // Mes sessions - Electric blue
+  &--sessions {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    i { color: #1976D2; }
+  }
+
+  // Comment ça marche - Sunshine yellow
+  &--how {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+    i { color: #F9A825; }
+  }
+
+  // Contact - Bubblegum pink
+  &--contact {
+    background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%);
+    i { color: #C2185B; }
+  }
 }
 
 .menu-fullscreen__link:hover .menu-fullscreen__icon {
-  background: linear-gradient(135deg, #CAFF8D 0%, #B8F076 100%);
-  transform: scale(1.05);
+  transform: scale(1.08);
+
+  &--home {
+    background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+  }
+
+  &--sessions {
+    background: linear-gradient(135deg, #BBDEFB 0%, #90CAF9 100%);
+  }
+
+  &--how {
+    background: linear-gradient(135deg, #FFECB3 0%, #FFE082 100%);
+  }
+
+  &--contact {
+    background: linear-gradient(135deg, #F8BBD9 0%, #F48FB1 100%);
+  }
 }
 
 .menu-fullscreen__actions {
