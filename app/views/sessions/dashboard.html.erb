@@ -104,12 +104,19 @@
           <span>🍴</span> Voir les restos
         <% end %>
       <% elsif @is_leader %>
-        <%= button_to generate_recommendations_session_path(share_code: @session.share_code),
-            method: :post,
-            class: "dashboard__btn dashboard__btn--primary",
-            data: { turbo: false } do %>
-          <span>✨</span> Générer les restos
-        <% end %>
+        <div data-controller="loading-button">
+          <%= button_to generate_recommendations_session_path(share_code: @session.share_code),
+              method: :post,
+              class: "dashboard__btn dashboard__btn--primary",
+              data: {
+                turbo: false,
+                loading_button_target: "button",
+                action: "click->loading-button#submit"
+              } do %>
+            <span data-loading-button-target="icon">✨</span>
+            <span data-loading-button-target="text">Générer les restos</span>
+          <% end %>
+        </div>
       <% else %>
         <div class="dashboard__waiting">
           <span class="dashboard__waiting-icon">⏳</span>
