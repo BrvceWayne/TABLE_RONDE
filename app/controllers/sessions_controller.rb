@@ -71,14 +71,14 @@ class SessionsController < ApplicationController
     @is_participant = session_user.present?
   end
 
-  # PHASE 4: Le leader lance la génération
+  # PHASE 4: Le leader lance la génération (appelé en AJAX)
   def generate_recommendations
     # Vérifier que le current_user est bien le leader
     user = current_or_guest_user
     session_user = @session.session_users.find_by(user: user)
 
     unless session_user&.leader?
-      redirect_to dashboard_session_path(@session), alert: "Seul le leader peut lancer la génération"
+      render json: { error: "Seul le leader peut lancer la génération" }, status: :forbidden
       return
     end
 
@@ -86,7 +86,7 @@ class SessionsController < ApplicationController
     completed_users = @session.users.joins(:preference).where.not(preferences: { id: nil })
 
     if completed_users.empty?
-      redirect_to dashboard_session_path(@session), alert: "Aucun participant n'a complété le questionnaire"
+      render json: { error: "Aucun participant n'a complété le questionnaire" }, status: :unprocessable_entity
       return
     end
 
@@ -101,7 +101,10 @@ class SessionsController < ApplicationController
       { type: "restaurants_generated" }
     )
 
-    redirect_to session_restaurants_path(session_share_code: @session.share_code), notice: "Recommandations générées avec succès !", status: :see_other
+    render json: {
+      success: true,
+      redirect_url: session_restaurants_path(session_share_code: @session.share_code)
+    }
   end
 
   # Supprimer une session (leader uniquement)

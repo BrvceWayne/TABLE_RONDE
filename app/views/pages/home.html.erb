@@ -31,11 +31,33 @@
       On mange où ?
     <% end %>
 
-    <%# Join Session Form %>
-    <%= form_with url: "/join", method: :get, class: "home__join-form", local: true do |f| %>
-      <%= f.text_field :share_code, placeholder: "Code", class: "home__join-input", required: true %>
-      <%= f.submit "Rejoindre", class: "home__join-btn" %>
-    <% end %>
+    <%# Join Session - Bouton qui se transforme en input %>
+    <div class="home__join" data-controller="join-input">
+      <%# Bouton initial %>
+      <button type="button" class="home__join-trigger" data-join-input-target="trigger" data-action="click->join-input#expand">
+        <span class="home__join-trigger-icon">🎟️</span>
+        <span>Rejoindre une session</span>
+      </button>
+
+      <%# Formulaire caché qui apparaît %>
+      <%= form_with url: "/join", method: :get, class: "home__join-form", local: true, data: { join_input_target: "form" } do |f| %>
+        <%= f.text_field :share_code,
+            placeholder: "Entrez le code",
+            class: "home__join-input",
+            maxlength: 8,
+            autocomplete: "off",
+            autocapitalize: "characters",
+            spellcheck: false,
+            data: { join_input_target: "input", action: "keyup->join-input#handleInput" },
+            required: true %>
+        <button type="submit" class="home__join-submit" data-join-input-target="submit" disabled>
+          <span>→</span>
+        </button>
+        <button type="button" class="home__join-cancel" data-action="click->join-input#collapse">
+          <span>✕</span>
+        </button>
+      <% end %>
+    </div>
   </div>
 
   <%# Footer discret %>

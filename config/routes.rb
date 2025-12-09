@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy], param: :share_code do
     member do
       get :dashboard       # PHASE 4: Dashboard du leader
-      post :generate_recommendations  # PHASE 4: Lancer la génération
+      post :generate_recommendations  # PHASE 4: Lancer la génération (AJAX)
     end
 
     # PHASE 3: Questionnaire de préférences

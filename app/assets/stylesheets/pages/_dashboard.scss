@@ -102,6 +102,10 @@
 .dashboard__share {
   text-align: center;
   margin-bottom: $space-xl;
+  padding: $space-lg;
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
 }
 
 .dashboard__share-label {
@@ -111,67 +115,107 @@
   margin-bottom: $space-md;
 }
 
+// ============================================
+// QR CODE
+// ============================================
+
+.dashboard__qr {
+  display: flex;
+  justify-content: center;
+  margin-bottom: $space-md;
+
+  .qr-code {
+    border-radius: $radius-md;
+    padding: $space-sm;
+    background: $white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+}
+
+// ============================================
+// CODE DIGITS
+// ============================================
+
 .dashboard__code {
   display: flex;
   justify-content: center;
   gap: $space-xs;
-  margin-bottom: $space-md;
+  margin-bottom: $space-lg;
 }
 
 .dashboard__code-digit {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 52px;
-  background: $white;
-  border: 2px solid $border-light;
+  width: 36px;
+  height: 44px;
+  background: $cream;
+  border: 1px solid $border-light;
   border-radius: $radius-sm;
   font-family: $font-display;
-  font-size: $font-size-xl;
+  font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   color: $charcoal;
-  box-shadow: $shadow-sm;
 
   @media (max-width: $breakpoint-sm) {
-    width: 36px;
-    height: 46px;
-    font-size: $font-size-lg;
+    width: 32px;
+    height: 40px;
+    font-size: $font-size-base;
   }
 }
 
-.dashboard__copy-btn {
+// ============================================
+// SHARE BUTTONS
+// ============================================
+
+.dashboard__share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: $space-sm;
+}
+
+.dashboard__share-btn {
   display: inline-flex;
   align-items: center;
-  gap: $space-sm;
-  padding: $space-sm $space-lg;
-  background: transparent;
-  border: 2px solid $forest;
+  gap: $space-xs;
+  padding: $space-sm $space-md;
   border-radius: $radius-full;
-  color: $forest;
   font-family: $font-body;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   cursor: pointer;
   transition: all $transition-base;
-
-  &:hover {
-    background: $forest;
-    color: $white;
-  }
+  border: none;
 
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
   }
 
-  &--copied {
+  &--copy {
+    background: $cream;
+    color: $charcoal;
+
+    &:hover {
+      background: darken($cream, 5%);
+    }
+  }
+
+  &--native {
     background: $forest;
     color: $white;
-    border-color: $forest;
+
+    &:hover {
+      background: darken($forest, 8%);
+    }
+  }
+
+  &--success {
+    background: $forest !important;
+    color: $white !important;
   }
 }
 
-.dashboard__copy-icon {
+.dashboard__share-btn-icon {
   font-size: 1rem;
 }
 

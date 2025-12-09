@@ -1,0 +1,245 @@
+// ============================================
+// GENERATE OVERLAY - Loading animation sur le dashboard
+// ============================================
+
+.generate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+
+    .generate-overlay__backdrop {
+      opacity: 1;
+    }
+
+    .generate-overlay__content {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+}
+
+.generate-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(1, 102, 66, 0.85);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.generate-overlay__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  text-align: center;
+  padding: $space-xl;
+  max-width: 400px;
+  width: 90%;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
+}
+
+// ============================================
+// ANIMATION DU CHEF
+// ============================================
+
+.generate-overlay__animation {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto $space-lg;
+}
+
+.generate-overlay__chef {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.generate-overlay__chef-emoji {
+  font-size: 4.5rem;
+  display: block;
+  animation: overlayChefBounce 1s ease-in-out infinite;
+}
+
+@keyframes overlayChefBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.08);
+  }
+}
+
+// ============================================
+// ICÔNES FLOTTANTES
+// ============================================
+
+.generate-overlay__icons {
+  position: absolute;
+  inset: 0;
+}
+
+.generate-overlay__icon {
+  position: absolute;
+  font-size: 1.75rem;
+  opacity: 0;
+  animation: overlayIconFloat 3.5s ease-in-out infinite;
+
+  &--1 {
+    top: 5%;
+    left: 50%;
+    animation-delay: 0s;
+  }
+
+  &--2 {
+    top: 25%;
+    right: 5%;
+    animation-delay: 0.6s;
+  }
+
+  &--3 {
+    bottom: 25%;
+    right: 10%;
+    animation-delay: 1.2s;
+  }
+
+  &--4 {
+    bottom: 5%;
+    left: 50%;
+    animation-delay: 1.8s;
+  }
+
+  &--5 {
+    bottom: 25%;
+    left: 10%;
+    animation-delay: 2.4s;
+  }
+
+  &--6 {
+    top: 25%;
+    left: 5%;
+    animation-delay: 3s;
+  }
+}
+
+@keyframes overlayIconFloat {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(15px);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1) translateY(-8px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translateY(-15px);
+  }
+}
+
+// ============================================
+// TEXTE
+// ============================================
+
+.generate-overlay__title {
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $white;
+  margin: 0 0 $space-sm;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.generate-overlay__message {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 $space-lg;
+  min-height: 24px;
+  transition: opacity 0.2s ease, color 0.3s ease;
+
+  &--error {
+    color: $sunshine;
+  }
+}
+
+// ============================================
+// BARRE DE PROGRESSION
+// ============================================
+
+.generate-overlay__progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-full;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.generate-overlay__progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, $lime 0%, $sunshine 50%, $lime 100%);
+  background-size: 200% 100%;
+  border-radius: $radius-full;
+  transition: width 0.4s ease;
+  animation: progressShimmer 2s linear infinite;
+}
+
+@keyframes progressShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: $breakpoint-sm) {
+  .generate-overlay__content {
+    padding: $space-lg;
+  }
+
+  .generate-overlay__animation {
+    width: 150px;
+    height: 150px;
+  }
+
+  .generate-overlay__chef-emoji {
+    font-size: 3.5rem;
+  }
+
+  .generate-overlay__icon {
+    font-size: 1.5rem;
+  }
+
+  .generate-overlay__title {
+    font-size: $font-size-lg;
+  }
+
+  .generate-overlay__message {
+    font-size: $font-size-sm;
+  }
+}

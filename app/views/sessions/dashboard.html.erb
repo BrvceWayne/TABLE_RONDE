@@ -20,20 +20,38 @@
 
     <%# Section code de partage (leader only) %>
     <% if @is_leader %>
-      <section class="dashboard__share">
+      <section class="dashboard__share" data-controller="share" data-share-url-value="<%= join_session_url(@session.share_code) %>" data-share-title-value="TableRonde - <%= @session.name.presence || @session.meal_type %>" data-share-text-value="Rejoins-moi pour choisir où manger !">
         <p class="dashboard__share-label">Partagez ce code avec vos amis</p>
+
+        <%# QR Code %>
+        <div class="dashboard__qr">
+          <%= qr_code_svg(join_session_url(@session.share_code), size: 160) %>
+        </div>
+
+        <%# Code en lettres %>
         <div class="dashboard__code">
           <% @session.share_code.chars.each do |char| %>
             <span class="dashboard__code-digit"><%= char %></span>
           <% end %>
         </div>
-        <button class="dashboard__copy-btn"
-                data-controller="clipboard"
-                data-action="click->clipboard#copy"
-                data-clipboard-text-value="<%= join_session_url(@session.share_code) %>">
-          <span class="dashboard__copy-icon">📋</span>
-          <span class="dashboard__copy-text">Copier le lien</span>
-        </button>
+
+        <%# Boutons de partage %>
+        <div class="dashboard__share-buttons">
+          <button class="dashboard__share-btn dashboard__share-btn--copy"
+                  data-controller="clipboard"
+                  data-action="click->clipboard#copy"
+                  data-clipboard-text-value="<%= join_session_url(@session.share_code) %>">
+            <span class="dashboard__share-btn-icon">📋</span>
+            <span>Copier</span>
+          </button>
+
+          <button class="dashboard__share-btn dashboard__share-btn--native"
+                  data-action="click->share#share"
+                  data-share-target="button">
+            <span class="dashboard__share-btn-icon">📤</span>
+            <span>Partager</span>
+          </button>
+        </div>
       </section>
     <% end %>
 
@@ -104,18 +122,10 @@
           <span>🍴</span> Voir les restos
         <% end %>
       <% elsif @is_leader %>
-        <div data-controller="loading-button">
-          <%= button_to generate_recommendations_session_path(share_code: @session.share_code),
-              method: :post,
-              class: "dashboard__btn dashboard__btn--primary",
-              data: {
-                turbo: false,
-                loading_button_target: "button",
-                action: "click->loading-button#submit"
-              } do %>
-            <span data-loading-button-target="icon">✨</span>
-            <span data-loading-button-target="text">Générer les restos</span>
-          <% end %>
+        <div data-controller="generate-overlay" data-generate-overlay-url-value="<%= generate_recommendations_session_path(share_code: @session.share_code) %>">
+          <button type="button" class="dashboard__btn dashboard__btn--primary" data-action="click->generate-overlay#start">
+            <span>✨</span> Générer les restos
+          </button>
         </div>
       <% else %>
         <div class="dashboard__waiting">
