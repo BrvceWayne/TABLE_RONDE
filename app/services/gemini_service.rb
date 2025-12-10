@@ -4,7 +4,7 @@ class GeminiService
   def initialize
     @client = Gemini.new(
       credentials: { service: 'generative-language-api', api_key: ENV['GEMINI_API_KEY'] },
-      options: { model: 'gemini-2.0-flash', server_sent_events: true }
+      options: { model: 'gemini-2.5-flash', server_sent_events: true }
     )
   end
 
