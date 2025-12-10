@@ -8,19 +8,12 @@
 // ============================================
 
 .floating-header {
-  position: fixed;
-  top: 24px;
-  left: 24px;
-  right: 24px;
+  position: relative;
+  padding: 24px;
   z-index: 1030;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  pointer-events: none; // Laisse passer les clics sauf sur les enfants
-
-  > * {
-    pointer-events: auto; // Réactive les clics sur les enfants
-  }
 }
 
 .floating-header__user {
@@ -624,9 +617,7 @@ main {
 
 @media (max-width: 576px) {
   .floating-header {
-    top: 16px;
-    left: 16px;
-    right: 16px;
+    padding: 16px;
   }
 
   .floating-header__user {
