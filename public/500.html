@@ -1,66 +1,204 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Erreur serveur - TableRonde</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
   <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
+    body {
+      font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #FAFAF8;
+      color: #1A1A1A;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
 
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    .error-container {
+      max-width: 500px;
+      width: 100%;
+    }
 
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
+    .error-icon {
+      font-size: 6rem;
+      margin-bottom: 1.5rem;
+      animation: shake 0.5s ease-in-out infinite;
+    }
 
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+
+    .error-code {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 5rem;
+      font-weight: 700;
+      color: #FF570D;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .error-title {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 1rem;
+    }
+
+    .error-message {
+      font-size: 1.1rem;
+      color: #666666;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .error-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: #016642;
+      color: white;
+      font-family: "DM Sans", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.875rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(1, 102, 66, 0.3);
+    }
+
+    .btn-primary:hover {
+      background-color: #01553a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(1, 102, 66, 0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #0059DB;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      color: #004bb8;
+      text-decoration: underline;
+    }
+
+    .status-card {
+      background: white;
+      border: 1px solid #E8E8E4;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    .status-title {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #1A1A1A;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-text {
+      font-size: 0.875rem;
+      color: #666666;
+      line-height: 1.5;
+    }
+
+    .decoration {
+      position: fixed;
+      opacity: 0.08;
+      font-size: 8rem;
+      z-index: -1;
+    }
+
+    .decoration-1 { top: 10%; left: 5%; }
+    .decoration-2 { top: 20%; right: 10%; }
+    .decoration-3 { bottom: 15%; left: 15%; }
+    .decoration-4 { bottom: 25%; right: 5%; }
+
+    @media (max-width: 480px) {
+      .error-code {
+        font-size: 4rem;
+      }
+      .error-title {
+        font-size: 1.5rem;
+      }
+      .error-icon {
+        font-size: 4rem;
+      }
+      .decoration {
+        display: none;
+      }
+    }
   </style>
 </head>
+<body>
+  <span class="decoration decoration-1">&#127869;</span>
+  <span class="decoration decoration-2">&#127836;</span>
+  <span class="decoration decoration-3">&#127828;</span>
+  <span class="decoration decoration-4">&#127843;</span>
 
-<body class="rails-default-error-page">
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <div>
-      <h1>We're sorry, but something went wrong.</h1>
+  <div class="error-container">
+    <div class="error-icon">&#128293;</div>
+    <div class="error-code">500</div>
+    <h1 class="error-title">Aïe ! Quelque chose a brûlé en cuisine</h1>
+    <p class="error-message">
+      Notre chef travaille déjà à résoudre le problème.
+      En attendant, pourquoi ne pas réessayer dans quelques instants ?
+    </p>
+    <div class="error-actions">
+      <a href="/" class="btn-primary">
+        &#127968; Retour à l'accueil
+      </a>
+      <a href="javascript:location.reload()" class="btn-secondary">
+        &#8635; Réessayer
+      </a>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+
+    <div class="status-card">
+      <div class="status-title">
+        &#128161; Que s'est-il passé ?
+      </div>
+      <p class="status-text">
+        Une erreur inattendue s'est produite sur notre serveur.
+        Notre équipe a été automatiquement notifiée et travaille à résoudre le problème.
+      </p>
+    </div>
   </div>
 </body>
 </html>
