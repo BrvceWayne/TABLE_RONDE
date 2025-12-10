@@ -143,6 +143,22 @@ export default class extends Controller {
   touchStart(event) {
     this.touchStartX = event.touches[0].clientX
     this.touchStartY = event.touches[0].clientY
+    this.isSwiping = false
+  }
+
+  touchMove(event) {
+    if (!this.touchStartX) return
+
+    const touchX = event.touches[0].clientX
+    const touchY = event.touches[0].clientY
+    const diffX = Math.abs(this.touchStartX - touchX)
+    const diffY = Math.abs(this.touchStartY - touchY)
+
+    // Si le mouvement est plus horizontal que vertical, empêche le scroll de la page
+    if (diffX > diffY && diffX > 10) {
+      event.preventDefault()
+      this.isSwiping = true
+    }
   }
 
   touchEnd(event) {
@@ -166,6 +182,7 @@ export default class extends Controller {
 
     this.touchStartX = null
     this.touchStartY = null
+    this.isSwiping = false
   }
 
   // Navigation au clavier
