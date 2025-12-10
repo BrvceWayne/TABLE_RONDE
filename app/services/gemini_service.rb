@@ -42,7 +42,7 @@ class GeminiService
       lat = pref.latitude
       lng = pref.longitude
       max_dist = pref.max_distance || 1000
-      "- Participant #{i + 1}: #{address} (GPS: #{lat}, #{lng}) - RAYON MAX: #{max_dist} mètres"
+      "- Participant #{i + 1}: #{address} (GPS: #{lat}, #{lng}) - Distance max acceptée: #{max_dist}m"
     end.join("\n")
 
     # Calculer le rayon de recherche le plus restrictif
@@ -56,32 +56,56 @@ class GeminiService
     all_ambiances = preferences.map(&:ambiance).compact.reject(&:empty?).uniq
     all_requests = preferences.map(&:special_requests).compact.reject(&:empty?).uniq
 
-    excluded_text = excluded_restaurants.any? ? "\nNE PAS PROPOSER: #{excluded_restaurants.join(', ')}" : ""
+    excluded_text = excluded_restaurants.any? ? "\n❌ RESTAURANTS EXCLUS (ne pas proposer): #{excluded_restaurants.join(', ')}" : ""
+    requests_text = all_requests.any? ? "\n💬 DEMANDES SPÉCIALES: #{all_requests.join(' | ')}" : ""
 
     <<~PROMPT
-      Trouve 3 restaurants RÉELS à proximité immédiate de cette zone.
+      Tu es un expert gastronomique. Tu DOIS retourner EXACTEMENT 3 restaurants, ni plus ni moins.
 
-      CONTRAINTE GÉOGRAPHIQUE ABSOLUE:
+      🎯 MISSION: Recommander 3 restaurants pour un groupe de #{preferences.size} personne(s).
+
+      📍 ZONE DE RECHERCHE:
       #{positions_text}
+      Zone cible: rayon de #{max_radius} mètres autour des participants.
 
-      ⚠️ IMPORTANT: Les restaurants doivent être à MAXIMUM #{max_radius} mètres de chaque participant. C'est une CONTRAINTE STRICTE, pas une préférence.
-
-      AUTRES CRITÈRES:
-      - Cuisines: #{all_cuisines.any? ? all_cuisines.join(', ') : 'Toutes'}
+      👥 PRÉFÉRENCES (à respecter au mieux):
+      - Cuisines: #{all_cuisines.any? ? all_cuisines.join(', ') : 'Toutes cuisines'}
       - Restrictions alimentaires: #{all_restrictions.any? ? all_restrictions.join(', ') : 'Aucune'}
-      - Budget: #{budget_min}€ - #{budget_max}€/personne
-      - Ambiance: #{all_ambiances.any? ? all_ambiances.join(', ') : 'Peu importe'}
-      #{excluded_text}
+      - Budget: #{budget_min}€ - #{budget_max}€ par personne
+      - Ambiance: #{all_ambiances.any? ? all_ambiances.join(', ') : 'Peu importe'}#{requests_text}#{excluded_text}
 
-      Réponds UNIQUEMENT en JSON valide (sans ```, sans markdown):
+      ⚠️ RÈGLES ABSOLUES:
+      1. Tu DOIS retourner EXACTEMENT 3 restaurants - JAMAIS moins, JAMAIS plus
+      2. Les restaurants doivent EXISTER réellement (vérifiables sur Google Maps)
+      3. Respecter les restrictions alimentaires est OBLIGATOIRE
+      4. Si les critères sont trop restrictifs, ÉLARGIS la zone de recherche mais retourne TOUJOURS 3 restaurants
+      5. Privilégie les restaurants bien notés (≥ 4.0 étoiles)
+
+      📋 RÉPONDS UNIQUEMENT AVEC CE JSON (sans ```, sans texte autour):
       [
         {
-          "name": "Nom exact du restaurant (tel qu'il apparaît sur Google Maps)",
-          "cuisine_type": "Type de cuisine (ex: Italien, Japonais, Français...)",
+          "name": "Nom EXACT tel qu'affiché sur Google Maps",
+          "cuisine_type": "Type de cuisine",
           "address": "Adresse complète avec code postal",
-          "price_range": "€, €€, €€€ ou €€€€",
+          "price_range": "€ ou €€ ou €€€ ou €€€€",
           "rating": 4.5,
-          "explanation": "2-3 phrases expliquant pourquoi ce restaurant est parfait pour le groupe"
+          "explanation": "2-3 phrases expliquant pourquoi ce resto convient au groupe"
+        },
+        {
+          "name": "Deuxième restaurant",
+          "cuisine_type": "...",
+          "address": "...",
+          "price_range": "...",
+          "rating": 4.2,
+          "explanation": "..."
+        },
+        {
+          "name": "Troisième restaurant",
+          "cuisine_type": "...",
+          "address": "...",
+          "price_range": "...",
+          "rating": 4.0,
+          "explanation": "..."
         }
       ]
     PROMPT
