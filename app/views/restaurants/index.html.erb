@@ -94,8 +94,8 @@
                   <% end %>
                 <% end %>
 
-                <% if restaurant.google_place_id.present? %>
-                  <%= link_to "https://www.google.com/maps/place/?q=place_id:#{restaurant.google_place_id}",
+                <% if restaurant.address.present? %>
+                  <%= link_to "https://www.google.com/maps/search/?api=1&query=#{ERB::Util.url_encode(restaurant.address)}",
                       target: "_blank",
                       rel: "noopener",
                       class: "restaurant-card__action restaurant-card__action--primary" do %>
