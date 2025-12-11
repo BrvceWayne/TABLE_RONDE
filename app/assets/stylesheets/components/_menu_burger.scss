@@ -8,12 +8,16 @@
 // ============================================
 
 .floating-header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 24px;
   z-index: 1030;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: transparent;
 }
 
 .floating-header__user {
@@ -606,8 +610,14 @@ body.menu-open {
   overflow: hidden !important;
 }
 
-// Plus de padding-top sur main (pas de header)
+// Padding-top pour compenser le floating-header en position absolute
 main {
+  padding-top: 96px; // 24px padding + ~48px hauteur boutons + marge
+}
+
+// Pages full-screen qui gèrent leur propre layout (pas de padding-top)
+main:has(.home),
+main:has(.question-stack) {
   padding-top: 0;
 }
 
@@ -616,6 +626,15 @@ main {
 // ============================================
 
 @media (max-width: 576px) {
+  main {
+    padding-top: 72px; // 16px padding + ~40px hauteur boutons + marge
+  }
+
+  main:has(.home),
+  main:has(.question-stack) {
+    padding-top: 0;
+  }
+
   .floating-header {
     padding: 16px;
   }
